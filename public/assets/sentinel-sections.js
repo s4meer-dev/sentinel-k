@@ -467,23 +467,40 @@ export function Card3DVisual({ index, testimonial, isHovered }) {
 export function DigitalTwinSection() {
   let [rpm, setRpm] = (0, o.useState)(980);
   let [valve, setValve] = (0, o.useState)(12);
-  let [replanned, setReplanned] = (0, o.useState)(false);
+  let [scenario, setScenario] = (0, o.useState)('custom'); // 'blind', 'cyber', 'replan', 'custom'
+  let [animating, setAnimating] = (0, o.useState)(false);
 
-  // Real-time Joukowsky water hammer calculation
-  let calculatedPressure = replanned ? 5.4 : Number(((rpm / 1200) * 8.5 + (1 - valve / 100) * 2.8).toFixed(1));
+  // Smooth scenario transition animation
+  const animateTo = (targetRpm, targetValve, mode) => {
+    setScenario(mode);
+    setAnimating(true);
+    let startRpm = rpm;
+    let startValve = valve;
+    let startTime = performance.now();
+    let duration = 650;
+
+    let step = (now) => {
+      let progress = Math.min(1, (now - startTime) / duration);
+      // Cubic ease-out
+      let ease = 1 - Math.pow(1 - progress, 3);
+      setRpm(Math.round(startRpm + (targetRpm - startRpm) * ease));
+      setValve(Math.round(startValve + (targetValve - startValve) * ease));
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        setAnimating(false);
+      }
+    };
+    requestAnimationFrame(step);
+  };
+
+  // Real-time Joukowsky water hammer calculations
+  let calculatedPressure = Number(((rpm / 1200) * 8.6 + (1 - valve / 100) * 3.2).toFixed(1));
   let isBreach = calculatedPressure > 8.0;
-
-  const handleReplan = () => {
-    setReplanned(true);
-    setRpm(720);
-    setValve(65);
-  };
-
-  const handleReset = () => {
-    setReplanned(false);
-    setRpm(980);
-    setValve(12);
-  };
+  let flowVelocity = (rpm * 0.0031).toFixed(2);
+  let flowRate = Math.round(rpm * 0.42 * (valve / 100));
+  let stressPercent = Math.min(150, Math.round((calculatedPressure / 8.0) * 100));
+  let isCavitation = valve < 15 && rpm > 750;
 
   return (0, x.jsxs)(`section`, {
     id: `digital-twin`,
@@ -495,7 +512,7 @@ export function DigitalTwinSection() {
         style: { maxWidth: 1280, margin: `0 auto`, padding: `0 32px` },
         children: [
           (0, x.jsxs)(`div`, {
-            style: { textAlign: `center`, margin: `24px 0 48px` },
+            style: { textAlign: `center`, margin: `24px 0 36px` },
             children: [
               (0, x.jsx)(`h2`, {
                 style: {
@@ -514,16 +531,45 @@ export function DigitalTwinSection() {
                   fontFamily: L,
                   fontSize: 18,
                   color: `#535862`,
-                  maxWidth: 680,
+                  maxWidth: 720,
                   margin: `0 auto`,
                   lineHeight: 1.6
                 },
-                children: `Every high-consequence command is executed inside an on-device EPANET 2.2 / WNTR hydrodynamic twin before single-coil write. If a surge exceeds the physical pipe yield limit, execution is deterministically aborted.`
+                children: `Every high-impact instruction is simulated in an on-device EPANET 2.2 / WNTR hydrodynamic twin before physical coil actuation. If Joukowsky water hammer pressure exceeds flange burst ceiling, single-coil write is deterministically rejected.`
               })
             ]
           }),
 
-          // Simulator Grid
+          // 3 Scenario Quick-Select Tabs
+          (0, x.jsx)(`div`, {
+            style: { display: `flex`, justifyContent: `center`, gap: 8, marginBottom: 24, flexWrap: `wrap` },
+            children: [
+              { id: 'blind', label: '1. BLIND ACTION (11.4 BAR BURST)', targetRpm: 1050, targetValve: 4, color: '#ef4444' },
+              { id: 'cyber', label: '2. TRADITIONAL FIREWALL (CRC PASS, 9.8 BAR)', targetRpm: 920, targetValve: 10, color: '#f59e0b' },
+              { id: 'replan', label: '3. SENTINEL-K REPLAN (7.4 BAR SAFE)', targetRpm: 680, targetValve: 55, color: '#10b981' }
+            ].map((sc) => (
+              (0, x.jsx)(`button`, {
+                key: sc.id,
+                onClick: () => animateTo(sc.targetRpm, sc.targetValve, sc.id),
+                style: {
+                  fontFamily: I,
+                  fontSize: 11.5,
+                  fontWeight: 700,
+                  padding: `10px 18px`,
+                  borderRadius: 100,
+                  border: scenario === sc.id ? `1px solid ${sc.color}` : `1px solid rgba(0,0,0,0.1)`,
+                  background: scenario === sc.id ? sc.color : `#fff`,
+                  color: scenario === sc.id ? `#fff` : `#475467`,
+                  cursor: `pointer`,
+                  transition: `all 0.25s ease`,
+                  boxShadow: scenario === sc.id ? `0 4px 14px ${sc.color}40` : `0 2px 6px rgba(0,0,0,0.04)`
+                },
+                children: sc.label
+              })
+            ))
+          }),
+
+          // Main Simulator Cockpit
           (0, x.jsxs)(`div`, {
             style: {
               display: `grid`,
@@ -533,42 +579,57 @@ export function DigitalTwinSection() {
               borderRadius: 24,
               padding: `clamp(24px, 4vw, 40px)`,
               color: `#fff`,
-              boxShadow: `0 24px 64px rgba(0,0,0,0.15)`
+              boxShadow: `0 24px 64px rgba(0,0,0,0.2)`,
+              border: `1px solid rgba(255,255,255,0.06)`,
+              position: `relative`,
+              overflow: `hidden`
             },
             children: [
-              // Left: Sliders & Controls
+              // Left Column: Interactive Controls
               (0, x.jsxs)(`div`, {
                 style: { display: `flex`, flexDirection: `column`, gap: 24 },
                 children: [
+                  // Pump Slider
                   (0, x.jsxs)(`div`, {
                     children: [
                       (0, x.jsxs)(`div`, {
-                        style: { display: `flex`, justifyContent: `space-between`, fontFamily: I, fontSize: 13, color: `#98a2b3`, marginBottom: 8 },
+                        style: { display: `flex`, justifyContent: `space-between`, alignItems: `center`, fontFamily: I, fontSize: 12.5, color: `#98a2b3`, marginBottom: 8 },
                         children: [
                           (0, x.jsx)(`span`, { children: `PUMP SPEED (BOOSTER 04)` }),
-                          (0, x.jsxs)(`span`, { style: { color: R, fontWeight: 700 }, children: [rpm, ` RPM`] })
+                          (0, x.jsxs)(`span`, { style: { color: R, fontWeight: 800, fontFamily: `monospace`, fontSize: 14 }, children: [rpm, ` RPM`] })
                         ]
                       }),
                       (0, x.jsx)(`input`, {
                         type: `range`,
                         min: 0,
                         max: 1200,
-                        step: 10,
+                        step: 5,
                         value: rpm,
-                        disabled: replanned,
-                        onChange: (e) => setRpm(Number(e.target.value)),
-                        style: { width: `100%`, accentColor: R, cursor: `pointer` }
+                        onChange: (e) => { setScenario('custom'); setRpm(Number(e.target.value)); },
+                        style: {
+                          width: `100%`,
+                          height: 8,
+                          accentColor: R,
+                          cursor: `pointer`,
+                          borderRadius: 4,
+                          background: `linear-gradient(to right, ${R} ${(rpm / 1200) * 100}%, rgba(255,255,255,0.1) ${(rpm / 1200) * 100}%)`
+                        }
+                      }),
+                      (0, x.jsxs)(`div`, {
+                        style: { display: `flex`, justifyContent: `space-between`, fontSize: 9.5, color: `#64748b`, fontFamily: `monospace`, marginTop: 4 },
+                        children: [(0, x.jsx)(`span`, { children: `0 RPM (IDLE)` }), (0, x.jsx)(`span`, { children: `600 RPM` }), (0, x.jsx)(`span`, { children: `1,200 RPM (MAX)` })]
                       })
                     ]
                   }),
 
+                  // Valve Slider
                   (0, x.jsxs)(`div`, {
                     children: [
                       (0, x.jsxs)(`div`, {
-                        style: { display: `flex`, justifyContent: `space-between`, fontFamily: I, fontSize: 13, color: `#98a2b3`, marginBottom: 8 },
+                        style: { display: `flex`, justifyContent: `space-between`, alignItems: `center`, fontFamily: I, fontSize: 12.5, color: `#98a2b3`, marginBottom: 8 },
                         children: [
                           (0, x.jsx)(`span`, { children: `RELIEF VALVE APERTURE` }),
-                          (0, x.jsxs)(`span`, { style: { color: R, fontWeight: 700 }, children: [valve, `% OPEN`] })
+                          (0, x.jsxs)(`span`, { style: { color: valve < 20 ? `#ef4444` : `#10b981`, fontWeight: 800, fontFamily: `monospace`, fontSize: 14 }, children: [valve, `% OPEN`] })
                         ]
                       }),
                       (0, x.jsx)(`input`, {
@@ -577,163 +638,227 @@ export function DigitalTwinSection() {
                         max: 100,
                         step: 1,
                         value: valve,
-                        disabled: replanned,
-                        onChange: (e) => setValve(Number(e.target.value)),
-                        style: { width: `100%`, accentColor: R, cursor: `pointer` }
-                      })
-                    ]
-                  }),
-
-                  // Joukowsky equation banner
-                  (0, x.jsxs)(`div`, {
-                    style: {
-                      background: `rgba(255, 255, 255, 0.04)`,
-                      border: `1px solid ${BORDER_DARK}`,
-                      borderRadius: 14,
-                      padding: 16
-                    },
-                    children: [
-                      (0, x.jsx)(`div`, {
-                        style: { fontFamily: I, fontSize: 11, color: `#98a2b3`, textTransform: `uppercase`, letterSpacing: `0.1em`, marginBottom: 6 },
-                        children: `JOUKOWSKY WATER HAMMER LAW`
-                      }),
-                      (0, x.jsx)(`div`, {
-                        style: { fontFamily: `monospace`, fontSize: 16, color: R, fontWeight: 700 },
-                        children: `ΔP = ρ · c · Δv  (c = 1,200 m/s)`
-                      }),
-                      (0, x.jsx)(`div`, {
-                        style: { fontFamily: L, fontSize: 12, color: `#98a2b3`, marginTop: 4 },
-                        children: `Calculates instantaneous kinetic pressure rise across transmission flange.`
-                      })
-                    ]
-                  }),
-
-                  // Action Buttons
-                  (0, x.jsxs)(`div`, {
-                    style: { display: `flex`, gap: 12, marginTop: 8 },
-                    children: [
-                      (0, x.jsx)(`button`, {
-                        onClick: handleReplan,
+                        onChange: (e) => { setScenario('custom'); setValve(Number(e.target.value)); },
                         style: {
-                          flex: 1,
-                          padding: `12px 20px`,
-                          background: R,
-                          color: `#fff`,
-                          border: `none`,
-                          borderRadius: 12,
-                          fontFamily: I,
-                          fontWeight: 700,
-                          fontSize: 14,
+                          width: `100%`,
+                          height: 8,
+                          accentColor: valve < 20 ? `#ef4444` : `#10b981`,
                           cursor: `pointer`,
-                          boxShadow: `0 4px 14px rgba(255, 105, 46, 0.4)`
-                        },
-                        children: `APPLY SAFE REPLAN`
+                          borderRadius: 4,
+                          background: `linear-gradient(to right, ${valve < 20 ? '#ef4444' : '#10b981'} ${valve}%, rgba(255,255,255,0.1) ${valve}%)`
+                        }
                       }),
-                      replanned && (0, x.jsx)(`button`, {
-                        onClick: handleReset,
-                        style: {
-                          padding: `12px 18px`,
-                          background: `rgba(255, 255, 255, 0.1)`,
-                          color: `#fff`,
-                          border: `none`,
-                          borderRadius: 12,
-                          fontFamily: I,
-                          fontWeight: 600,
-                          fontSize: 13,
-                          cursor: `pointer`
-                        },
-                        children: `RESET SIM`
+                      (0, x.jsxs)(`div`, {
+                        style: { display: `flex`, justifyContent: `space-between`, fontSize: 9.5, color: `#64748b`, fontFamily: `monospace`, marginTop: 4 },
+                        children: [(0, x.jsx)(`span`, { children: `0% (CLOSED // BLOWOUT RISK)` }), (0, x.jsx)(`span`, { children: `50%` }), (0, x.jsx)(`span`, { children: `100% (FULL RELIEF)` })]
                       })
                     ]
+                  }),
+
+                  // Real-time Physics Readouts Grid
+                  (0, x.jsxs)(`div`, {
+                    style: { display: `grid`, gridTemplateColumns: `1fr 1fr`, gap: 10 },
+                    children: [
+                      (0, x.jsxs)(`div`, {
+                        style: { background: `rgba(255,255,255,0.03)`, border: `1px solid rgba(255,255,255,0.06)`, borderRadius: 12, padding: 12 },
+                        children: [
+                          (0, x.jsx)(`div`, { style: { fontSize: 10, color: `#94a3b8`, fontFamily: I, fontWeight: 700 }, children: `FLUID VELOCITY` }),
+                          (0, x.jsxs)(`div`, { style: { fontSize: 18, fontFamily: `monospace`, fontWeight: 700, color: `#38bdf8`, marginTop: 2 }, children: [flowVelocity, ` m/s`] })
+                        ]
+                      }),
+                      (0, x.jsxs)(`div`, {
+                        style: { background: `rgba(255,255,255,0.03)`, border: `1px solid rgba(255,255,255,0.06)`, borderRadius: 12, padding: 12 },
+                        children: [
+                          (0, x.jsx)(`div`, { style: { fontSize: 10, color: `#94a3b8`, fontFamily: I, fontWeight: 700 }, children: `DISCHARGE FLOW` }),
+                          (0, x.jsxs)(`div`, { style: { fontSize: 18, fontFamily: `monospace`, fontWeight: 700, color: `#38bdf8`, marginTop: 2 }, children: [flowRate, ` L/s`] })
+                        ]
+                      }),
+                      (0, x.jsxs)(`div`, {
+                        style: { background: `rgba(255,255,255,0.03)`, border: `1px solid rgba(255,255,255,0.06)`, borderRadius: 12, padding: 12 },
+                        children: [
+                          (0, x.jsx)(`div`, { style: { fontSize: 10, color: `#94a3b8`, fontFamily: I, fontWeight: 700 }, children: `FLANGE STRESS` }),
+                          (0, x.jsxs)(`div`, { style: { fontSize: 18, fontFamily: `monospace`, fontWeight: 700, color: isBreach ? `#ef4444` : `#10b981`, marginTop: 2 }, children: [stressPercent, `%`] })
+                        ]
+                      }),
+                      (0, x.jsxs)(`div`, {
+                        style: { background: `rgba(255,255,255,0.03)`, border: `1px solid rgba(255,255,255,0.06)`, borderRadius: 12, padding: 12 },
+                        children: [
+                          (0, x.jsx)(`div`, { style: { fontSize: 10, color: `#94a3b8`, fontFamily: I, fontWeight: 700 }, children: `TRANSIENT WAVE C` }),
+                          (0, x.jsx)(`div`, { style: { fontSize: 18, fontFamily: `monospace`, fontWeight: 700, color: `#f59e0b`, marginTop: 2 }, children: `1,200 m/s` })
+                        ]
+                      })
+                    ]
+                  }),
+
+                  // Joukowsky Equation Box
+                  (0, x.jsxs)(`div`, {
+                    style: { background: `rgba(255, 105, 46, 0.08)`, border: `1px solid rgba(255, 105, 46, 0.2)`, borderRadius: 12, padding: `12px 14px` },
+                    children: [
+                      (0, x.jsx)(`div`, { style: { fontFamily: `monospace`, fontSize: 13, color: R, fontWeight: 700 }, children: `ΔP = ρ · c · Δv  (Joukowsky Transient)` }),
+                      (0, x.jsx)(`div`, { style: { fontSize: 10.5, color: `#cbd5e1`, marginTop: 4, lineHeight: 1.4 }, children: `Rapid valve closure or abrupt pump surge converts fluid kinetic energy into acoustic shock pressure.` })
+                    ]
+                  }),
+
+                  // Replan Trigger Button
+                  (0, x.jsx)(`button`, {
+                    onClick: () => animateTo(680, 55, 'replan'),
+                    style: {
+                      width: `100%`,
+                      padding: `14px 20px`,
+                      background: isBreach ? R : `#10b981`,
+                      color: `#fff`,
+                      border: `none`,
+                      borderRadius: 14,
+                      fontFamily: I,
+                      fontWeight: 800,
+                      fontSize: 14,
+                      cursor: `pointer`,
+                      letterSpacing: `0.05em`,
+                      boxShadow: isBreach ? `0 8px 24px rgba(255, 105, 46, 0.4)` : `0 8px 24px rgba(16, 185, 129, 0.3)`,
+                      transition: `all 0.3s ease`
+                    },
+                    children: isBreach ? `⚡ AUTONOMOUS REPLAN: MITIGATE SURGE` : `✔ REPLANNED SAFE TRAJECTORY ACTIVE`
                   })
                 ]
               }),
 
-              // Right: Live SVG Waveform & Readout
+              // Right Column: Dynamic Hydrodynamic Waveform & Flange Monitor
               (0, x.jsxs)(`div`, {
-                style: { display: `flex`, flexDirection: `column`, gap: 16 },
+                style: { display: `flex`, flexDirection: `column`, justifyContent: `space-between`, gap: 16 },
                 children: [
+                  // Top Pressure Header
                   (0, x.jsxs)(`div`, {
-                    style: {
-                      display: `flex`,
-                      justifyContent: `space-between`,
-                      alignItems: `baseline`,
-                      paddingBottom: 12,
-                      borderBottom: `1px solid ${BORDER_DARK}`
-                    },
+                    style: { display: `flex`, justifyContent: `space-between`, alignItems: `flex-end`, borderBottom: `1px solid rgba(255,255,255,0.08)`, paddingBottom: 12 },
                     children: [
                       (0, x.jsxs)(`div`, {
                         children: [
-                          (0, x.jsx)(`div`, { style: { fontFamily: I, fontSize: 11, color: `#98a2b3` }, children: `PEAK SURGE PRESSURE` }),
+                          (0, x.jsx)(`div`, { style: { fontFamily: I, fontSize: 11, color: `#98a2b3`, fontWeight: 700, letterSpacing: `0.05em` }, children: `CALCULATED PEAK SURGE` }),
                           (0, x.jsxs)(`div`, {
-                            style: { fontFamily: F, fontSize: 44, fontWeight: 700, color: isBreach ? `#ef4444` : `#10b981`, lineHeight: 1 },
-                            children: [calculatedPressure, ` bar`]
+                            style: { fontFamily: F, fontSize: 48, fontWeight: 700, color: isBreach ? `#ef4444` : `#10b981`, lineHeight: 1, marginTop: 4, transition: `color 0.3s ease` },
+                            children: [calculatedPressure, ` `, (0, x.jsx)(`span`, { style: { fontSize: 20, fontFamily: I, fontWeight: 600, color: `#98a2b3` }, children: `BAR` })]
                           })
                         ]
                       }),
                       (0, x.jsxs)(`div`, {
                         style: { textAlign: `right` },
                         children: [
-                          (0, x.jsx)(`div`, { style: { fontFamily: I, fontSize: 11, color: `#98a2b3` }, children: `FLANGE BURST LIMIT` }),
-                          (0, x.jsx)(`div`, { style: { fontFamily: I, fontSize: 20, fontWeight: 700, color: `#f87171` }, children: `8.0 bar` })
+                          (0, x.jsx)(`div`, { style: { fontFamily: I, fontSize: 11, color: `#98a2b3`, fontWeight: 700 }, children: `SAFETY LIMIT CEILING` }),
+                          (0, x.jsx)(`div`, { style: { fontFamily: `monospace`, fontSize: 22, fontWeight: 700, color: `#f87171`, marginTop: 4 }, children: `8.0 BAR` })
                         ]
                       })
                     ]
                   }),
 
-                  // SVG Curve
-                  (0, x.jsxs)(`svg`, {
-                    viewBox: `0 0 500 180`,
+                  // Dynamic Multi-Harmonic SVG Waveform
+                  (0, x.jsxs)(`div`, {
                     style: {
-                      width: `100%`,
-                      height: 160,
-                      background: `rgba(0, 0, 0, 0.4)`,
-                      borderRadius: 14,
-                      border: `1px solid ${BORDER_DARK}`
+                      position: `relative`,
+                      height: 200,
+                      background: `rgba(0,0,0,0.5)`,
+                      borderRadius: 16,
+                      border: isBreach ? `1px solid rgba(239, 68, 68, 0.3)` : `1px solid rgba(16, 185, 129, 0.3)`,
+                      overflow: `hidden`,
+                      padding: 10,
+                      boxSizing: `border-box`,
+                      display: `flex`,
+                      flexDirection: `column`,
+                      justifyContent: `center`,
+                      transition: `border-color 0.3s ease`
                     },
                     children: [
-                      (0, x.jsx)(`line`, { x1: 0, y1: 45, x2: 500, y2: 45, stroke: `rgba(239, 68, 68, 0.3)`, strokeDasharray: `4 4` }),
-                      (0, x.jsx)(`text`, { x: 490, y: 40, textAnchor: `end`, fill: `#ef4444`, fontSize: 10, fontFamily: `monospace`, children: `8.0 bar limit` }),
-                      (0, x.jsx)(`path`, {
-                        d: `M 0 140 Q 120 135 180 ${Math.max(15, 180 - (calculatedPressure / 10) * 160)} T 320 ${Math.max(40, 180 - (calculatedPressure / 10) * 110)} T 500 130`,
-                        fill: `none`,
-                        stroke: isBreach ? `#ef4444` : `#10b981`,
-                        strokeWidth: 3
+                      (0, x.jsxs)(`svg`, {
+                        viewBox: `0 0 500 180`,
+                        style: { width: `100%`, height: `100%`, overflow: `visible` },
+                        children: [
+                          // Defs for gradients
+                          (0, x.jsxs)(`defs`, {
+                            children: [
+                              (0, x.jsxs)(`linearGradient`, {
+                                id: `waveFillGrad`,
+                                x1: `0`,
+                                y1: `0`,
+                                x2: `0`,
+                                y2: `1`,
+                                children: [
+                                  (0, x.jsx)(`stop`, { offset: `0%`, stopColor: isBreach ? `#ef4444` : `#10b981`, stopOpacity: `0.4` }),
+                                  (0, x.jsx)(`stop`, { offset: `100%`, stopColor: isBreach ? `#ef4444` : `#10b981`, stopOpacity: `0.0` })
+                                ]
+                              })
+                            ]
+                          }),
+
+                          // Safety Threshold Line at 8.0 bar (y = 52)
+                          (0, x.jsx)(`line`, { x1: 0, y1: 52, x2: 500, y2: 52, stroke: `#ef4444`, strokeDasharray: `4 4`, strokeWidth: 1.5 }),
+                          (0, x.jsx)(`text`, { x: 490, y: 46, textAnchor: `end`, fill: `#ef4444`, fontSize: 10, fontFamily: `monospace`, fontWeight: 700, children: `8.0 BAR FLANGE BURST CEILING` }),
+
+                          // Background Grid Lines
+                          [80, 110, 140].map((yVal, gIdx) => (
+                            (0, x.jsx)(`line`, { key: gIdx, x1: 0, y1: yVal, x2: 500, y2: yVal, stroke: `rgba(255,255,255,0.05)`, strokeWidth: 1 })
+                          )),
+
+                          // Area fill under wave
+                          (0, x.jsx)(`path`, {
+                            d: `M 0 145 C 100 145, 140 ${Math.max(12, 175 - (calculatedPressure / 10) * 155)}, 200 ${Math.max(12, 175 - (calculatedPressure / 10) * 155)} S 320 145, 500 140 L 500 180 L 0 180 Z`,
+                            fill: `url(#waveFillGrad)`,
+                            style: { transition: `all 0.2s ease` }
+                          }),
+
+                          // Main Dynamic Wave Curve
+                          (0, x.jsx)(`path`, {
+                            d: `M 0 145 C 100 145, 140 ${Math.max(12, 175 - (calculatedPressure / 10) * 155)}, 200 ${Math.max(12, 175 - (calculatedPressure / 10) * 155)} S 320 145, 500 140`,
+                            fill: `none`,
+                            stroke: isBreach ? `#ef4444` : `#10b981`,
+                            strokeWidth: 3.5,
+                            style: { transition: `all 0.2s ease` }
+                          }),
+
+                          // Peak Pulse Point
+                          (0, x.jsx)(`circle`, {
+                            cx: 200,
+                            cy: Math.max(12, 175 - (calculatedPressure / 10) * 155),
+                            r: 5,
+                            fill: isBreach ? `#ef4444` : `#10b981`,
+                            style: { filter: `drop-shadow(0 0 8px ${isBreach ? '#ef4444' : '#10b981'})`, transition: `all 0.2s ease` }
+                          })
+                        ]
                       })
                     ]
                   }),
 
-                  // Status Alert
+                  // Status Alert Banner
                   (0, x.jsxs)(`div`, {
                     style: {
-                      padding: `12px 16px`,
-                      borderRadius: 12,
+                      padding: `14px 18px`,
+                      borderRadius: 14,
                       background: isBreach ? `rgba(239, 68, 68, 0.15)` : `rgba(16, 185, 129, 0.15)`,
-                      border: `1px solid ${isBreach ? `#ef4444` : `#10b981`}`,
+                      border: isBreach ? `1px solid rgba(239, 68, 68, 0.4)` : `1px solid rgba(16, 185, 129, 0.4)`,
                       display: `flex`,
                       alignItems: `center`,
-                      gap: 12
+                      gap: 12,
+                      transition: `all 0.3s ease`
                     },
                     children: [
-                      (0, x.jsx)(`span`, {
+                      (0, x.jsx)(`div`, {
                         style: {
                           width: 10,
                           height: 10,
                           borderRadius: `50%`,
                           background: isBreach ? `#ef4444` : `#10b981`,
+                          boxShadow: `0 0 10px ${isBreach ? '#ef4444' : '#10b981'}`,
                           flexShrink: 0
                         }
                       }),
-                      (0, x.jsx)(`span`, {
+                      (0, x.jsx)(`div`, {
                         style: {
                           fontFamily: I,
                           fontSize: 13,
                           fontWeight: 700,
-                          color: isBreach ? `#fca5a5` : `#6ee7b7`
+                          color: isBreach ? `#fca5a5` : `#6ee7b7`,
+                          lineHeight: 1.4
                         },
                         children: isBreach
-                          ? `CRITICAL BREACH: Surge exceeds pipe yield threshold (+${(calculatedPressure - 8.0).toFixed(1)} bar over limit)`
-                          : `VERIFIED SAFE: Staged ramp trajectory maintains flange safety`
+                          ? `CRITICAL BREACH: Surge exceeds 8.0 bar pipe yield threshold (+ ${(calculatedPressure - 8.0).toFixed(1)} bar over limit). Single-coil write blocked!`
+                          : `DETERMINISTIC SAFETY: Controlled 60s staged trajectory verified inside EPANET 2.2 hydrodynamic model. Safe to execute.`
                       })
                     ]
                   })
@@ -746,7 +871,6 @@ export function DigitalTwinSection() {
     ]
   });
 }
-
 // 4. Multi-Agent Bento Grid Component
 export function AgentBentoSection() {
   let [activeAgent, setActiveAgent] = (0, o.useState)(0);
@@ -1242,3 +1366,457 @@ export function HackathonTeamSection() {
     ]
   });
 }
+
+// ==========================================
+// CINEMATIC HORIZONTAL CARDS VISUALS (Ee)
+// ==========================================
+
+// 1. Field Copilot Radar & Spectral HUD Visual
+export function FieldCopilotVisual({ w, h }) {
+  let [angle, setAngle] = (0, o.useState)(0);
+
+  (0, o.useEffect)(() => {
+    let anim;
+    let tick = () => {
+      setAngle((a) => (a + 1.8) % 360);
+      anim = requestAnimationFrame(tick);
+    };
+    anim = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(anim);
+  }, []);
+
+  return (0, x.jsxs)(`div`, {
+    style: {
+      position: `absolute`,
+      inset: 0,
+      background: `radial-gradient(circle at 50% 50%, #151d2a 0%, #080b10 100%)`,
+      display: `flex`,
+      flexDirection: `column`,
+      justifyContent: `space-between`,
+      padding: 20,
+      boxSizing: `border-box`,
+      overflow: `hidden`
+    },
+    children: [
+      // Top status row
+      (0, x.jsxs)(`div`, {
+        style: { display: `flex`, justifyContent: `space-between`, alignItems: `center`, fontSize: 10, fontFamily: `monospace`, color: `#94a3b8` },
+        children: [
+          (0, x.jsxs)(`span`, { style: { display: `flex`, alignItems: `center`, gap: 6 }, children: [(0, x.jsx)(`span`, { style: { width: 6, height: 6, borderRadius: `50%`, background: R, boxShadow: `0 0 8px ${R}` } }), `RADAR // SECTOR 04`] }),
+          (0, x.jsx)(`span`, { style: { color: `#38bdf8`, fontWeight: 700 }, children: `45 TOPS NPU` })
+        ]
+      }),
+
+      // Center: Circular Radar Sweep
+      (0, x.jsxs)(`div`, {
+        style: { position: `relative`, width: Math.min(180, w * 0.45), height: Math.min(180, w * 0.45), margin: `0 auto` },
+        children: [
+          (0, x.jsxs)(`svg`, {
+            viewBox: `0 0 160 160`,
+            style: { width: `100%`, height: `100%` },
+            children: [
+              // Concentric radar rings
+              [25, 45, 65, 75].map((rVal, idx) => (
+                (0, x.jsx)(`circle`, { key: idx, cx: 80, cy: 80, r: rVal, fill: `none`, stroke: `rgba(56, 189, 248, 0.2)`, strokeWidth: 1, strokeDasharray: idx === 3 ? `3 3` : undefined })
+              )),
+              // Crosshairs
+              (0, x.jsx)(`line`, { x1: 5, y1: 80, x2: 155, y2: 80, stroke: `rgba(56, 189, 248, 0.15)`, strokeWidth: 1 }),
+              (0, x.jsx)(`line`, { x1: 80, y1: 5, x2: 80, y2: 155, stroke: `rgba(56, 189, 248, 0.15)`, strokeWidth: 1 }),
+
+              // Sweeping line
+              (0, x.jsx)(`line`, {
+                x1: 80,
+                y1: 80,
+                x2: 80 + 72 * Math.cos((angle * Math.PI) / 180),
+                y2: 80 + 72 * Math.sin((angle * Math.PI) / 180),
+                stroke: R,
+                strokeWidth: 2,
+                style: { filter: `drop-shadow(0 0 6px ${R})` }
+              }),
+
+              // Anomaly Blip
+              (0, x.jsx)(`circle`, {
+                cx: 105,
+                cy: 62,
+                r: 4,
+                fill: `#ef4444`,
+                style: { filter: `drop-shadow(0 0 6px #ef4444)` }
+              })
+            ]
+          }),
+          (0, x.jsx)(`div`, {
+            style: {
+              position: `absolute`,
+              bottom: 4,
+              left: `50%`,
+              transform: `translateX(-50%)`,
+              background: `rgba(239, 68, 68, 0.2)`,
+              border: `1px solid rgba(239, 68, 68, 0.4)`,
+              color: `#f87171`,
+              fontSize: 8.5,
+              fontFamily: `monospace`,
+              fontWeight: 700,
+              padding: `2px 6px`,
+              borderRadius: 4,
+              whiteSpace: `nowrap`
+            },
+            children: `8.9 URGENCY SPOOF DETECTED`
+          })
+        ]
+      }),
+
+      // Bottom: Acoustic Equalizer Bars
+      (0, x.jsxs)(`div`, {
+        style: { background: `rgba(0,0,0,0.4)`, borderRadius: 8, padding: 8, border: `1px solid rgba(255,255,255,0.06)` },
+        children: [
+          (0, x.jsxs)(`div`, {
+            style: { display: `flex`, justifyContent: `space-between`, fontSize: 8.5, fontFamily: `monospace`, color: `#cbd5e1`, marginBottom: 6 },
+            children: [(0, x.jsx)(`span`, { children: `VOICE CLONE SPECTRAL MATCH` }), (0, x.jsx)(`span`, { style: { color: `#f59e0b` }, children: `71% SIMILARITY` })]
+          }),
+          (0, x.jsx)(`div`, {
+            style: { display: `flex`, alignItems: `flex-end`, gap: 3, height: 26 },
+            children: [6, 14, 22, 10, 18, 26, 12, 20, 8, 24, 16, 10, 22, 14, 18, 8, 12, 16, 20, 10].map((hVal, idx) => (
+              (0, x.jsx)(`div`, {
+                key: idx,
+                style: {
+                  flex: 1,
+                  height: `${Math.max(4, (hVal + Math.sin(angle * 0.1 + idx) * 8))}px`,
+                  background: idx % 2 === 0 ? R : `#38bdf8`,
+                  borderRadius: 1,
+                  transition: `height 0.1s ease`
+                }
+              })
+            ))
+          })
+        ]
+      })
+    ]
+  });
+}
+
+// 2. Verification Pipeline Visual (Conduits & Nodes)
+export function VerificationPipelineVisual({ w, h }) {
+  let [activeNode, setActiveNode] = (0, o.useState)(0);
+
+  (0, o.useEffect)(() => {
+    let t = setInterval(() => {
+      setActiveNode((n) => (n + 1) % 5);
+    }, 1200);
+    return () => clearInterval(t);
+  }, []);
+
+  const stages = [
+    { name: `INGEST`, sub: `Voice Dispatch`, status: `Intercepted` },
+    { name: `SLM 3B`, sub: `Snapdragon NPU`, status: `18ms Decompile` },
+    { name: `MODBUS`, sub: `SCADA Gate`, status: `CRC Valid` },
+    { name: `EPANET`, sub: `Fluid Dynamic Twin`, status: `Surge Reject` },
+    { name: `TEE`, sub: `Biometric Enclave`, status: `Signed Safe` }
+  ];
+
+  return (0, x.jsxs)(`div`, {
+    style: {
+      position: `absolute`,
+      inset: 0,
+      background: `#0a0d14`,
+      padding: 16,
+      boxSizing: `border-box`,
+      display: `flex`,
+      flexDirection: `column`,
+      justifyContent: `space-between`
+    },
+    children: [
+      (0, x.jsxs)(`div`, {
+        style: { display: `flex`, justifyContent: `space-between`, alignItems: `center`, fontSize: 10, fontFamily: `monospace`, color: `#94a3b8` },
+        children: [
+          (0, x.jsx)(`span`, { children: `CROSS-DOMAIN VERIFICATION BARRIER` }),
+          (0, x.jsxs)(`span`, { style: { color: R, fontWeight: 700 }, children: [`STAGE 0`, activeNode + 1, `/05`] })
+        ]
+      }),
+
+      // 5 Nodes Connected by Conduit
+      (0, x.jsx)(`div`, {
+        style: { display: `flex`, flexDirection: `column`, gap: 8, margin: `8px 0` },
+        children: stages.map((s, idx) => {
+          let isActive = activeNode === idx;
+          return (0, x.jsxs)(`div`, {
+            key: idx,
+            style: {
+              display: `flex`,
+              alignItems: `center`,
+              justifyContent: `space-between`,
+              padding: `6px 12px`,
+              borderRadius: 8,
+              background: isActive ? `rgba(255, 105, 46, 0.15)` : `rgba(255,255,255,0.03)`,
+              border: isActive ? `1px solid ${R}` : `1px solid rgba(255,255,255,0.05)`,
+              transition: `all 0.3s ease`
+            },
+            children: [
+              (0, x.jsxs)(`div`, {
+                style: { display: `flex`, alignItems: `center`, gap: 8 },
+                children: [
+                  (0, x.jsx)(`div`, {
+                    style: {
+                      width: 8,
+                      height: 8,
+                      borderRadius: `50%`,
+                      background: isActive ? R : `#475467`,
+                      boxShadow: isActive ? `0 0 10px ${R}` : `none`
+                    }
+                  }),
+                  (0, x.jsxs)(`div`, {
+                    children: [
+                      (0, x.jsx)(`div`, { style: { fontFamily: `monospace`, fontSize: 11, fontWeight: 700, color: isActive ? `#fff` : `#94a3b8` }, children: s.name }),
+                      (0, x.jsx)(`div`, { style: { fontSize: 8.5, color: `#64748b` }, children: s.sub })
+                    ]
+                  })
+                ]
+              }),
+              (0, x.jsx)(`span`, {
+                style: {
+                  fontFamily: `monospace`,
+                  fontSize: 9,
+                  fontWeight: 700,
+                  color: idx === 3 ? `#ef4444` : idx === 4 ? `#10b981` : `#38bdf8`
+                },
+                children: s.status
+              })
+            ]
+          });
+        })
+      }),
+
+      // Bottom Execution Terminal Log
+      (0, x.jsxs)(`div`, {
+        style: { background: `rgba(0,0,0,0.6)`, borderRadius: 6, padding: `6px 10px`, fontFamily: `monospace`, fontSize: 8.5, color: `#38bdf8` },
+        children: [
+          (0, x.jsx)(`div`, { children: `>> [EXEC] WRITE_HOLDING_REGISTER(40012, 850)` }),
+          (0, x.jsx)(`div`, { style: { color: `#34d399` }, children: `>> [VERDICT] DETERMINISTIC INTERVENTION READY` })
+        ]
+      })
+    ]
+  });
+}
+
+// 3. Latency Triage Odometer Visual
+export function LatencyTriageVisual({ w, h }) {
+  let [count, setCount] = (0, o.useState)(1.84);
+
+  (0, o.useEffect)(() => {
+    let t = setInterval(() => {
+      setCount((1.75 + Math.random() * 0.15).toFixed(2));
+    }, 1800);
+    return () => clearInterval(t);
+  }, []);
+
+  return (0, x.jsxs)(`div`, {
+    style: {
+      position: `absolute`,
+      inset: 0,
+      background: `#0a0d14`,
+      padding: 20,
+      boxSizing: `border-box`,
+      display: `flex`,
+      flexDirection: `column`,
+      justifyContent: `space-between`
+    },
+    children: [
+      (0, x.jsxs)(`div`, {
+        style: { display: `flex`, justifyContent: `space-between`, alignItems: `center`, fontSize: 10, fontFamily: `monospace`, color: `#94a3b8` },
+        children: [
+          (0, x.jsx)(`span`, { children: `END-TO-END TRIAGE LATENCY` }),
+          (0, x.jsx)(`span`, { style: { color: `#10b981`, fontWeight: 700 }, children: `TARGET: < 2.0s` })
+        ]
+      }),
+
+      // Giant Odometer
+      (0, x.jsxs)(`div`, {
+        style: { textAlign: `center`, margin: `10px 0` },
+        children: [
+          (0, x.jsxs)(`div`, {
+            style: { fontFamily: F, fontSize: 56, fontWeight: 700, color: R, lineHeight: 1 },
+            children: [count, (0, x.jsx)(`span`, { style: { fontSize: 24, fontFamily: I, color: `#fff` }, children: `s` })]
+          }),
+          (0, x.jsx)(`div`, { style: { fontFamily: `monospace`, fontSize: 9.5, color: `#94a3b8`, marginTop: 4 }, children: `AIR-GAPPED TOTAL EXECUTION TIME` })
+        ]
+      }),
+
+      // 4 Precision Micro-Breakdowns
+      (0, x.jsxs)(`div`, {
+        style: { display: `flex`, flexDirection: `column`, gap: 6 },
+        children: [
+          { name: `Acoustic Forensics (Whisper-v3)`, time: `18ms`, pct: `18%`, color: `#38bdf8` },
+          { name: `Modbus CRC Formal Check (Z3)`, time: `2ms`, pct: `4%`, color: `#34d399` },
+          { name: `EPANET Fluid Twin (Runge-Kutta)`, time: `142ms`, pct: `72%`, color: R },
+          { name: `Hardware Enclave Biometric (TEE)`, time: `12ms`, pct: `12%`, color: `#a855f7` }
+        ].map((item, idx) => (
+          (0, x.jsxs)(`div`, {
+            key: idx,
+            children: [
+              (0, x.jsxs)(`div`, {
+                style: { display: `flex`, justifyContent: `space-between`, fontSize: 8.5, fontFamily: `monospace`, color: `#cbd5e1`, marginBottom: 2 },
+                children: [(0, x.jsx)(`span`, { children: item.name }), (0, x.jsx)(`span`, { style: { color: item.color, fontWeight: 700 }, children: item.time })]
+              }),
+              (0, x.jsx)(`div`, {
+                style: { width: `100%`, height: 3, background: `rgba(255,255,255,0.08)`, borderRadius: 2, overflow: `hidden` },
+                children: (0, x.jsx)(`div`, { style: { width: item.pct, height: `100%`, background: item.color, borderRadius: 2 } })
+              })
+            ]
+          })
+        ))
+      })
+    ]
+  });
+}
+
+// 4. Industrial Protocol Matrix Visual
+export function IndustrialStackVisual({ w, h }) {
+  const protocols = [
+    { name: `MODBUS TCP`, sub: `Port 502 // Holding Regs`, status: `ONLINE`, color: `#10b981` },
+    { name: `OPENPLC`, sub: `IEC 61131-3 Ladder`, status: `ACTIVE`, color: `#38bdf8` },
+    { name: `EPANET 2.2`, sub: `Hydraulic Twin Solver`, status: `READY`, color: R },
+    { name: `SNAPDRAGON`, sub: `8 Elite NPU 45 TOPS`, status: `LOADED`, color: `#a855f7` },
+    { name: `VIVO OFFICE`, sub: `Edge Zero-Friction Bridge`, status: `LINKED`, color: `#f59e0b` },
+    { name: `ORIGINOS 5`, sub: `TEE Biometric Enclave`, status: `LOCKED`, color: `#10b981` }
+  ];
+
+  return (0, x.jsxs)(`div`, {
+    style: {
+      position: `absolute`,
+      inset: 0,
+      background: `#0a0d14`,
+      padding: 16,
+      boxSizing: `border-box`,
+      display: `flex`,
+      flexDirection: `column`,
+      justifyContent: `space-between`
+    },
+    children: [
+      (0, x.jsxs)(`div`, {
+        style: { display: `flex`, justifyContent: `space-between`, alignItems: `center`, fontSize: 10, fontFamily: `monospace`, color: `#94a3b8` },
+        children: [
+          (0, x.jsx)(`span`, { children: `HARDWARE-IN-THE-LOOP ECOSYSTEM` }),
+          (0, x.jsx)(`span`, { style: { color: `#34d399`, fontWeight: 700 }, children: `ZERO BYPASS` })
+        ]
+      }),
+
+      // 6-Chip Matrix Grid
+      (0, x.jsx)(`div`, {
+        style: { display: `grid`, gridTemplateColumns: `1fr 1fr`, gap: 8, margin: `10px 0` },
+        children: protocols.map((p, idx) => (
+          (0, x.jsxs)(`div`, {
+            key: idx,
+            style: {
+              background: `rgba(255,255,255,0.03)`,
+              border: `1px solid rgba(255,255,255,0.06)`,
+              borderRadius: 8,
+              padding: 8,
+              display: `flex`,
+              flexDirection: `column`,
+              justifyContent: `space-between`
+            },
+            children: [
+              (0, x.jsxs)(`div`, {
+                style: { display: `flex`, justifyContent: `space-between`, alignItems: `center` },
+                children: [
+                  (0, x.jsx)(`span`, { style: { fontFamily: `monospace`, fontSize: 10, fontWeight: 700, color: `#fff` }, children: p.name }),
+                  (0, x.jsx)(`span`, { style: { width: 5, height: 5, borderRadius: `50%`, background: p.color, boxShadow: `0 0 6px ${p.color}` } })
+                ]
+              }),
+              (0, x.jsx)(`div`, { style: { fontSize: 7.5, color: `#94a3b8`, marginTop: 3 }, children: p.sub })
+            ]
+          })
+        ))
+      }),
+
+      // Bottom Telemetry Strip
+      (0, x.jsxs)(`div`, {
+        style: { background: `rgba(255, 105, 46, 0.08)`, border: `1px solid rgba(255, 105, 46, 0.2)`, borderRadius: 6, padding: `6px 10px`, display: `flex`, justifyContent: `space-between`, fontSize: 8.5, fontFamily: `monospace` },
+        children: [
+          (0, x.jsx)(`span`, { style: { color: `#cbd5e1` }, children: `PLC LATENCY: 0.8ms` }),
+          (0, x.jsx)(`span`, { style: { color: R, fontWeight: 700 }, children: `MODBUS SYNC: 100%` })
+        ]
+      })
+    ]
+  });
+}
+
+// 5. Dynamic Twin Water Hammer Simulation Visual
+export function DynamicTwinVisual({ w, h }) {
+  return (0, x.jsxs)(`div`, {
+    style: {
+      position: `absolute`,
+      inset: 0,
+      background: `radial-gradient(circle at 50% 50%, #171d2b 0%, #080b10 100%)`,
+      padding: 16,
+      boxSizing: `border-box`,
+      display: `flex`,
+      flexDirection: `column`,
+      justifyContent: `space-between`
+    },
+    children: [
+      (0, x.jsxs)(`div`, {
+        style: { display: `flex`, justifyContent: `space-between`, alignItems: `center`, fontSize: 10, fontFamily: `monospace`, color: `#94a3b8` },
+        children: [
+          (0, x.jsx)(`span`, { children: `TRANSIENT SURGE VS SAFE REPLAN` }),
+          (0, x.jsx)(`span`, { style: { color: `#10b981`, fontWeight: 700 }, children: `EPANET / WNTR` })
+        ]
+      }),
+
+      // Waveform Display
+      (0, x.jsxs)(`div`, {
+        style: { height: 130, background: `rgba(0,0,0,0.5)`, borderRadius: 10, border: `1px solid rgba(255,255,255,0.06)`, padding: 8, position: `relative` },
+        children: [
+          (0, x.jsxs)(`svg`, {
+            viewBox: `0 0 240 100`,
+            style: { width: `100%`, height: `100%` },
+            children: [
+              // Safety limit line
+              (0, x.jsx)(`line`, { x1: 0, y1: 35, x2: 240, y2: 35, stroke: `#ef4444`, strokeDasharray: `3 3`, strokeWidth: 1 }),
+              (0, x.jsx)(`text`, { x: 235, y: 30, textAnchor: `end`, fill: `#ef4444`, fontSize: 7, fontFamily: `monospace`, children: `8.0 BAR LIMIT` }),
+
+              // Catastrophic spike curve
+              (0, x.jsx)(`path`, {
+                d: `M 0 80 Q 50 80 80 10 T 130 75 T 240 78`,
+                fill: `none`,
+                stroke: `#ef4444`,
+                strokeWidth: 2,
+                style: { filter: `drop-shadow(0 0 4px #ef4444)` }
+              }),
+
+              // Safe replanned curve
+              (0, x.jsx)(`path`, {
+                d: `M 0 80 Q 70 80 110 50 T 170 52 T 240 54`,
+                fill: `none`,
+                stroke: `#10b981`,
+                strokeWidth: 2.5,
+                style: { filter: `drop-shadow(0 0 4px #10b981)` }
+              })
+            ]
+          }),
+          (0, x.jsxs)(`div`, {
+            style: { position: `absolute`, top: 8, left: 12, fontSize: 7.5, fontFamily: `monospace` },
+            children: [
+              (0, x.jsx)(`div`, { style: { color: `#ef4444` }, children: `-- UNVERIFIED: 11.4 BAR (BURST)` }),
+              (0, x.jsx)(`div`, { style: { color: `#10b981` }, children: `-- REPLANNED: 7.4 BAR (SAFE)` })
+            ]
+          })
+        ]
+      }),
+
+      // Bottom Status Pill
+      (0, x.jsxs)(`div`, {
+        style: { background: `rgba(16, 185, 129, 0.12)`, border: `1px solid rgba(16, 185, 129, 0.3)`, borderRadius: 6, padding: `6px 10px`, display: `flex`, justifyContent: `space-between`, alignItems: `center` },
+        children: [
+          (0, x.jsx)(`span`, { style: { fontSize: 8.5, fontFamily: `monospace`, color: `#34d399`, fontWeight: 700 }, children: `✔ 60s STAGED VALVE DEVIATION COMMITTED` }),
+          (0, x.jsx)(`span`, { style: { fontSize: 8.5, fontFamily: `monospace`, color: `#fff` }, children: `ZERO SURGE` })
+        ]
+      })
+    ]
+  });
+}
+
+// ==========================================
+// CINEMATIC HORIZONTAL CARDS VISUALS (Ee)
+// ==========================================
+
+// 1. Field Copilot Radar & Spectral HUD Visual
