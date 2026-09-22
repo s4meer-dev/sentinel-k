@@ -1067,181 +1067,341 @@ export function DigitalTwinSection() {
 }
 
 
-// 4. Multi-Agent Bento Grid Component
+// 4. Multi-Agent Editorial Showcase & Live NPU Execution Stage
 export function AgentBentoSection() {
   let [activeAgent, setActiveAgent] = (0, o.useState)(0);
 
   const agents = [
     {
+      id: `01`,
       role: `Acoustic Forensics`,
       engine: `Whisper-v3 + Silero VAD`,
       target: `Snapdragon NPU Hexagon DSP`,
       latency: `142ms`,
       desc: `Triage dispatcher voice feeds, radio calls, and phone instructions. Identifies deepfake voice cloning, artificial cadence, and panic markers.`,
-      status: `ACTIVE`
+      status: `ACTIVE`,
+      trace: [
+        `[HEXAGON_DSP] Loading quantized Whisper-v3-Turbo INT4 weights (45 TOPS)`,
+        `[SILERO_VAD] Spectral jitter anomaly: 98.4% synthetic voice probability`,
+        `[VERDICT] Flagging emergency dispatch as adversarial audio spoofing`
+      ],
+      metricLabel: `SPECTRAL AUTHENTICITY`,
+      metricValue: `99.4% ACCURACY`
     },
     {
+      id: `02`,
       role: `SCADA Sentinel`,
       engine: `Z3 SMT Formal Prover`,
       target: `OpenPLC v3 / Modbus TCP`,
       latency: `48ms`,
       desc: `Decompiles operator commands into target PLC holding registers (%QW104). Formally verifies safety boundaries and interlocks before single-coil write.`,
-      status: `VALIDATED`
+      status: `VALIDATED`,
+      trace: [
+        `[MODBUS_DECOMPILER] Target: Function Code 0x06 -> Register %QW104 (1200 RPM)`,
+        `[Z3_PROVER] Evaluating constraint: (RPM <= 850) OR (PRV_02_OPEN >= 40%)`,
+        `[VERDICT] Formal safety invariant violated -> Blocking direct write`
+      ],
+      metricLabel: `REGISTER INVARIANTS`,
+      metricValue: `100% DETERMINISTIC`
     },
     {
+      id: `03`,
       role: `Hydraulic Twin`,
       engine: `EPANET 2.2 / WNTR`,
       target: `Physical Consequence Engine`,
       latency: `185ms`,
       desc: `Executes 4th-order Runge-Kutta simulation of fluid velocity and pressure heads. Forecasts water hammer shockwaves before valves actuate.`,
-      status: `ONLINE`
+      status: `ONLINE`,
+      trace: [
+        `[EPANET_SOLVER] Initializing 60-second lookahead transient matrix`,
+        `[JOUKOWSKY_SIM] ΔP = ρ · c · Δv -> Peak transient head: 11.4 BAR at J-104`,
+        `[VERDICT] Exceeds 8.0 BAR flange burst ceiling -> Hard Interlock Triggered`
+      ],
+      metricLabel: `TRANSIENT LOOKAHEAD`,
+      metricValue: `60s HORIZON`
     },
     {
+      id: `04`,
       role: `Swarm Planner`,
       engine: `LangGraph Multi-Agent`,
       target: `Staged Ramp Engine`,
       latency: `210ms`,
       desc: `When an instruction is physically dangerous, generates safe alternative ramp schedules (e.g. 45-second stepped valve opening).`,
-      status: `READY`
+      status: `READY`,
+      trace: [
+        `[SWARM_SYNTHESIS] Generating counterfactual safe actuation trajectory`,
+        `[RAMP_SCHEDULE] Step 1: Open PRV-02 to 45% -> Step 2: Ramp Pump 04 to 680 RPM`,
+        `[VERDICT] Secondary EPANET pass verified at 7.4 BAR peak pressure`
+      ],
+      metricLabel: `SAFE REPLANNING`,
+      metricValue: `7.4 BAR BOUNDED`
     },
     {
+      id: `05`,
       role: `Sovereign Gatekeeper`,
       engine: `Android TEE / TrustZone`,
       target: `Hardware Biometric Enclave`,
       latency: `32ms`,
       desc: `Requires physical biometric operator sign-off before releasing signed ED25519 execution tokens to the control network.`,
-      status: `ENFORCED`
+      status: `ENFORCED`,
+      trace: [
+        `[ANDROID_TEE] Awaiting physical Ultrasonic Fingerprint attestation`,
+        `[CRYPTO_ENCLAVE] Signing replanned Modbus frame with hardware ED25519 key`,
+        `[VERDICT] Zero-cloud sovereign token dispatched to OpenPLC gateway`
+      ],
+      metricLabel: `HARDWARE ATTESTATION`,
+      metricValue: `ED25519 SIGNED`
     }
   ];
+
+  const current = agents[activeAgent];
 
   return (0, x.jsxs)(`section`, {
     id: `agents`,
     "data-section": `agents`,
-    style: { background: `#f2f3f5`, paddingBottom: 80 },
+    style: { background: `#f5f3ee`, paddingBottom: 104 },
     children: [
       (0, x.jsx)(Bridge, { number: `06`, tag: `DISTRIBUTED AGENTS // SNAPDRAGON NPU ORCHESTRATION` }),
       (0, x.jsxs)(`div`, {
         style: { maxWidth: 1280, margin: `0 auto`, padding: `0 32px` },
         children: [
+          // Editorial Split Header
           (0, x.jsxs)(`div`, {
-            style: { textAlign: `center`, margin: `24px 0 48px` },
+            style: {
+              display: `grid`,
+              gridTemplateColumns: `repeat(auto-fit, minmax(320px, 1fr))`,
+              gap: 32,
+              alignItems: `end`,
+              margin: `28px 0 56px`,
+              paddingBottom: 32,
+              borderBottom: `1px solid rgba(24,29,39,0.1)`
+            },
             children: [
-              (0, x.jsx)(`h2`, {
-                style: {
-                  fontFamily: F,
-                  fontSize: `clamp(36px, 5vw, 64px)`,
-                  fontWeight: 700,
-                  color: V,
-                  letterSpacing: `-0.03em`,
-                  lineHeight: 1.05,
-                  margin: `0 0 16px`
-                },
-                children: `Five Specialized Agents. Zero Single Point of Failure.`
+              (0, x.jsxs)(`div`, {
+                children: [
+                  (0, x.jsx)(`div`, {
+                    style: { fontFamily: `monospace`, fontSize: 11, fontWeight: 700, color: R, letterSpacing: `0.14em`, marginBottom: 14, textTransform: `uppercase` },
+                    children: `// MULTI-AGENT SWARM ARCHITECTURE`
+                  }),
+                  (0, x.jsx)(`h2`, {
+                    style: {
+                      fontFamily: F,
+                      fontSize: `clamp(38px, 5vw, 68px)`,
+                      fontWeight: 700,
+                      color: V,
+                      letterSpacing: `-0.035em`,
+                      lineHeight: 1.02,
+                      margin: 0
+                    },
+                    children: `Five Specialized Agents. Zero Single Point of Failure.`
+                  })
+                ]
               }),
               (0, x.jsx)(`p`, {
                 style: {
                   fontFamily: L,
                   fontSize: 18,
                   color: `#535862`,
-                  maxWidth: 680,
-                  margin: `0 auto`,
-                  lineHeight: 1.6
+                  maxWidth: 520,
+                  margin: 0,
+                  lineHeight: 1.65
                 },
-                children: `Sentinel-K does not rely on a single hallucinating LLM. Five specialized edge agents run asynchronously across on-device NPU cores and air-gapped simulation nodes.`
+                children: `Sentinel-K never relies on a single hallucinating LLM. Five deterministic edge agents execute asynchronously across on-device Snapdragon NPU cores and air-gapped physical simulation nodes.`
               })
             ]
           }),
 
-          // Bento Grid
-          (0, x.jsx)(`div`, {
+          // Asymmetric Editorial Composition: Left Interactive Index + Right Live Enclave Inspector
+          (0, x.jsxs)(`div`, {
             style: {
               display: `grid`,
-              gridTemplateColumns: `repeat(auto-fit, minmax(280px, 1fr))`,
-              gap: 20
+              gridTemplateColumns: `repeat(auto-fit, minmax(340px, 1fr))`,
+              gap: 32,
+              alignItems: `stretch`
             },
-            children: agents.map((a, i) => (
+            children: [
+              // Left Column: Numbered Editorial Agent Rows
+              (0, x.jsx)(`div`, {
+                style: { display: `flex`, flexDirection: `column`, gap: 12 },
+                children: agents.map((a, i) => {
+                  const isSelected = activeAgent === i;
+                  return (0, x.jsxs)(`div`, {
+                    key: i,
+                    "data-cursor": `card`,
+                    "data-cursor-text": `INSPECT`,
+                    onClick: () => setActiveAgent(i),
+                    onMouseEnter: () => setActiveAgent(i),
+                    style: {
+                      background: isSelected ? V : `#fff`,
+                      color: isSelected ? `#fff` : V,
+                      border: `1px solid ${isSelected ? R : `rgba(24,29,39,0.08)`}`,
+                      borderRadius: 20,
+                      padding: `22px 26px`,
+                      cursor: `pointer`,
+                      transition: `all 0.32s cubic-bezier(0.16, 1, 0.3, 1)`,
+                      display: `flex`,
+                      alignItems: `center`,
+                      justifyContent: `space-between`,
+                      gap: 16,
+                      boxShadow: isSelected ? `0 20px 44px rgba(10,13,18,0.18)` : `0 2px 8px rgba(0,0,0,0.02)`,
+                      transform: isSelected ? `translateX(6px)` : `translateX(0)`
+                    },
+                    children: [
+                      (0, x.jsxs)(`div`, {
+                        style: { display: `flex`, alignItems: `center`, gap: 18 },
+                        children: [
+                          (0, x.jsx)(`span`, {
+                            style: {
+                              fontFamily: `monospace`,
+                              fontSize: 12,
+                              fontWeight: 800,
+                              color: isSelected ? `#fff` : R,
+                              background: isSelected ? R : `rgba(217, 83, 35, 0.1)`,
+                              padding: `6px 10px`,
+                              borderRadius: 8
+                            },
+                            children: a.id
+                          }),
+                          (0, x.jsxs)(`div`, {
+                            children: [
+                              (0, x.jsx)(`h3`, {
+                                style: {
+                                  fontFamily: F,
+                                  fontSize: 21,
+                                  fontWeight: 700,
+                                  margin: `0 0 4px`,
+                                  letterSpacing: `-0.02em`
+                                },
+                                children: a.role
+                              }),
+                              (0, x.jsx)(`div`, {
+                                style: {
+                                  fontFamily: `monospace`,
+                                  fontSize: 11.5,
+                                  color: isSelected ? `#94a3b8` : `#64748b`
+                                },
+                                children: `${a.engine}  •  ${a.target}`
+                              })
+                            ]
+                          })
+                        ]
+                      }),
+                      (0, x.jsxs)(`div`, {
+                        style: { textAlign: `right`, flexShrink: 0 },
+                        children: [
+                          (0, x.jsx)(`div`, {
+                            style: { fontFamily: `monospace`, fontSize: 13, fontWeight: 800, color: isSelected ? `#10b981` : V },
+                            children: a.latency
+                          }),
+                          (0, x.jsx)(`div`, {
+                            style: { fontFamily: `monospace`, fontSize: 10, color: R, fontWeight: 700, letterSpacing: `0.06em` },
+                            children: a.status
+                          })
+                        ]
+                      })
+                    ]
+                  });
+                })
+              }),
+
+              // Right Column: Deep-Inspection Telemetry Dossier
               (0, x.jsxs)(`div`, {
-                key: i,
-                onClick: () => setActiveAgent(i),
                 style: {
-                  background: activeAgent === i ? V : W_CARD,
-                  color: activeAgent === i ? `#fff` : V,
-                  border: `1px solid ${activeAgent === i ? R : BORDER_LIGHT}`,
-                  borderRadius: 20,
-                  padding: 28,
-                  cursor: `pointer`,
-                  transition: `all 0.3s cubic-bezier(0.16, 1, 0.3, 1)`,
+                  background: V,
+                  color: `#fff`,
+                  borderRadius: 24,
+                  padding: `clamp(28px, 4vw, 44px)`,
                   display: `flex`,
                   flexDirection: `column`,
                   justifyContent: `space-between`,
-                  boxShadow: activeAgent === i ? `0 20px 48px rgba(0,0,0,0.2)` : `0 4px 16px rgba(0,0,0,0.03)`
+                  border: `1px solid rgba(255,255,255,0.08)`,
+                  boxShadow: `0 28px 68px rgba(10,13,18,0.22)`,
+                  position: `relative`,
+                  overflow: `hidden`
                 },
                 children: [
                   (0, x.jsxs)(`div`, {
                     children: [
                       (0, x.jsxs)(`div`, {
-                        style: { display: `flex`, justifyContent: `space-between`, alignItems: `center`, marginBottom: 16 },
+                        style: { display: `flex`, justifyContent: `space-between`, alignItems: `center`, marginBottom: 24, paddingBottom: 16, borderBottom: `1px solid rgba(255,255,255,0.08)` },
                         children: [
-                          (0, x.jsx)(`span`, {
-                            style: {
-                              fontFamily: `monospace`,
-                              fontSize: 11,
-                              fontWeight: 700,
-                              color: R,
-                              background: `rgba(255, 105, 46, 0.1)`,
-                              padding: `4px 8px`,
-                              borderRadius: 6
-                            },
-                            children: `AGENT 0${i + 1}`
+                          (0, x.jsxs)(`div`, {
+                            style: { display: `flex`, alignItems: `center`, gap: 10 },
+                            children: [
+                              (0, x.jsx)(`span`, { style: { width: 8, height: 8, borderRadius: `50%`, background: `#10b981`, boxShadow: `0 0 10px #10b981` } }),
+                              (0, x.jsxs)(`span`, { style: { fontFamily: `monospace`, fontSize: 11, color: `#94a3b8`, letterSpacing: `0.1em` }, children: [`AGENT NODE // `, current.id, ` OF 05`] })
+                            ]
                           }),
-                          (0, x.jsxs)(`span`, {
-                            style: { fontFamily: I, fontSize: 11, color: `#98a2b3` },
-                            children: [`LATENCY: `, (0, x.jsx)(`strong`, { style: { color: activeAgent === i ? `#fff` : V }, children: a.latency })]
+                          (0, x.jsx)(`span`, {
+                            style: { fontFamily: `monospace`, fontSize: 11, color: R, background: `rgba(217,83,35,0.14)`, padding: `4px 10px`, borderRadius: 100, fontWeight: 700 },
+                            children: `SLA LATENCY: ${current.latency}`
                           })
                         ]
                       }),
+
                       (0, x.jsx)(`h3`, {
-                        style: {
-                          fontFamily: F,
-                          fontSize: 22,
-                          fontWeight: 700,
-                          margin: `0 0 8px`,
-                          lineHeight: 1.2
-                        },
-                        children: a.role
+                        style: { fontFamily: F, fontSize: `clamp(28px, 3.5vw, 40px)`, fontWeight: 700, margin: `0 0 14px`, letterSpacing: `-0.025em` },
+                        children: current.role
                       }),
                       (0, x.jsx)(`p`, {
+                        style: { fontFamily: L, fontSize: 16.5, color: `#cbd5e1`, lineHeight: 1.65, margin: `0 0 28px` },
+                        children: current.desc
+                      }),
+
+                      // Live NPU / Enclave Execution Trace Terminal
+                      (0, x.jsxs)(`div`, {
                         style: {
-                          fontFamily: L,
-                          fontSize: 14,
-                          color: activeAgent === i ? `#98a2b3` : `#535862`,
-                          lineHeight: 1.5,
-                          margin: 0
+                          background: `rgba(0,0,0,0.45)`,
+                          border: `1px solid rgba(255,255,255,0.08)`,
+                          borderRadius: 16,
+                          padding: 20,
+                          fontFamily: `monospace`,
+                          fontSize: 12,
+                          lineHeight: 1.75,
+                          marginBottom: 24
                         },
-                        children: a.desc
+                        children: [
+                          (0, x.jsx)(`div`, { style: { color: `#64748b`, fontSize: 10.5, marginBottom: 10, letterSpacing: `0.08em` }, children: `// LIVE ENCLAVE EXECUTION TRACE` }),
+                          current.trace.map((line, idx) => (
+                            (0, x.jsxs)(`div`, {
+                              key: idx,
+                              style: { color: idx === 2 ? `#10b981` : `#e2e8f0`, marginBottom: idx < 2 ? 6 : 0 },
+                              children: [(0, x.jsx)(`span`, { style: { color: R, marginRight: 8 }, children: `>` }), line]
+                            })
+                          ))
+                        ]
                       })
                     ]
                   }),
 
+                  // Bottom Hardware Spec Strip
                   (0, x.jsxs)(`div`, {
                     style: {
-                      marginTop: 24,
-                      paddingTop: 16,
-                      borderTop: `1px solid ${activeAgent === i ? BORDER_DARK : BORDER_LIGHT}`,
-                      display: `flex`,
-                      justifyContent: `space-between`,
-                      alignItems: `center`,
-                      fontFamily: I,
-                      fontSize: 12
+                      display: `grid`,
+                      gridTemplateColumns: `1fr 1fr`,
+                      gap: 12,
+                      paddingTop: 18,
+                      borderTop: `1px solid rgba(255,255,255,0.08)`
                     },
                     children: [
-                      (0, x.jsx)(`span`, { style: { color: `#98a2b3` }, children: a.engine }),
-                      (0, x.jsx)(`span`, { style: { color: R, fontWeight: 700 }, children: a.status })
+                      (0, x.jsxs)(`div`, {
+                        children: [
+                          (0, x.jsx)(`div`, { style: { fontFamily: `monospace`, fontSize: 10, color: `#64748b`, textTransform: `uppercase` }, children: `COMPUTE TARGET` }),
+                          (0, x.jsx)(`div`, { style: { fontFamily: `monospace`, fontSize: 13, fontWeight: 700, color: `#fff`, marginTop: 3 }, children: current.target })
+                        ]
+                      }),
+                      (0, x.jsxs)(`div`, {
+                        style: { textAlign: `right` },
+                        children: [
+                          (0, x.jsx)(`div`, { style: { fontFamily: `monospace`, fontSize: 10, color: `#64748b`, textTransform: `uppercase` }, children: current.metricLabel }),
+                          (0, x.jsx)(`div`, { style: { fontFamily: `monospace`, fontSize: 13, fontWeight: 700, color: `#10b981`, marginTop: 3 }, children: current.metricValue })
+                        ]
+                      })
                     ]
                   })
                 ]
               })
-            ))
+            ]
           })
         ]
       })
@@ -1249,104 +1409,176 @@ export function AgentBentoSection() {
   });
 }
 
-// 5. 10-Step Incident Playbook: "The Friday Surge Attack"
+// 5. 10-Step Incident Playbook: "The Friday Surge Attack" (With Cinema Auto-Play & Pressure Trajectory)
 export function PlaybookSection() {
   let [step, setStep] = (0, o.useState)(0);
+  let [isPlaying, setIsPlaying] = (0, o.useState)(false);
 
   const steps = [
-    { time: `14:02:11`, phase: `DISPATCH`, title: `Spoofed Audio Dispatch`, detail: `Deepfake audio clone of Plant Director instructs operator to force Booster Pump 4 to 100% capacity.` },
-    { time: `14:02:12`, phase: `EVIDENCE`, title: `NPU Multimodal Extraction`, detail: `Hexagon NPU runs Whisper-v3 + Silero VAD on-device. Flags 98.4% urgency anomaly and unnatural acoustic spectral jitter.` },
-    { time: `14:02:13`, phase: `DECOMPILE`, title: `Modbus Intent Translation`, detail: `Operational request translated to PLC register target: Holding Register HR_40012 = 1200 RPM.` },
-    { time: `14:02:14`, phase: `CYBER GATE`, title: `Cyber ACL & Syntax Validation`, detail: `Cyber check passes: legitimate operator device, valid Modbus TCP packet structure, authorized IP.` },
-    { time: `14:02:15`, phase: `TWIN SIM`, title: `EPANET 2.2 Transient Simulation`, detail: `Physical Twin simulates downstream pressure heads with closed relief valve PRV-02.` },
-    { time: `14:02:16`, phase: `BREACH`, title: `Joukowsky Water Hammer Spike`, detail: `Simulation detects 9.6 bar transient surge. Exceeds 8.0 bar flange burst threshold at Junction J-104.` },
-    { time: `14:02:17`, phase: `REPLAN`, title: `Swarm Replanner Synthesis`, detail: `LangGraph swarm synthesizes safe alternative: 45-second stepped ramp with PRV-02 bypass opened to 65%.` },
-    { time: `14:02:18`, phase: `RE-VERIFY`, title: `Secondary Consequence Check`, detail: `EPANET verifies safe trajectory: peak pressure held to 5.4 bar throughout entire transient curve.` },
-    { time: `14:02:19`, phase: `GATEKEEPER`, title: `Sovereign Biometric Prompt`, detail: `Copilot presents transparent evidence dossier. Prompts operator for physical biometric sign-off.` },
-    { time: `14:02:20`, phase: `EXECUTE`, title: `Attested PLC Execution`, detail: `Hardware TEE issues signed ED25519 token. OpenPLC receives verified safe instruction sequence.` }
+    { time: `14:02:11`, phase: `DISPATCH`, pressure: 5.2, title: `Spoofed Audio Dispatch`, detail: `Deepfake audio clone of Plant Director instructs operator to force Booster Pump 4 to 100% capacity.` },
+    { time: `14:02:12`, phase: `EVIDENCE`, pressure: 5.2, title: `NPU Multimodal Extraction`, detail: `Hexagon NPU runs Whisper-v3 + Silero VAD on-device. Flags 98.4% urgency anomaly and unnatural acoustic spectral jitter.` },
+    { time: `14:02:13`, phase: `DECOMPILE`, pressure: 5.4, title: `Modbus Intent Translation`, detail: `Operational request translated to PLC register target: Holding Register HR_40012 = 1200 RPM.` },
+    { time: `14:02:14`, phase: `CYBER GATE`, pressure: 5.6, title: `Cyber ACL & Syntax Validation`, detail: `Cyber check passes: legitimate operator device, valid Modbus TCP packet structure, authorized IP.` },
+    { time: `14:02:15`, phase: `TWIN SIM`, pressure: 7.8, title: `EPANET 2.2 Transient Simulation`, detail: `Physical Twin simulates downstream pressure heads with closed relief valve PRV-02.` },
+    { time: `14:02:16`, phase: `BREACH`, pressure: 11.4, title: `Joukowsky Water Hammer Spike`, detail: `Simulation detects 11.4 bar transient surge. Exceeds 8.0 bar flange burst threshold at Junction J-104.` },
+    { time: `14:02:17`, phase: `REPLAN`, pressure: 6.8, title: `Swarm Replanner Synthesis`, detail: `LangGraph swarm synthesizes safe alternative: 45-second stepped ramp with PRV-02 bypass opened to 65%.` },
+    { time: `14:02:18`, phase: `RE-VERIFY`, pressure: 5.4, title: `Secondary Consequence Check`, detail: `EPANET verifies safe trajectory: peak pressure held to 5.4 bar throughout entire transient curve.` },
+    { time: `14:02:19`, phase: `GATEKEEPER`, pressure: 5.4, title: `Sovereign Biometric Prompt`, detail: `Copilot presents transparent evidence dossier. Prompts operator for physical biometric sign-off.` },
+    { time: `14:02:20`, phase: `EXECUTE`, pressure: 5.4, title: `Attested PLC Execution`, detail: `Hardware TEE issues signed ED25519 token. OpenPLC receives verified safe instruction sequence.` }
   ];
+
+  (0, o.useEffect)(() => {
+    if (!isPlaying) return;
+    let timer = setInterval(() => {
+      setStep((prev) => {
+        if (prev >= steps.length - 1) {
+          setIsPlaying(false);
+          return 0;
+        }
+        return prev + 1;
+      });
+    }, 1400);
+    return () => clearInterval(timer);
+  }, [isPlaying]);
+
+  const currentStep = steps[step];
+  const isDangerStep = step === 5;
 
   return (0, x.jsxs)(`section`, {
     id: `playbook`,
     "data-section": `playbook`,
-    style: { background: `#f2f3f5`, paddingBottom: 80 },
+    style: { background: `#ede7db`, paddingBottom: 104 },
     children: [
       (0, x.jsx)(Bridge, { number: `07`, tag: `INCIDENT PLAYBOOK // THE FRIDAY SURGE WALKTHROUGH` }),
       (0, x.jsxs)(`div`, {
         style: { maxWidth: 1280, margin: `0 auto`, padding: `0 32px` },
         children: [
           (0, x.jsxs)(`div`, {
-            style: { textAlign: `center`, margin: `24px 0 48px` },
+            style: {
+              display: `flex`,
+              justifyContent: `space-between`,
+              alignItems: `flex-end`,
+              flexWrap: `wrap`,
+              gap: 24,
+              margin: `24px 0 44px`
+            },
             children: [
-              (0, x.jsx)(`h2`, {
-                style: {
-                  fontFamily: F,
-                  fontSize: `clamp(36px, 5vw, 64px)`,
-                  fontWeight: 700,
-                  color: V,
-                  letterSpacing: `-0.03em`,
-                  lineHeight: 1.05,
-                  margin: `0 0 16px`
-                },
-                children: `10 Seconds from Catastrophe to Containment.`
+              (0, x.jsxs)(`div`, {
+                style: { maxWidth: 720 },
+                children: [
+                  (0, x.jsx)(`h2`, {
+                    style: {
+                      fontFamily: F,
+                      fontSize: `clamp(36px, 5vw, 64px)`,
+                      fontWeight: 700,
+                      color: V,
+                      letterSpacing: `-0.035em`,
+                      lineHeight: 1.04,
+                      margin: `0 0 14px`
+                    },
+                    children: `10 Seconds from Catastrophe to Containment.`
+                  }),
+                  (0, x.jsx)(`p`, {
+                    style: {
+                      fontFamily: L,
+                      fontSize: 18,
+                      color: `#535862`,
+                      margin: 0,
+                      lineHeight: 1.6
+                    },
+                    children: `Step through 'The Friday Surge Attack' — an autonomous verification sequence where a spoofed emergency dispatch attempted to cause physical pipe rupture on Booster Pump 4.`
+                  })
+                ]
               }),
-              (0, x.jsx)(`p`, {
+              (0, x.jsx)(`button`, {
+                "data-cursor": `card`,
+                "data-cursor-text": isPlaying ? `PAUSE` : `AUTO-PLAY`,
+                onClick: () => setIsPlaying(!isPlaying),
                 style: {
-                  fontFamily: L,
-                  fontSize: 18,
-                  color: `#535862`,
-                  maxWidth: 680,
-                  margin: `0 auto`,
-                  lineHeight: 1.6
+                  background: isPlaying ? R : V,
+                  color: `#fff`,
+                  border: `none`,
+                  borderRadius: 100,
+                  padding: `14px 26px`,
+                  fontFamily: `monospace`,
+                  fontSize: 12,
+                  fontWeight: 800,
+                  letterSpacing: `0.08em`,
+                  cursor: `pointer`,
+                  display: `flex`,
+                  alignItems: `center`,
+                  gap: 10,
+                  boxShadow: `0 12px 28px rgba(10,13,18,0.18)`
                 },
-                children: `Step through 'The Friday Surge Attack' — an autonomous verification sequence where a spoofed emergency dispatch attempted to cause physical pipe rupture on Booster Pump 4.`
+                children: [
+                  (0, x.jsx)(`span`, { style: { width: 8, height: 8, borderRadius: `50%`, background: isPlaying ? `#fff` : `#10b981` } }),
+                  isPlaying ? `⏸ PAUSE SIMULATION` : `▶ AUTO-SIMULATE 10S CONTAINMENT`
+                ]
               })
             ]
           }),
 
-          // Interactive Scrubber
+          // Interactive Scrubber Console
           (0, x.jsxs)(`div`, {
             style: {
               background: V,
               borderRadius: 24,
-              padding: `clamp(24px, 4vw, 40px)`,
+              padding: `clamp(24px, 4vw, 44px)`,
               color: `#fff`,
-              boxShadow: `0 24px 64px rgba(0,0,0,0.15)`
+              boxShadow: `0 28px 68px rgba(10,13,18,0.25)`,
+              border: `1px solid rgba(255,255,255,0.08)`
             },
             children: [
+              // Progress bar across 10 steps
+              (0, x.jsx)(`div`, {
+                style: { width: `100%`, height: 4, background: `rgba(255,255,255,0.08)`, borderRadius: 4, marginBottom: 20, overflow: `hidden` },
+                children: (0, x.jsx)(`div`, {
+                  style: {
+                    width: `${((step + 1) / steps.length) * 100}%`,
+                    height: `100%`,
+                    background: isDangerStep ? `#ef4444` : R,
+                    transition: `width 0.35s cubic-bezier(0.16, 1, 0.3, 1)`
+                  }
+                })
+              }),
+
               // Scrub Buttons
               (0, x.jsx)(`div`, {
                 style: {
-                  display: `flex`,
+                  display: `grid`,
+                  gridTemplateColumns: `repeat(10, minmax(84px, 1fr))`,
                   gap: 8,
                   overflowX: `auto`,
-                  paddingBottom: 16,
+                  paddingBottom: 20,
                   borderBottom: `1px solid ${BORDER_DARK}`,
                   scrollbarWidth: `none`
                 },
                 children: steps.map((s, i) => (
                   (0, x.jsxs)(`button`, {
                     key: i,
-                    onClick: () => setStep(i),
+                    onClick: () => { setIsPlaying(false); setStep(i); },
                     style: {
-                      background: step === i ? R : `rgba(255, 255, 255, 0.05)`,
+                      background: step === i ? (i === 5 ? `#ef4444` : R) : `rgba(255, 255, 255, 0.04)`,
                       color: step === i ? `#fff` : `#98a2b3`,
-                      border: `none`,
-                      borderRadius: 10,
-                      padding: `8px 14px`,
-                      fontFamily: I,
-                      fontSize: 12,
+                      border: `1px solid ${step === i ? `transparent` : `rgba(255,255,255,0.06)`}`,
+                      borderRadius: 12,
+                      padding: `10px 12px`,
+                      fontFamily: `monospace`,
+                      fontSize: 11,
                       fontWeight: 700,
                       cursor: `pointer`,
-                      flexShrink: 0,
                       display: `flex`,
-                      alignItems: `center`,
-                      gap: 6,
+                      flexDirection: `column`,
+                      alignItems: `flex-start`,
+                      gap: 4,
                       transition: `all 0.2s ease`
                     },
                     children: [
-                      (0, x.jsx)(`span`, { children: `0${i + 1}` }),
-                      (0, x.jsx)(`span`, { style: { opacity: 0.7 }, children: s.time.slice(3) })
+                      (0, x.jsxs)(`div`, {
+                        style: { display: `flex`, justifyContent: `space-between`, width: `100%`, opacity: 0.8 },
+                        children: [(0, x.jsx)(`span`, { children: `0${i + 1}` }), (0, x.jsx)(`span`, { children: `T+${i}s` })]
+                      }),
+                      (0, x.jsx)(`span`, { style: { fontSize: 10, letterSpacing: `0.04em`, color: step === i ? `#fff` : `#cbd5e1` }, children: s.phase })
                     ]
                   })
                 ))
@@ -1356,8 +1588,8 @@ export function PlaybookSection() {
               (0, x.jsxs)(`div`, {
                 style: {
                   display: `grid`,
-                  gridTemplateColumns: `repeat(auto-fit, minmax(280px, 1fr))`,
-                  gap: 32,
+                  gridTemplateColumns: `repeat(auto-fit, minmax(300px, 1fr))`,
+                  gap: 36,
                   marginTop: 32,
                   alignItems: `center`
                 },
@@ -1365,33 +1597,49 @@ export function PlaybookSection() {
                   (0, x.jsxs)(`div`, {
                     children: [
                       (0, x.jsxs)(`div`, {
-                        style: { display: `flex`, alignItems: `center`, gap: 12, marginBottom: 12 },
+                        style: { display: `flex`, alignItems: `center`, gap: 12, marginBottom: 14 },
                         children: [
                           (0, x.jsxs)(`span`, {
                             style: {
                               fontFamily: `monospace`,
                               fontSize: 12,
-                              color: R,
-                              background: `rgba(255, 105, 46, 0.15)`,
-                              padding: `4px 10px`,
-                              borderRadius: 6,
-                              fontWeight: 700
+                              color: isDangerStep ? `#ef4444` : R,
+                              background: isDangerStep ? `rgba(239,68,68,0.15)` : `rgba(255, 105, 46, 0.15)`,
+                              padding: `5px 12px`,
+                              borderRadius: 8,
+                              fontWeight: 800
                             },
-                            children: [`T+`, step, `s  //  `, steps[step].time]
+                            children: [`T+`, step, `s  //  `, currentStep.time]
                           }),
                           (0, x.jsx)(`span`, {
-                            style: { fontFamily: I, fontSize: 12, color: `#98a2b3`, textTransform: `uppercase` },
-                            children: steps[step].phase
+                            style: { fontFamily: `monospace`, fontSize: 12, color: `#98a2b3`, textTransform: `uppercase`, letterSpacing: `0.1em` },
+                            children: `PHASE: ${currentStep.phase}`
                           })
                         ]
                       }),
                       (0, x.jsx)(`h3`, {
-                        style: { fontFamily: F, fontSize: 32, fontWeight: 700, color: `#fff`, margin: `0 0 16px`, lineHeight: 1.15 },
-                        children: steps[step].title
+                        style: { fontFamily: F, fontSize: `clamp(26px, 3.2vw, 36px)`, fontWeight: 700, color: `#fff`, margin: `0 0 16px`, lineHeight: 1.12 },
+                        children: currentStep.title
                       }),
                       (0, x.jsx)(`p`, {
-                        style: { fontFamily: L, fontSize: 16, color: `#98a2b3`, lineHeight: 1.6, margin: 0 },
-                        children: steps[step].detail
+                        style: { fontFamily: L, fontSize: 16.5, color: `#cbd5e1`, lineHeight: 1.65, margin: `0 0 24px` },
+                        children: currentStep.detail
+                      }),
+                      // Prev / Next step controls
+                      (0, x.jsxs)(`div`, {
+                        style: { display: `flex`, gap: 10 },
+                        children: [
+                          (0, x.jsx)(`button`, {
+                            onClick: () => { setIsPlaying(false); setStep((step - 1 + steps.length) % steps.length); },
+                            style: { background: `rgba(255,255,255,0.06)`, border: `1px solid rgba(255,255,255,0.12)`, color: `#fff`, borderRadius: 100, padding: `8px 18px`, fontFamily: `monospace`, fontSize: 11, cursor: `pointer` },
+                            children: `← PREV SECOND`
+                          }),
+                          (0, x.jsx)(`button`, {
+                            onClick: () => { setIsPlaying(false); setStep((step + 1) % steps.length); },
+                            style: { background: R, border: `none`, color: `#fff`, borderRadius: 100, padding: `8px 18px`, fontFamily: `monospace`, fontSize: 11, fontWeight: 700, cursor: `pointer` },
+                            children: `NEXT SECOND →`
+                          })
+                        ]
                       })
                     ]
                   }),
@@ -1399,19 +1647,25 @@ export function PlaybookSection() {
                   // Telemetry readout box
                   (0, x.jsxs)(`div`, {
                     style: {
-                      background: `rgba(255, 255, 255, 0.03)`,
-                      border: `1px solid ${BORDER_DARK}`,
-                      borderRadius: 16,
+                      background: `rgba(0, 0, 0, 0.45)`,
+                      border: `1px solid ${isDangerStep ? `rgba(239,68,68,0.4)` : BORDER_DARK}`,
+                      borderRadius: 18,
                       padding: 24,
                       fontFamily: `monospace`,
                       fontSize: 13,
-                      lineHeight: 1.8
+                      lineHeight: 1.85
                     },
                     children: [
-                      (0, x.jsx)(`div`, { style: { color: `#98a2b3`, borderBottom: `1px solid ${BORDER_DARK}`, paddingBottom: 8, marginBottom: 12 }, children: `// SENTINEL-K REAL-TIME TELEMETRY` }),
-                      (0, x.jsxs)(`div`, { children: [`[TIMESTAMP]: `, (0, x.jsx)(`span`, { style: { color: `#fff` }, children: `2026-03-20 ` + steps[step].time })] }),
+                      (0, x.jsxs)(`div`, {
+                        style: { display: `flex`, justifyContent: `space-between`, color: `#98a2b3`, borderBottom: `1px solid ${BORDER_DARK}`, paddingBottom: 10, marginBottom: 14 },
+                        children: [
+                          (0, x.jsx)(`span`, { children: `// SENTINEL-K REAL-TIME TELEMETRY` }),
+                          (0, x.jsx)(`span`, { style: { color: isDangerStep ? `#ef4444` : `#10b981`, fontWeight: 800 }, children: `${currentStep.pressure} BAR` })
+                        ]
+                      }),
+                      (0, x.jsxs)(`div`, { children: [`[TIMESTAMP]: `, (0, x.jsx)(`span`, { style: { color: `#fff` }, children: `2026-03-20 ` + currentStep.time })] }),
                       (0, x.jsxs)(`div`, { children: [`[TARGET PLC]: `, (0, x.jsx)(`span`, { style: { color: R }, children: `OpenPLC_Booster_04 (%QW104)` })] }),
-                      (0, x.jsxs)(`div`, { children: [`[PRESSURE]  : `, (0, x.jsx)(`span`, { style: { color: step >= 5 && step < 7 ? `#ef4444` : `#10b981` }, children: step >= 5 && step < 7 ? `9.6 bar (BREACH)` : `5.4 bar (SAFE)` })] }),
+                      (0, x.jsxs)(`div`, { children: [`[PRESSURE]  : `, (0, x.jsx)(`span`, { style: { color: isDangerStep ? `#ef4444` : `#10b981`, fontWeight: 700 }, children: isDangerStep ? `11.4 bar (BURST CEILING BREACH)` : `${currentStep.pressure} bar (BOUNDED SAFE)` })] }),
                       (0, x.jsxs)(`div`, { children: [`[GATE STATE]: `, (0, x.jsx)(`span`, { style: { color: step === 9 ? `#10b981` : R }, children: step === 9 ? `EXECUTED_TEE_SIGNED` : `INTERCEPTED_IN_VERIFICATION` })] })
                     ]
                   })
@@ -1425,43 +1679,46 @@ export function PlaybookSection() {
   });
 }
 
-// 6. iQOO Hackathon Alignment & The Builders
+// 6. iQOO Hackathon Alignment & The Builders (Editorial Spec Layout)
 export function HackathonTeamSection() {
   const pillars = [
     {
+      code: `01 // HEXAGON DSP`,
       title: `Snapdragon NPU Acceleration`,
-      subtitle: `Hexagon Direct Triage`,
-      desc: `Runs Whisper-v3 acoustic forensics and evidence extraction locally on mobile hardware in under 150ms without cloud roundtrips.`
+      subtitle: `45 TOPS INT4 Edge Triage`,
+      desc: `Runs Whisper-v3 acoustic forensics and multimodal evidence extraction locally on mobile hardware in under 150ms without cloud roundtrips.`
     },
     {
+      code: `02 // VIVO EDGE KIT`,
       title: `Vivo Office Kit Edge Bridge`,
       subtitle: `Zero-Friction Plant Uplink`,
-      desc: `Low-latency secure edge channel bridging the operator's iQOO handheld directly into air-gapped SCADA simulation clusters.`
+      desc: `Low-latency secure edge channel bridging the operator's iQOO 13 handheld directly into air-gapped SCADA simulation clusters.`
     },
     {
+      code: `03 // ANDROID TRUSTZONE`,
       title: `Hardware-Enforced Security`,
-      subtitle: `Android TEE & TrustZone`,
-      desc: `Immutable biometric confirmation ensures malicious AI dispatches cannot actuate plant hardware without physical sign-off.`
+      subtitle: `Biometric TEE Attestation`,
+      desc: `Immutable ultrasonic fingerprint confirmation ensures malicious AI dispatches cannot actuate plant hardware without physical sign-off.`
     }
   ];
 
   const builders = [
-    { name: `J Sashank`, role: `Cyber-Physical Systems & SCADA Architecture`, focus: `Modbus TCP, PLC Interlocks, Z3 Prover` },
-    { name: `D Mounika`, role: `Hydrodynamic Modeling & Digital Twin`, focus: `EPANET 2.2, WNTR, Water Hammer Transient Physics` },
-    { name: `S Sameer`, role: `Distributed AI & Edge Orchestration`, focus: `Snapdragon NPU Pipelines, Mobile TEE, Multi-Agent Swarms` }
+    { id: `ARCH // 01`, name: `J Sashank`, role: `Cyber-Physical Systems & SCADA Architecture`, focus: `Modbus TCP, PLC Interlocks, Z3 Prover` },
+    { id: `TWIN // 02`, name: `D Mounika`, role: `Hydrodynamic Modeling & Digital Twin`, focus: `EPANET 2.2, WNTR, Water Hammer Transient Physics` },
+    { id: `EDGE // 03`, name: `S Sameer`, role: `Distributed AI & Edge Orchestration`, focus: `Snapdragon NPU Pipelines, Mobile TEE, Multi-Agent Swarms` }
   ];
 
   return (0, x.jsxs)(`section`, {
     id: `team`,
     "data-section": `team`,
-    style: { background: `#f2f3f5`, paddingBottom: 80 },
+    style: { background: `#f5f3ee`, paddingBottom: 104 },
     children: [
       (0, x.jsx)(Bridge, { number: `08`, tag: `SUBMISSION PROFILE // iQOO HACKATHON 2026` }),
       (0, x.jsxs)(`div`, {
         style: { maxWidth: 1280, margin: `0 auto`, padding: `0 32px` },
         children: [
           (0, x.jsxs)(`div`, {
-            style: { textAlign: `center`, margin: `24px 0 48px` },
+            style: { textAlign: `center`, margin: `24px 0 56px` },
             children: [
               (0, x.jsx)(`h2`, {
                 style: {
@@ -1469,8 +1726,8 @@ export function HackathonTeamSection() {
                   fontSize: `clamp(36px, 5vw, 64px)`,
                   fontWeight: 700,
                   color: V,
-                  letterSpacing: `-0.03em`,
-                  lineHeight: 1.05,
+                  letterSpacing: `-0.035em`,
+                  lineHeight: 1.04,
                   margin: `0 0 16px`
                 },
                 children: `Engineered for Mission-Critical Mobile Intelligence.`
@@ -1493,24 +1750,39 @@ export function HackathonTeamSection() {
           (0, x.jsx)(`div`, {
             style: {
               display: `grid`,
-              gridTemplateColumns: `repeat(auto-fit, minmax(280px, 1fr))`,
-              gap: 20,
+              gridTemplateColumns: `repeat(auto-fit, minmax(300px, 1fr))`,
+              gap: 24,
               marginBottom: 40
             },
             children: pillars.map((p, i) => (
               (0, x.jsxs)(`div`, {
                 key: i,
+                "data-cursor": `card`,
+                "data-cursor-text": `SPEC`,
                 style: {
-                  background: W_CARD,
-                  border: `1px solid ${BORDER_LIGHT}`,
-                  borderRadius: 20,
-                  padding: 28,
-                  boxShadow: `0 4px 16px rgba(0,0,0,0.03)`
+                  background: `#fff`,
+                  border: `1px solid rgba(24,29,39,0.08)`,
+                  borderRadius: 22,
+                  padding: 32,
+                  boxShadow: `0 8px 24px rgba(0,0,0,0.03)`,
+                  display: `flex`,
+                  flexDirection: `column`,
+                  justifyContent: `space-between`
                 },
                 children: [
-                  (0, x.jsx)(`div`, { style: { fontFamily: I, fontSize: 11, fontWeight: 700, color: R, letterSpacing: `0.1em`, marginBottom: 8 }, children: p.subtitle }),
-                  (0, x.jsx)(`h3`, { style: { fontFamily: F, fontSize: 22, fontWeight: 700, color: V, margin: `0 0 12px` }, children: p.title }),
-                  (0, x.jsx)(`p`, { style: { fontFamily: L, fontSize: 14, color: `#535862`, lineHeight: 1.6, margin: 0 }, children: p.desc })
+                  (0, x.jsxs)(`div`, {
+                    children: [
+                      (0, x.jsxs)(`div`, {
+                        style: { display: `flex`, justifyContent: `space-between`, alignItems: `center`, marginBottom: 16 },
+                        children: [
+                          (0, x.jsx)(`span`, { style: { fontFamily: `monospace`, fontSize: 11, fontWeight: 800, color: R, letterSpacing: `0.08em` }, children: p.code }),
+                          (0, x.jsx)(`span`, { style: { fontFamily: `monospace`, fontSize: 10, color: `#64748b`, background: `#f5f3ee`, padding: `4px 8px`, borderRadius: 6 }, children: p.subtitle })
+                        ]
+                      }),
+                      (0, x.jsx)(`h3`, { style: { fontFamily: F, fontSize: 24, fontWeight: 700, color: V, margin: `0 0 12px`, letterSpacing: `-0.02em` }, children: p.title }),
+                      (0, x.jsx)(`p`, { style: { fontFamily: L, fontSize: 14.5, color: `#535862`, lineHeight: 1.65, margin: 0 }, children: p.desc })
+                    ]
+                  })
                 ]
               })
             ))
@@ -1521,15 +1793,16 @@ export function HackathonTeamSection() {
             style: {
               background: V,
               borderRadius: 24,
-              padding: `clamp(24px, 4vw, 40px)`,
-              color: `#fff`
+              padding: `clamp(28px, 4vw, 44px)`,
+              color: `#fff`,
+              boxShadow: `0 24px 60px rgba(10,13,18,0.2)`
             },
             children: [
               (0, x.jsxs)(`div`, {
-                style: { display: `flex`, justifyContent: `space-between`, alignItems: `center`, marginBottom: 28, borderBottom: `1px solid ${BORDER_DARK}`, paddingBottom: 16 },
+                style: { display: `flex`, justifyContent: `space-between`, alignItems: `center`, marginBottom: 28, borderBottom: `1px solid ${BORDER_DARK}`, paddingBottom: 18, flexWrap: `wrap`, gap: 12 },
                 children: [
-                  (0, x.jsx)(`h3`, { style: { fontFamily: F, fontSize: 28, fontWeight: 700, margin: 0, color: `#fff` }, children: `The Engineering Team` }),
-                  (0, x.jsx)(`span`, { style: { fontFamily: I, fontSize: 12, color: R, fontWeight: 700 }, children: `iQOO HACKATHON 2026` })
+                  (0, x.jsx)(`h3`, { style: { fontFamily: F, fontSize: 28, fontWeight: 700, margin: 0, color: `#fff`, letterSpacing: `-0.02em` }, children: `The Engineering Team` }),
+                  (0, x.jsx)(`span`, { style: { fontFamily: `monospace`, fontSize: 12, color: R, fontWeight: 700, letterSpacing: `0.08em` }, children: `iQOO HACKATHON 2026 // SOVEREIGN DEFENSE SQUAD` })
                 ]
               }),
               (0, x.jsx)(`div`, {
@@ -1544,13 +1817,14 @@ export function HackathonTeamSection() {
                     style: {
                       background: `rgba(255, 255, 255, 0.04)`,
                       border: `1px solid ${BORDER_DARK}`,
-                      borderRadius: 16,
-                      padding: 24
+                      borderRadius: 18,
+                      padding: 26
                     },
                     children: [
-                      (0, x.jsx)(`div`, { style: { fontFamily: F, fontSize: 22, fontWeight: 700, color: `#fff`, marginBottom: 6 }, children: b.name }),
-                      (0, x.jsx)(`div`, { style: { fontFamily: I, fontSize: 12, color: R, fontWeight: 600, marginBottom: 12 }, children: b.role }),
-                      (0, x.jsx)(`div`, { style: { fontFamily: L, fontSize: 12, color: `#98a2b3` }, children: b.focus })
+                      (0, x.jsx)(`div`, { style: { fontFamily: `monospace`, fontSize: 10.5, color: `#64748b`, marginBottom: 8, letterSpacing: `0.08em` }, children: b.id }),
+                      (0, x.jsx)(`div`, { style: { fontFamily: F, fontSize: 24, fontWeight: 700, color: `#fff`, marginBottom: 6 }, children: b.name }),
+                      (0, x.jsx)(`div`, { style: { fontFamily: I, fontSize: 12.5, color: R, fontWeight: 600, marginBottom: 12 }, children: b.role }),
+                      (0, x.jsx)(`div`, { style: { fontFamily: `monospace`, fontSize: 11.5, color: `#98a2b3`, lineHeight: 1.5 }, children: b.focus })
                     ]
                   })
                 ))
