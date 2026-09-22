@@ -36,32 +36,32 @@ function drawCapsule(ctx, cx, cy, rad, f) {
   ctx.closePath();
 }
 
-// Draw precision tactical reticle for resting state (ultra-cool & minimal)
-function drawPrecisionReticle(ctx, cx, cy, color) {
+// Draw ultra-aesthetic, minimal fluid precision micro-ring for resting state
+function drawMinimalFluidCursor(ctx, cx, cy, color, vx, vy, rad) {
   ctx.save();
+  ctx.translate(cx, cy);
+
+  let speed = Math.sqrt(vx * vx + vy * vy);
+  let angle = Math.atan2(vy, vx);
+  let stretch = Math.min(speed * 0.018, 0.35);
+
+  // Rotate and stretch elastically along velocity vector
+  ctx.rotate(angle);
+  ctx.scale(1 + stretch, 1 - stretch * 0.5);
+
+  // Soft ethereal inner glow
+  ctx.beginPath();
+  ctx.arc(0, 0, rad, 0, Math.PI * 2);
+  ctx.fillStyle = color;
+  ctx.globalAlpha = 0.06;
+  ctx.fill();
+
+  // Ultra-clean hairline ring
+  ctx.beginPath();
+  ctx.arc(0, 0, rad, 0, Math.PI * 2);
   ctx.strokeStyle = color;
-  ctx.lineWidth = 1;
-  ctx.globalAlpha = 0.55;
-
-  // Delicate outer hairline ring (radius 10)
-  ctx.beginPath();
-  ctx.arc(cx, cy, 10, 0, Math.PI * 2);
-  ctx.stroke();
-
-  // 4 Micro precision tick marks (length 3.5px)
-  ctx.beginPath();
-  // Top
-  ctx.moveTo(cx, cy - 10);
-  ctx.lineTo(cx, cy - 13.5);
-  // Bottom
-  ctx.moveTo(cx, cy + 10);
-  ctx.lineTo(cx, cy + 13.5);
-  // Left
-  ctx.moveTo(cx - 10, cy);
-  ctx.lineTo(cx - 13.5, cy);
-  // Right
-  ctx.moveTo(cx + 10, cy);
-  ctx.lineTo(cx + 13.5, cy);
+  ctx.lineWidth = 1.2;
+  ctx.globalAlpha = 0.48;
   ctx.stroke();
 
   ctx.restore();
@@ -193,9 +193,11 @@ function CustomCursor() {
         ctx.globalAlpha = 0.55;
         ctx.stroke();
       } else {
-        // Smoothly return to precision tactical reticle
-        currentRadius = s(currentRadius, 10, 0.1);
-        drawPrecisionReticle(ctx, smoothX, smoothY, activeColor);
+        // Smoothly return to ultra-clean fluid precision micro-ring
+        currentRadius = s(currentRadius, 11, 0.1);
+        let vx = destX - smoothX;
+        let vy = destY - smoothY;
+        drawMinimalFluidCursor(ctx, smoothX, smoothY, activeColor, vx, vy, currentRadius);
       }
       ctx.globalAlpha = 1;
 

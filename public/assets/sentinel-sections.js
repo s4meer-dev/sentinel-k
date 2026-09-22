@@ -1564,125 +1564,329 @@ export function HackathonTeamSection() {
 }
 
 // ==========================================
-// CINEMATIC HORIZONTAL CARDS VISUALS (Ee)
+// THREAT RADAR COCKPIT FOR PARAGRAPH SECTION (he)
 // ==========================================
-
-// 1. Field Copilot Radar & Spectral HUD Visual
-export function FieldCopilotVisual({ w, h }) {
-  let [angle, setAngle] = (0, o.useState)(0);
+export function ThreatRadarCockpit({ scrollProgress = 0 }) {
+  let [mousePos, setMousePos] = (0, o.useState)({ x: 0, y: 0, active: false });
+  let [tick, setTick] = (0, o.useState)(0);
+  let [selectedNode, setSelectedNode] = (0, o.useState)(null);
+  let animRef = (0, o.useRef)(null);
 
   (0, o.useEffect)(() => {
-    let anim;
-    let tick = () => {
-      setAngle((a) => (a + 1.8) % 360);
-      anim = requestAnimationFrame(tick);
+    let step = () => {
+      setTick((t) => (t + 1) % 7200);
+      animRef.current = requestAnimationFrame(step);
     };
-    anim = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(anim);
+    animRef.current = requestAnimationFrame(step);
+    return () => animRef.current && cancelAnimationFrame(animRef.current);
   }, []);
 
-  return (0, x.jsxs)(`div`, {
+  let handleMouseMove = (e) => {
+    let rect = e.currentTarget.getBoundingClientRect();
+    let x = (e.clientX - rect.left) / rect.width - 0.5;
+    let y = (e.clientY - rect.top) / rect.height - 0.5;
+    setMousePos({ x, y, active: true });
+  };
+
+  let handleMouseLeave = () => {
+    setMousePos({ x: 0, y: 0, active: false });
+    setSelectedNode(null);
+  };
+
+  let rotX = mousePos.active ? mousePos.y * -14 : 0;
+  let rotY = mousePos.active ? mousePos.x * 16 : 0;
+  let sweepAngle = (tick * 2.2) % 360;
+  let isSafePhase = scrollProgress >= 0.5;
+
+  return (0, x.jsxs)("div", {
+    onMouseMove: handleMouseMove,
+    onMouseLeave: handleMouseLeave,
     style: {
-      position: `absolute`,
-      inset: 0,
-      background: `radial-gradient(circle at 50% 50%, #151d2a 0%, #080b10 100%)`,
-      display: `flex`,
-      flexDirection: `column`,
-      justifyContent: `space-between`,
-      padding: 20,
-      boxSizing: `border-box`,
-      overflow: `hidden`
+      position: "relative",
+      width: "100%",
+      maxWidth: 520,
+      height: 470,
+      background: "linear-gradient(145deg, rgba(22, 27, 36, 0.94) 0%, rgba(10, 13, 19, 0.98) 100%)",
+      borderRadius: 22,
+      border: "1px solid rgba(255, 255, 255, 0.12)",
+      boxShadow: "0 28px 70px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.15)",
+      padding: "20px 22px",
+      boxSizing: "border-box",
+      color: "#fff",
+      fontFamily: L,
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
+      overflow: "hidden",
+      transform: `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg)`,
+      transition: "transform 0.15s ease-out, box-shadow 0.2s ease",
+      willChange: "transform"
     },
     children: [
-      // Top status row
-      (0, x.jsxs)(`div`, {
-        style: { display: `flex`, justifyContent: `space-between`, alignItems: `center`, fontSize: 10, fontFamily: `monospace`, color: `#94a3b8` },
-        children: [
-          (0, x.jsxs)(`span`, { style: { display: `flex`, alignItems: `center`, gap: 6 }, children: [(0, x.jsx)(`span`, { style: { width: 6, height: 6, borderRadius: `50%`, background: R, boxShadow: `0 0 8px ${R}` } }), `RADAR // SECTOR 04`] }),
-          (0, x.jsx)(`span`, { style: { color: `#38bdf8`, fontWeight: 700 }, children: `45 TOPS NPU` })
-        ]
+      // Dynamic Specular Glass Glare
+      (0, x.jsx)("div", {
+        style: {
+          position: "absolute",
+          inset: 0,
+          pointerEvents: "none",
+          background: `radial-gradient(circle at ${50 + mousePos.x * 60}% ${50 + mousePos.y * 60}%, rgba(255,255,255,0.12) 0%, transparent 60%)`,
+          zIndex: 10
+        }
       }),
 
-      // Center: Circular Radar Sweep
-      (0, x.jsxs)(`div`, {
-        style: { position: `relative`, width: Math.min(180, w * 0.45), height: Math.min(180, w * 0.45), margin: `0 auto` },
+      // Subtle Scanline Grid
+      (0, x.jsx)("div", {
+        style: {
+          position: "absolute",
+          inset: 0,
+          backgroundImage: "linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)",
+          backgroundSize: "20px 20px",
+          pointerEvents: "none",
+          zIndex: 1
+        }
+      }),
+
+      // Header Bar: Threat Radar Status & Node Metadata
+      (0, x.jsxs)("div", {
+        style: { display: "flex", justifyContent: "space-between", alignItems: "center", position: "relative", zIndex: 5, borderBottom: "1px solid rgba(255,255,255,0.08)", paddingBottom: 12 },
         children: [
-          (0, x.jsxs)(`svg`, {
-            viewBox: `0 0 160 160`,
-            style: { width: `100%`, height: `100%` },
+          (0, x.jsxs)("div", {
+            style: { display: "flex", alignItems: "center", gap: 8 },
             children: [
-              // Concentric radar rings
-              [25, 45, 65, 75].map((rVal, idx) => (
-                (0, x.jsx)(`circle`, { key: idx, cx: 80, cy: 80, r: rVal, fill: `none`, stroke: `rgba(56, 189, 248, 0.2)`, strokeWidth: 1, strokeDasharray: idx === 3 ? `3 3` : undefined })
-              )),
-              // Crosshairs
-              (0, x.jsx)(`line`, { x1: 5, y1: 80, x2: 155, y2: 80, stroke: `rgba(56, 189, 248, 0.15)`, strokeWidth: 1 }),
-              (0, x.jsx)(`line`, { x1: 80, y1: 5, x2: 80, y2: 155, stroke: `rgba(56, 189, 248, 0.15)`, strokeWidth: 1 }),
-
-              // Sweeping line
-              (0, x.jsx)(`line`, {
-                x1: 80,
-                y1: 80,
-                x2: 80 + 72 * Math.cos((angle * Math.PI) / 180),
-                y2: 80 + 72 * Math.sin((angle * Math.PI) / 180),
-                stroke: R,
-                strokeWidth: 2,
-                style: { filter: `drop-shadow(0 0 6px ${R})` }
+              (0, x.jsx)("span", {
+                style: {
+                  width: 8,
+                  height: 8,
+                  borderRadius: "50%",
+                  background: isSafePhase ? "#10b981" : "#ef4444",
+                  boxShadow: `0 0 10px ${isSafePhase ? "#10b981" : "#ef4444"}`
+                }
               }),
-
-              // Anomaly Blip
-              (0, x.jsx)(`circle`, {
-                cx: 105,
-                cy: 62,
-                r: 4,
-                fill: `#ef4444`,
-                style: { filter: `drop-shadow(0 0 6px #ef4444)` }
+              (0, x.jsxs)("span", {
+                style: { fontFamily: I, fontSize: 11, fontWeight: 800, letterSpacing: "0.08em", color: "#f1f5f9" },
+                children: ["RADAR // SECTOR 04", isSafePhase ? " [CONTAINED]" : " [INTERCEPTING]"]
               })
             ]
           }),
-          (0, x.jsx)(`div`, {
-            style: {
-              position: `absolute`,
-              bottom: 4,
-              left: `50%`,
-              transform: `translateX(-50%)`,
-              background: `rgba(239, 68, 68, 0.2)`,
-              border: `1px solid rgba(239, 68, 68, 0.4)`,
-              color: `#f87171`,
-              fontSize: 8.5,
-              fontFamily: `monospace`,
-              fontWeight: 700,
-              padding: `2px 6px`,
-              borderRadius: 4,
-              whiteSpace: `nowrap`
-            },
-            children: `8.9 URGENCY SPOOF DETECTED`
+          (0, x.jsxs)("div", {
+            style: { display: "flex", gap: 6, alignItems: "center", fontSize: 9.5, fontFamily: "monospace", color: "#94a3b8" },
+            children: [
+              (0, x.jsx)("span", { style: { background: "rgba(255,255,255,0.06)", padding: "2px 6px", borderRadius: 4 }, children: "AIR-GAP ACTIVE" }),
+              (0, x.jsx)("span", { style: { color: R, fontWeight: 700 }, children: "45 TOPS" })
+            ]
           })
         ]
       }),
 
-      // Bottom: Acoustic Equalizer Bars
-      (0, x.jsxs)(`div`, {
-        style: { background: `rgba(0,0,0,0.4)`, borderRadius: 8, padding: 8, border: `1px solid rgba(255,255,255,0.06)` },
+      // Middle Stage: Interactive Radar Scanner & Modbus Stream
+      (0, x.jsxs)("div", {
+        style: { display: "grid", gridTemplateColumns: "170px 1fr", gap: 18, alignItems: "center", position: "relative", zIndex: 5, margin: "10px 0" },
         children: [
-          (0, x.jsxs)(`div`, {
-            style: { display: `flex`, justifyContent: `space-between`, fontSize: 8.5, fontFamily: `monospace`, color: `#cbd5e1`, marginBottom: 6 },
-            children: [(0, x.jsx)(`span`, { children: `VOICE CLONE SPECTRAL MATCH` }), (0, x.jsx)(`span`, { style: { color: `#f59e0b` }, children: `71% SIMILARITY` })]
-          }),
-          (0, x.jsx)(`div`, {
-            style: { display: `flex`, alignItems: `flex-end`, gap: 3, height: 26 },
-            children: [6, 14, 22, 10, 18, 26, 12, 20, 8, 24, 16, 10, 22, 14, 18, 8, 12, 16, 20, 10].map((hVal, idx) => (
-              (0, x.jsx)(`div`, {
-                key: idx,
+          // Left: Radar Sweep Disc
+          (0, x.jsxs)("div", {
+            style: {
+              width: 160,
+              height: 160,
+              position: "relative",
+              borderRadius: "50%",
+              background: "radial-gradient(circle at 50% 50%, rgba(217,83,35,0.12) 0%, rgba(10,13,20,0.8) 75%)",
+              border: "1px solid rgba(217,83,35,0.3)",
+              boxShadow: "0 0 20px rgba(0,0,0,0.4), inset 0 0 15px rgba(217,83,35,0.15)",
+              overflow: "hidden"
+            },
+            children: [
+              // Concentric Rings
+              [20, 45, 70].map((rVal, idx) => (
+                (0, x.jsx)("div", {
+                  key: idx,
+                  style: {
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    width: rVal * 2,
+                    height: rVal * 2,
+                    transform: "translate(-50%, -50%)",
+                    borderRadius: "50%",
+                    border: "1px dashed rgba(255,255,255,0.12)"
+                  }
+                })
+              )),
+
+              // Crosshair Lines
+              (0, x.jsx)("div", { style: { position: "absolute", top: "50%", left: 0, right: 0, height: 1, background: "rgba(255,255,255,0.1)" } }),
+              (0, x.jsx)("div", { style: { position: "absolute", left: "50%", top: 0, bottom: 0, width: 1, background: "rgba(255,255,255,0.1)" } }),
+
+              // Sweeping Radar Line
+              (0, x.jsx)("div", {
                 style: {
-                  flex: 1,
-                  height: `${Math.max(4, (hVal + Math.sin(angle * 0.1 + idx) * 8))}px`,
-                  background: idx % 2 === 0 ? R : `#38bdf8`,
-                  borderRadius: 1,
-                  transition: `height 0.1s ease`
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  width: 80,
+                  height: 2,
+                  background: `linear-gradient(90deg, ${R}, transparent)`,
+                  transformOrigin: "0 0",
+                  transform: `rotate(${sweepAngle}deg)`,
+                  boxShadow: `0 0 8px ${R}`
                 }
+              }),
+
+              // Anomaly Blip (Flashing)
+              (0, x.jsxs)("div", {
+                style: {
+                  position: "absolute",
+                  top: 38,
+                  left: 104,
+                  transform: "translate(-50%, -50%)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center"
+                },
+                children: [
+                  (0, x.jsx)("div", {
+                    style: {
+                      width: 10,
+                      height: 10,
+                      borderRadius: "50%",
+                      background: isSafePhase ? "#10b981" : "#ef4444",
+                      boxShadow: `0 0 10px ${isSafePhase ? "#10b981" : "#ef4444"}`,
+                      animation: "radarBlip 1s infinite alternate"
+                    }
+                  }),
+                  (0, x.jsx)("div", {
+                    style: {
+                      position: "absolute",
+                      width: 22,
+                      height: 22,
+                      borderRadius: "50%",
+                      border: `1px solid ${isSafePhase ? "#10b981" : "#ef4444"}`,
+                      opacity: 0.6
+                    }
+                  })
+                ]
+              }),
+
+              // Target Marker Label
+              (0, x.jsx)("div", {
+                style: {
+                  position: "absolute",
+                  bottom: 6,
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  fontSize: 7.5,
+                  fontFamily: "monospace",
+                  color: isSafePhase ? "#34d399" : "#f87171",
+                  background: "rgba(0,0,0,0.7)",
+                  padding: "1px 5px",
+                  borderRadius: 3,
+                  whiteSpace: "nowrap"
+                },
+                children: isSafePhase ? "TARGET: SAFE REPLAN" : "SPOOF: REG 40012"
               })
-            ))
+            ]
+          }),
+
+          // Right: Real-time Decompiled Modbus & Forensic Stream
+          (0, x.jsxs)("div", {
+            style: {
+              background: "rgba(0,0,0,0.5)",
+              borderRadius: 12,
+              padding: "12px 14px",
+              border: "1px solid rgba(255,255,255,0.08)",
+              display: "flex",
+              flexDirection: "column",
+              gap: 6,
+              fontSize: 8.5,
+              fontFamily: "monospace"
+            },
+            children: [
+              (0, x.jsxs)("div", {
+                style: { display: "flex", justifyContent: "space-between", color: "#94a3b8", borderBottom: "1px solid rgba(255,255,255,0.06)", paddingBottom: 4 },
+                children: [
+                  (0, x.jsx)("span", { children: "DISPATCH FORENSICS" }),
+                  (0, x.jsx)("span", { style: { color: "#f59e0b" }, children: "URGENCY: 8.9" })
+                ]
+              }),
+              (0, x.jsxs)("div", { style: { color: "#cbd5e1" }, children: [">> PAYLOAD: ", (0, x.jsx)("span", { style: { color: "#f87171" }, children: '"Force Pump 4 to 850 RPM"' })] }),
+              (0, x.jsxs)("div", { style: { color: "#cbd5e1" }, children: [">> MODBUS: ", (0, x.jsx)("span", { style: { color: "#38bdf8" }, children: "0x06 WRITE_REGISTER 40012" })] }),
+              (0, x.jsxs)("div", { style: { color: "#cbd5e1" }, children: [">> CYBER: ", (0, x.jsx)("span", { style: { color: "#34d399" }, children: "CRC-16 VALID (FIREWALL BLIND)" })] }),
+              (0, x.jsxs)("div", {
+                style: {
+                  marginTop: 4,
+                  padding: "4px 6px",
+                  borderRadius: 6,
+                  background: isSafePhase ? "rgba(16,185,129,0.15)" : "rgba(239,68,68,0.15)",
+                  border: `1px solid ${isSafePhase ? "rgba(16,185,129,0.4)" : "rgba(239,68,68,0.4)"}`,
+                  color: isSafePhase ? "#34d399" : "#f87171",
+                  fontWeight: 800
+                },
+                children: [
+                  isSafePhase ? "✓ DYNAMIC TWIN: VALVE STAGED 60s (7.4 BAR SAFE)" : "⛔ DYNAMIC TWIN: WATER HAMMER PEAK 19.8 BAR"
+                ]
+              })
+            ]
+          })
+        ]
+      }),
+
+      // Bottom Stage: Live Synchronized Hydraulic Waveform
+      (0, x.jsxs)("div", {
+        style: {
+          background: "rgba(0,0,0,0.5)",
+          borderRadius: 12,
+          padding: "10px 14px",
+          border: "1px solid rgba(255,255,255,0.08)",
+          position: "relative",
+          zIndex: 5
+        },
+        children: [
+          (0, x.jsxs)("div", {
+            style: { display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 8.5, fontFamily: "monospace", marginBottom: 6 },
+            children: [
+              (0, x.jsx)("span", { style: { color: "#94a3b8" }, children: "EPANET / WNTR HYDRAULIC PRESSURE ENVELOPE" }),
+              (0, x.jsxs)("span", { style: { color: isSafePhase ? "#34d399" : "#f87171", fontWeight: 800 }, children: [isSafePhase ? "PEAK: 7.4 BAR" : "PEAK: 19.8 BAR", " (LIMIT: 9.2 BAR)"] })
+            ]
+          }),
+
+          // Dual-Wave SVG Canvas
+          (0, x.jsxs)("svg", {
+            viewBox: "0 0 300 50",
+            style: { width: "100%", height: 46, display: "block" },
+            children: [
+              // 9.2 Bar Ceiling
+              (0, x.jsx)("line", { x1: 0, y1: 18, x2: 300, y2: 18, stroke: "rgba(239,68,68,0.4)", strokeDasharray: "4 3", strokeWidth: 1 }),
+              // Safe Baseline
+              (0, x.jsx)("line", { x1: 0, y1: 42, x2: 300, y2: 42, stroke: "rgba(255,255,255,0.08)", strokeWidth: 1 }),
+
+              // Unverified Surge Spike (danger red)
+              (0, x.jsx)("path", {
+                d: "M 0 42 Q 50 42 90 4 T 150 38 T 300 40",
+                fill: "none",
+                stroke: "#ef4444",
+                strokeWidth: 2,
+                opacity: isSafePhase ? 0.35 : 1,
+                style: { filter: isSafePhase ? "none" : "drop-shadow(0 0 6px #ef4444)" }
+              }),
+
+              // Safe Replan Curve (safe green)
+              (0, x.jsx)("path", {
+                d: "M 0 42 Q 70 42 140 24 T 220 25 T 300 26",
+                fill: "none",
+                stroke: "#10b981",
+                strokeWidth: isSafePhase ? 2.5 : 1.5,
+                opacity: isSafePhase ? 1 : 0.4,
+                style: { filter: isSafePhase ? "drop-shadow(0 0 6px #10b981)" : "none" }
+              })
+            ]
+          }),
+
+          // Enclave Attestation Seal
+          (0, x.jsxs)("div", {
+            style: { display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 7.5, fontFamily: "monospace", color: "#64748b", marginTop: 4 },
+            children: [
+              (0, x.jsx)("span", { children: "SNAPDRAGON 8 ELITE // TEE ATTESTATION: 0x8F92" }),
+              (0, x.jsx)("span", { style: { color: isSafePhase ? "#34d399" : R, fontWeight: 700 }, children: isSafePhase ? "✓ BIOMETRIC COMMIT READY" : "SIMULATING KINETICS..." })
+            ]
           })
         ]
       })
@@ -1690,89 +1894,225 @@ export function FieldCopilotVisual({ w, h }) {
   });
 }
 
-// 2. Verification Pipeline Visual (Conduits & Nodes)
+// ==========================================
+// CINEMATIC HORIZONTAL CARDS VISUALS (Ee)
+// ==========================================
+
+// 1. Field Copilot Radar & Spectral HUD Visual (Cursor-Reactive)
+export function FieldCopilotVisual({ w, h }) {
+  let [angle, setAngle] = (0, o.useState)(0);
+  let [mouseDist, setMouseDist] = (0, o.useState)(0.5);
+
+  (0, o.useEffect)(() => {
+    let anim;
+    let tick = () => {
+      setAngle((a) => (a + 2) % 360);
+      anim = requestAnimationFrame(tick);
+    };
+    anim = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(anim);
+  }, []);
+
+  return (0, x.jsxs)("div", {
+    onMouseMove: (e) => {
+      let rect = e.currentTarget.getBoundingClientRect();
+      setMouseDist(Math.max(0.1, Math.min(1, (e.clientX - rect.left) / rect.width)));
+    },
+    style: {
+      position: "absolute",
+      inset: 0,
+      background: "radial-gradient(circle at 50% 30%, #171f2c 0%, #0c1017 100%)",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
+      padding: 18,
+      boxSizing: "border-box",
+      overflow: "hidden"
+    },
+    children: [
+      // Top status row
+      (0, x.jsxs)("div", {
+        style: { display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 9.5, fontFamily: "monospace", color: "#94a3b8" },
+        children: [
+          (0, x.jsxs)("span", { style: { display: "flex", alignItems: "center", gap: 6 }, children: [(0, x.jsx)("span", { style: { width: 6, height: 6, borderRadius: "50%", background: R, boxShadow: `0 0 8px ${R}` } }), "ACOUSTIC TRIAGE // FORENSICS"] }),
+          (0, x.jsx)("span", { style: { color: "#38bdf8", fontWeight: 700 }, children: "45 TOPS NPU" })
+        ]
+      }),
+
+      // Center: Circular Radar Sweep with Live Holographic Blips
+      (0, x.jsxs)("div", {
+        style: { position: "relative", width: Math.min(170, w * 0.44), height: Math.min(170, w * 0.44), margin: "0 auto" },
+        children: [
+          (0, x.jsxs)("svg", {
+            viewBox: "0 0 160 160",
+            style: { width: "100%", height: "100%" },
+            children: [
+              [24, 46, 68].map((rVal, idx) => (
+                (0, x.jsx)("circle", { key: idx, cx: 80, cy: 80, r: rVal, fill: "none", stroke: "rgba(56, 189, 248, 0.22)", strokeWidth: 1, strokeDasharray: idx === 2 ? "3 3" : undefined })
+              )),
+              (0, x.jsx)("line", { x1: 5, y1: 80, x2: 155, y2: 80, stroke: "rgba(56, 189, 248, 0.15)", strokeWidth: 1 }),
+              (0, x.jsx)("line", { x1: 80, y1: 5, x2: 80, y2: 155, stroke: "rgba(56, 189, 248, 0.15)", strokeWidth: 1 }),
+              // Radar sweep line
+              (0, x.jsx)("line", {
+                x1: 80,
+                y1: 80,
+                x2: 80 + 70 * Math.cos((angle * Math.PI) / 180),
+                y2: 80 + 70 * Math.sin((angle * Math.PI) / 180),
+                stroke: R,
+                strokeWidth: 2,
+                style: { filter: `drop-shadow(0 0 6px ${R})` }
+              }),
+              // Threat target blip
+              (0, x.jsx)("circle", {
+                cx: 110,
+                cy: 58,
+                r: 4.5,
+                fill: "#ef4444",
+                style: { filter: "drop-shadow(0 0 7px #ef4444)" }
+              })
+            ]
+          }),
+          (0, x.jsx)("div", {
+            style: {
+              position: "absolute",
+              bottom: 2,
+              left: "50%",
+              transform: "translateX(-50%)",
+              background: "rgba(239, 68, 68, 0.2)",
+              border: "1px solid rgba(239, 68, 68, 0.4)",
+              color: "#f87171",
+              fontSize: 8,
+              fontFamily: "monospace",
+              fontWeight: 800,
+              padding: "2px 6px",
+              borderRadius: 4,
+              whiteSpace: "nowrap"
+            },
+            children: "8.9 URGENCY SPOOF DETECTED"
+          })
+        ]
+      }),
+
+      // Bottom: Cursor-Reactive Equalizer Waveform
+      (0, x.jsxs)("div", {
+        style: { background: "rgba(0,0,0,0.5)", borderRadius: 8, padding: "8px 10px", border: "1px solid rgba(255,255,255,0.06)" },
+        children: [
+          (0, x.jsxs)("div", {
+            style: { display: "flex", justifyContent: "space-between", fontSize: 8, fontFamily: "monospace", color: "#cbd5e1", marginBottom: 6 },
+            children: [(0, x.jsx)("span", { children: "VOICE CLONE SPECTRAL MATCH" }), (0, x.jsx)("span", { style: { color: "#f59e0b", fontWeight: 700 }, children: "71% SIMILARITY" })]
+          }),
+          (0, x.jsx)("div", {
+            style: { display: "flex", alignItems: "flex-end", gap: 3, height: 28 },
+            children: [6, 16, 24, 12, 20, 28, 14, 22, 10, 26, 18, 12, 24, 16, 20, 10, 14, 18, 22, 12].map((hVal, idx) => {
+              let dynamicH = Math.max(4, hVal + Math.sin(angle * 0.12 + idx * 0.5) * (10 * mouseDist));
+              return (0, x.jsx)("div", {
+                key: idx,
+                style: {
+                  flex: 1,
+                  height: `${dynamicH}px`,
+                  background: idx % 2 === 0 ? R : "#38bdf8",
+                  borderRadius: 1.5,
+                  boxShadow: idx % 2 === 0 ? `0 0 6px ${R}60` : "none",
+                  transition: "height 0.08s ease"
+                }
+              });
+            })
+          })
+        ]
+      })
+    ]
+  });
+}
+
+// 2. Verification Pipeline Visual (Conduits & Glowing Interactive Nodes)
 export function VerificationPipelineVisual({ w, h }) {
   let [activeNode, setActiveNode] = (0, o.useState)(0);
+  let [hoveredIndex, setHoveredIndex] = (0, o.useState)(null);
 
   (0, o.useEffect)(() => {
     let t = setInterval(() => {
       setActiveNode((n) => (n + 1) % 5);
-    }, 1200);
+    }, 1400);
     return () => clearInterval(t);
   }, []);
 
   const stages = [
-    { name: `INGEST`, sub: `Voice Dispatch`, status: `Intercepted` },
-    { name: `SLM 3B`, sub: `Snapdragon NPU`, status: `18ms Decompile` },
-    { name: `MODBUS`, sub: `SCADA Gate`, status: `CRC Valid` },
-    { name: `EPANET`, sub: `Fluid Dynamic Twin`, status: `Surge Reject` },
-    { name: `TEE`, sub: `Biometric Enclave`, status: `Signed Safe` }
+    { name: "INGEST", sub: "Voice Dispatch (Cellular)", status: "Intercepted", code: "PAYLOAD: 850 RPM" },
+    { name: "SLM 3B", sub: "Snapdragon NPU On-Device", status: "18ms Decompile", code: "REG: 40012" },
+    { name: "MODBUS", sub: "SCADA Protocol Gate", status: "CRC Valid (Blind)", code: "0x01 0x06 CRC:OK" },
+    { name: "EPANET", sub: "Fluid Dynamic Twin", status: "Surge Reject", code: "19.8 BAR BREACH" },
+    { name: "TEE KEY", sub: "Hardware Biometric Enclave", status: "Signed Safe", code: "0x8F92 COMMITTED" }
   ];
 
-  return (0, x.jsxs)(`div`, {
+  let displayIdx = hoveredIndex !== null ? hoveredIndex : activeNode;
+
+  return (0, x.jsxs)("div", {
     style: {
-      position: `absolute`,
+      position: "absolute",
       inset: 0,
-      background: `#0a0d14`,
+      background: "radial-gradient(circle at 50% 30%, #151d2a 0%, #0a0d13 100%)",
       padding: 16,
-      boxSizing: `border-box`,
-      display: `flex`,
-      flexDirection: `column`,
-      justifyContent: `space-between`
+      boxSizing: "border-box",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between"
     },
     children: [
-      (0, x.jsxs)(`div`, {
-        style: { display: `flex`, justifyContent: `space-between`, alignItems: `center`, fontSize: 10, fontFamily: `monospace`, color: `#94a3b8` },
+      (0, x.jsxs)("div", {
+        style: { display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 9.5, fontFamily: "monospace", color: "#94a3b8" },
         children: [
-          (0, x.jsx)(`span`, { children: `CROSS-DOMAIN VERIFICATION BARRIER` }),
-          (0, x.jsxs)(`span`, { style: { color: R, fontWeight: 700 }, children: [`STAGE 0`, activeNode + 1, `/05`] })
+          (0, x.jsx)("span", { children: "CROSS-DOMAIN VERIFICATION BARRIER" }),
+          (0, x.jsxs)("span", { style: { color: R, fontWeight: 700 }, children: ["STAGE 0", displayIdx + 1, "/05"] })
         ]
       }),
 
-      // 5 Nodes Connected by Conduit
-      (0, x.jsx)(`div`, {
-        style: { display: `flex`, flexDirection: `column`, gap: 8, margin: `8px 0` },
+      // 5 Interactive Pipeline Nodes
+      (0, x.jsx)("div", {
+        style: { display: "flex", flexDirection: "column", gap: 7, margin: "6px 0" },
         children: stages.map((s, idx) => {
-          let isActive = activeNode === idx;
-          return (0, x.jsxs)(`div`, {
+          let isActive = displayIdx === idx;
+          return (0, x.jsxs)("div", {
             key: idx,
+            onMouseEnter: () => setHoveredIndex(idx),
+            onMouseLeave: () => setHoveredIndex(null),
             style: {
-              display: `flex`,
-              alignItems: `center`,
-              justifyContent: `space-between`,
-              padding: `6px 12px`,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              padding: "7px 12px",
               borderRadius: 8,
-              background: isActive ? `rgba(255, 105, 46, 0.15)` : `rgba(255,255,255,0.03)`,
-              border: isActive ? `1px solid ${R}` : `1px solid rgba(255,255,255,0.05)`,
-              transition: `all 0.3s ease`
+              background: isActive ? "rgba(217, 83, 35, 0.18)" : "rgba(255,255,255,0.03)",
+              border: isActive ? `1px solid ${R}` : "1px solid rgba(255,255,255,0.06)",
+              cursor: "pointer",
+              transition: "all 0.2s ease"
             },
             children: [
-              (0, x.jsxs)(`div`, {
-                style: { display: `flex`, alignItems: `center`, gap: 8 },
+              (0, x.jsxs)("div", {
+                style: { display: "flex", alignItems: "center", gap: 8 },
                 children: [
-                  (0, x.jsx)(`div`, {
+                  (0, x.jsx)("div", {
                     style: {
                       width: 8,
                       height: 8,
-                      borderRadius: `50%`,
-                      background: isActive ? R : `#475467`,
-                      boxShadow: isActive ? `0 0 10px ${R}` : `none`
+                      borderRadius: "50%",
+                      background: isActive ? (idx === 3 ? "#ef4444" : idx === 4 ? "#10b981" : R) : "#475467",
+                      boxShadow: isActive ? `0 0 10px ${R}` : "none"
                     }
                   }),
-                  (0, x.jsxs)(`div`, {
+                  (0, x.jsxs)("div", {
                     children: [
-                      (0, x.jsx)(`div`, { style: { fontFamily: `monospace`, fontSize: 11, fontWeight: 700, color: isActive ? `#fff` : `#94a3b8` }, children: s.name }),
-                      (0, x.jsx)(`div`, { style: { fontSize: 8.5, color: `#64748b` }, children: s.sub })
+                      (0, x.jsx)("div", { style: { fontFamily: "monospace", fontSize: 10.5, fontWeight: 700, color: isActive ? "#fff" : "#94a3b8" }, children: s.name }),
+                      (0, x.jsx)("div", { style: { fontSize: 7.5, color: "#64748b" }, children: s.sub })
                     ]
                   })
                 ]
               }),
-              (0, x.jsx)(`span`, {
+              (0, x.jsx)("span", {
                 style: {
-                  fontFamily: `monospace`,
-                  fontSize: 9,
+                  fontFamily: "monospace",
+                  fontSize: 8.5,
                   fontWeight: 700,
-                  color: idx === 3 ? `#ef4444` : idx === 4 ? `#10b981` : `#38bdf8`
+                  color: idx === 3 ? "#ef4444" : idx === 4 ? "#10b981" : "#38bdf8"
                 },
                 children: s.status
               })
@@ -1781,80 +2121,125 @@ export function VerificationPipelineVisual({ w, h }) {
         })
       }),
 
-      // Bottom Execution Terminal Log
-      (0, x.jsxs)(`div`, {
-        style: { background: `rgba(0,0,0,0.6)`, borderRadius: 6, padding: `6px 10px`, fontFamily: `monospace`, fontSize: 8.5, color: `#38bdf8` },
+      // Active Inspection Console
+      (0, x.jsxs)("div", {
+        style: {
+          background: "rgba(0,0,0,0.6)",
+          padding: "6px 10px",
+          borderRadius: 6,
+          border: "1px solid rgba(255,255,255,0.08)",
+          fontFamily: "monospace",
+          fontSize: 8,
+          color: "#38bdf8",
+          display: "flex",
+          justifyContent: "space-between"
+        },
         children: [
-          (0, x.jsx)(`div`, { children: `>> [EXEC] WRITE_HOLDING_REGISTER(40012, 850)` }),
-          (0, x.jsx)(`div`, { style: { color: `#34d399` }, children: `>> [VERDICT] DETERMINISTIC INTERVENTION READY` })
+          (0, x.jsxs)("span", { children: [">> EXEC: ", (0, x.jsx)("strong", { style: { color: "#fff" }, children: stages[displayIdx].code })] }),
+          (0, x.jsx)("span", { style: { color: "#34d399" }, children: "✓ PARSED OK" })
         ]
       })
     ]
   });
 }
 
-// 3. Latency Triage Odometer Visual
+// 3. Latency Triage Chronograph Visual (Interactive Air-Gap Reactor)
 export function LatencyTriageVisual({ w, h }) {
-  let [count, setCount] = (0, o.useState)(1.84);
+  let [tick, setTick] = (0, o.useState)(0);
+  let [isFast, setIsFast] = (0, o.useState)(false);
 
   (0, o.useEffect)(() => {
-    let t = setInterval(() => {
-      setCount((1.75 + Math.random() * 0.15).toFixed(2));
-    }, 1800);
-    return () => clearInterval(t);
+    let anim;
+    let step = () => {
+      setTick((t) => (t + 1) % 3600);
+      anim = requestAnimationFrame(step);
+    };
+    anim = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(anim);
   }, []);
 
-  return (0, x.jsxs)(`div`, {
+  let msJitter = (Math.sin(tick * 0.1) * 6).toFixed(0);
+  let currentMs = (1788 + Number(msJitter));
+
+  return (0, x.jsxs)("div", {
+    onMouseEnter: () => setIsFast(true),
+    onMouseLeave: () => setIsFast(false),
     style: {
-      position: `absolute`,
+      position: "absolute",
       inset: 0,
-      background: `#0a0d14`,
-      padding: 20,
-      boxSizing: `border-box`,
-      display: `flex`,
-      flexDirection: `column`,
-      justifyContent: `space-between`
+      background: "radial-gradient(circle at 50% 30%, #1a2230 0%, #0a0d13 100%)",
+      padding: 16,
+      boxSizing: "border-box",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between"
     },
     children: [
-      (0, x.jsxs)(`div`, {
-        style: { display: `flex`, justifyContent: `space-between`, alignItems: `center`, fontSize: 10, fontFamily: `monospace`, color: `#94a3b8` },
+      (0, x.jsxs)("div", {
+        style: { display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 9.5, fontFamily: "monospace", color: "#94a3b8" },
         children: [
-          (0, x.jsx)(`span`, { children: `END-TO-END TRIAGE LATENCY` }),
-          (0, x.jsx)(`span`, { style: { color: `#10b981`, fontWeight: 700 }, children: `TARGET: < 2.0s` })
+          (0, x.jsx)("span", { children: "END-TO-END TRIAGE LATENCY" }),
+          (0, x.jsx)("span", { style: { color: "#34d399", fontWeight: 700 }, children: "TARGET: < 2.0s" })
         ]
       }),
 
-      // Giant Odometer
-      (0, x.jsxs)(`div`, {
-        style: { textAlign: `center`, margin: `10px 0` },
+      // Center Big 1.79s Readout with Radial Glow Arc
+      (0, x.jsxs)("div", {
+        style: { textAlign: "center", padding: "10px 0" },
         children: [
-          (0, x.jsxs)(`div`, {
-            style: { fontFamily: F, fontSize: 56, fontWeight: 700, color: R, lineHeight: 1 },
-            children: [count, (0, x.jsx)(`span`, { style: { fontSize: 24, fontFamily: I, color: `#fff` }, children: `s` })]
-          }),
-          (0, x.jsx)(`div`, { style: { fontFamily: `monospace`, fontSize: 9.5, color: `#94a3b8`, marginTop: 4 }, children: `AIR-GAPPED TOTAL EXECUTION TIME` })
-        ]
-      }),
-
-      // 4 Precision Micro-Breakdowns
-      (0, x.jsxs)(`div`, {
-        style: { display: `flex`, flexDirection: `column`, gap: 6 },
-        children: [
-          { name: `Acoustic Forensics (Whisper-v3)`, time: `18ms`, pct: `18%`, color: `#38bdf8` },
-          { name: `Modbus CRC Formal Check (Z3)`, time: `2ms`, pct: `4%`, color: `#34d399` },
-          { name: `EPANET Fluid Twin (Runge-Kutta)`, time: `142ms`, pct: `72%`, color: R },
-          { name: `Hardware Enclave Biometric (TEE)`, time: `12ms`, pct: `12%`, color: `#a855f7` }
-        ].map((item, idx) => (
-          (0, x.jsxs)(`div`, {
-            key: idx,
+          (0, x.jsxs)("div", {
+            style: {
+              fontFamily: I,
+              fontSize: 48,
+              fontWeight: 900,
+              color: R,
+              lineHeight: 1,
+              letterSpacing: "-0.04em",
+              textShadow: `0 0 24px ${R}70`
+            },
             children: [
-              (0, x.jsxs)(`div`, {
-                style: { display: `flex`, justifyContent: `space-between`, fontSize: 8.5, fontFamily: `monospace`, color: `#cbd5e1`, marginBottom: 2 },
-                children: [(0, x.jsx)(`span`, { children: item.name }), (0, x.jsx)(`span`, { style: { color: item.color, fontWeight: 700 }, children: item.time })]
+              (currentMs / 1000).toFixed(2),
+              (0, x.jsx)("span", { style: { fontSize: 24, fontWeight: 700, marginLeft: 2 }, children: "s" })
+            ]
+          }),
+          (0, x.jsx)("div", {
+            style: { fontSize: 8.5, fontFamily: "monospace", color: "#94a3b8", letterSpacing: "0.1em", textTransform: "uppercase", marginTop: 4 },
+            children: "AIR-GAPPED TOTAL EXECUTION TIME"
+          })
+        ]
+      }),
+
+      // Sub-Stage Breakdown Progress Bars
+      (0, x.jsx)("div", {
+        style: { display: "flex", flexDirection: "column", gap: 6 },
+        children: [
+          { name: "Acoustic Forensics (Whisper-v3)", ms: 18, pct: 15, color: "#38bdf8" },
+          { name: "Modbus CRC Formal Check (Z3)", ms: 2, pct: 8, color: "#34d399" },
+          { name: "EPANET Fluid Twin (Runge-Kutta)", ms: 142, pct: 72, color: R },
+          { name: "Hardware Enclave Biometric (TEE)", ms: 12, pct: 12, color: "#a78bfa" }
+        ].map((item, idx) => (
+          (0, x.jsxs)("div", {
+            key: idx,
+            style: { display: "flex", flexDirection: "column", gap: 2 },
+            children: [
+              (0, x.jsxs)("div", {
+                style: { display: "flex", justifyContent: "space-between", fontSize: 7.5, fontFamily: "monospace", color: "#cbd5e1" },
+                children: [
+                  (0, x.jsx)("span", { children: item.name }),
+                  (0, x.jsxs)("span", { style: { color: item.color, fontWeight: 700 }, children: [item.ms, "ms"] })
+                ]
               }),
-              (0, x.jsx)(`div`, {
-                style: { width: `100%`, height: 3, background: `rgba(255,255,255,0.08)`, borderRadius: 2, overflow: `hidden` },
-                children: (0, x.jsx)(`div`, { style: { width: item.pct, height: `100%`, background: item.color, borderRadius: 2 } })
+              (0, x.jsx)("div", {
+                style: { width: "100%", height: 3, background: "rgba(255,255,255,0.08)", borderRadius: 2, overflow: "hidden" },
+                children: (0, x.jsx)("div", {
+                  style: {
+                    width: `${item.pct}%`,
+                    height: "100%",
+                    background: item.color,
+                    borderRadius: 2,
+                    boxShadow: `0 0 6px ${item.color}80`
+                  }
+                })
               })
             ]
           })
@@ -1864,79 +2249,92 @@ export function LatencyTriageVisual({ w, h }) {
   });
 }
 
-// 4. Industrial Protocol Matrix Visual
+// 4. Industrial Stack Physics Sandbox (Bouncing Floating Nodes)
 export function IndustrialStackVisual({ w, h }) {
-  const protocols = [
-    { name: `MODBUS TCP`, sub: `Port 502 // Holding Regs`, status: `ONLINE`, color: `#10b981` },
-    { name: `OPENPLC`, sub: `IEC 61131-3 Ladder`, status: `ACTIVE`, color: `#38bdf8` },
-    { name: `EPANET 2.2`, sub: `Hydraulic Twin Solver`, status: `READY`, color: R },
-    { name: `SNAPDRAGON`, sub: `8 Elite NPU 45 TOPS`, status: `LOADED`, color: `#a855f7` },
-    { name: `VIVO OFFICE`, sub: `Edge Zero-Friction Bridge`, status: `LINKED`, color: `#f59e0b` },
-    { name: `ORIGINOS 5`, sub: `TEE Biometric Enclave`, status: `LOCKED`, color: `#10b981` }
+  let [mouseOffset, setMouseOffset] = (0, o.useState)({ x: 0, y: 0 });
+
+  const stackItems = [
+    { label: "MODBUS TCP", desc: "Port 502 // Holding Regs", col: "#38bdf8" },
+    { label: "OPENPLC", desc: "IEC 61131-3 Ladder", col: "#34d399" },
+    { label: "EPANET 2.2", desc: "Hydraulic Twin Solver", col: R },
+    { label: "SNAPDRAGON", desc: "8 Elite NPU 45 TOPS", col: "#f59e0b" },
+    { label: "VIVO OFFICE", desc: "Edge Zero-Friction Bridge", col: "#a78bfa" },
+    { label: "ORIGINOS 5", desc: "TEE Biometric Enclave", col: "#38bdf8" }
   ];
 
-  return (0, x.jsxs)(`div`, {
+  return (0, x.jsxs)("div", {
+    onMouseMove: (e) => {
+      let rect = e.currentTarget.getBoundingClientRect();
+      let x = (e.clientX - rect.left) / rect.width - 0.5;
+      let y = (e.clientY - rect.top) / rect.height - 0.5;
+      setMouseOffset({ x, y });
+    },
+    onMouseLeave: () => setMouseOffset({ x: 0, y: 0 }),
     style: {
-      position: `absolute`,
+      position: "absolute",
       inset: 0,
-      background: `#0a0d14`,
+      background: "radial-gradient(circle at 50% 40%, #151c27 0%, #090c12 100%)",
       padding: 16,
-      boxSizing: `border-box`,
-      display: `flex`,
-      flexDirection: `column`,
-      justifyContent: `space-between`
+      boxSizing: "border-box",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between"
     },
     children: [
-      (0, x.jsxs)(`div`, {
-        style: { display: `flex`, justifyContent: `space-between`, alignItems: `center`, fontSize: 10, fontFamily: `monospace`, color: `#94a3b8` },
+      (0, x.jsxs)("div", {
+        style: { display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 9.5, fontFamily: "monospace", color: "#94a3b8" },
         children: [
-          (0, x.jsx)(`span`, { children: `HARDWARE-IN-THE-LOOP ECOSYSTEM` }),
-          (0, x.jsx)(`span`, { style: { color: `#34d399`, fontWeight: 700 }, children: `ZERO BYPASS` })
+          (0, x.jsx)("span", { children: "HARDWARE-IN-THE-LOOP ECOSYSTEM" }),
+          (0, x.jsx)("span", { style: { color: "#34d399", fontWeight: 700 }, children: "ZERO BYPASS" })
         ]
       }),
 
-      // 6-Chip Matrix Grid
-      (0, x.jsx)(`div`, {
-        style: { display: `grid`, gridTemplateColumns: `1fr 1fr`, gap: 8, margin: `10px 0` },
-        children: protocols.map((p, idx) => (
-          (0, x.jsxs)(`div`, {
+      // 6 Floating Interactive Stack Cards
+      (0, x.jsx)("div", {
+        style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, margin: "10px 0" },
+        children: stackItems.map((st, idx) => {
+          let jitterX = mouseOffset.x * ((idx % 2 === 0 ? 1 : -1) * 8);
+          let jitterY = mouseOffset.y * (idx * 3);
+          return (0, x.jsxs)("div", {
             key: idx,
             style: {
-              background: `rgba(255,255,255,0.03)`,
-              border: `1px solid rgba(255,255,255,0.06)`,
-              borderRadius: 8,
-              padding: 8,
-              display: `flex`,
-              flexDirection: `column`,
-              justifyContent: `space-between`
+              background: "rgba(255,255,255,0.04)",
+              border: "1px solid rgba(255,255,255,0.08)",
+              borderRadius: 10,
+              padding: "9px 10px",
+              transform: `translate(${jitterX}px, ${jitterY}px)`,
+              transition: "transform 0.15s ease-out, background 0.2s ease",
+              cursor: "pointer"
             },
+            onMouseEnter: (e) => { e.currentTarget.style.background = "rgba(255,255,255,0.08)"; },
+            onMouseLeave: (e) => { e.currentTarget.style.background = "rgba(255,255,255,0.04)"; },
             children: [
-              (0, x.jsxs)(`div`, {
-                style: { display: `flex`, justifyContent: `space-between`, alignItems: `center` },
+              (0, x.jsxs)("div", {
+                style: { display: "flex", alignItems: "center", justifyContent: "space-between" },
                 children: [
-                  (0, x.jsx)(`span`, { style: { fontFamily: `monospace`, fontSize: 10, fontWeight: 700, color: `#fff` }, children: p.name }),
-                  (0, x.jsx)(`span`, { style: { width: 5, height: 5, borderRadius: `50%`, background: p.color, boxShadow: `0 0 6px ${p.color}` } })
+                  (0, x.jsx)("span", { style: { fontFamily: "monospace", fontSize: 9.5, fontWeight: 800, color: "#fff" }, children: st.label }),
+                  (0, x.jsx)("span", { style: { width: 5, height: 5, borderRadius: "50%", background: st.col, boxShadow: `0 0 6px ${st.col}` } })
                 ]
               }),
-              (0, x.jsx)(`div`, { style: { fontSize: 7.5, color: `#94a3b8`, marginTop: 3 }, children: p.sub })
+              (0, x.jsx)("div", { style: { fontSize: 7.5, color: "#94a3b8", marginTop: 2 }, children: st.desc })
             ]
-          })
-        ))
+          });
+        })
       }),
 
-      // Bottom Telemetry Strip
-      (0, x.jsxs)(`div`, {
-        style: { background: `rgba(255, 105, 46, 0.08)`, border: `1px solid rgba(255, 105, 46, 0.2)`, borderRadius: 6, padding: `6px 10px`, display: `flex`, justifyContent: `space-between`, fontSize: 8.5, fontFamily: `monospace` },
+      // Bottom Telemetry Bar
+      (0, x.jsxs)("div", {
+        style: { display: "flex", justifyContent: "space-between", fontSize: 8, fontFamily: "monospace", color: "#64748b" },
         children: [
-          (0, x.jsx)(`span`, { style: { color: `#cbd5e1` }, children: `PLC LATENCY: 0.8ms` }),
-          (0, x.jsx)(`span`, { style: { color: R, fontWeight: 700 }, children: `MODBUS SYNC: 100%` })
+          (0, x.jsx)("span", { children: "PLC LATENCY: 0.8ms" }),
+          (0, x.jsx)("span", { style: { color: R, fontWeight: 700 }, children: "AIR-GAP ASSURANCE: 100%" })
         ]
       })
     ]
   });
 }
 
-// 5. Dynamic Twin Water Hammer Simulation Visual (Next-Level Cockpit)
+// 5. Dynamic Twin Water Hammer Simulation Visual (Cursor-Scrubbed)
 export function DynamicTwinVisual({ w, h }) {
   let [tick, setTick] = (0, o.useState)(0);
   let [hoverX, setHoverX] = (0, o.useState)(null);
