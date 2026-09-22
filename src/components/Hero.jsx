@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const DELIVERABLES = ["Mobile App", "Landing Pages", "SaaS", "Design System"];
+const DELIVERABLES = ["Intake Pumps", "Modbus Logic", "Surge Valves", "Digital Twins"];
 const SCREENS = [
   "/assets/alpa-dashboard-today.webp",
   "/assets/alpin-klintt-app.webp",
@@ -80,8 +80,8 @@ export default function Hero() {
             textShadow: "0 4px 20px rgba(0,0,0,0.15)"
           }}
         >
-          Pause hiring,<br />
-          Start designing.
+          The command isn’t trusted.<br />
+          The consequence is verified.
         </h1>
 
         <p
@@ -92,7 +92,7 @@ export default function Hero() {
             minHeight: 36
           }}
         >
-          We design your{" "}
+          We protect your{" "}
           <strong
             style={{
               fontWeight: 700,
@@ -104,7 +104,7 @@ export default function Hero() {
           >
             {DELIVERABLES[deliverableIndex]}
           </strong>{" "}
-          without limits, for a fixed price.
+          before execution, for verified physical safety.
         </p>
       </div>
 
@@ -204,8 +204,8 @@ export default function Hero() {
                 <img src="/favicon.png" alt="" style={{ width: 16, height: 16 }} />
               </div>
               <div style={{ textAlign: "left" }}>
-                <div style={{ fontSize: 10, color: "#717680", fontWeight: 600 }}>Get the job done</div>
-                <div style={{ fontSize: 12, color: "#181d27", fontWeight: 700 }}>Your design has been delivered</div>
+                <div style={{ fontSize: 10, color: "#717680", fontWeight: 600 }}>Field Security Node</div>
+                <div style={{ fontSize: 12, color: "#181d27", fontWeight: 700 }}>Hydraulic boundary verified</div>
               </div>
             </div>
 

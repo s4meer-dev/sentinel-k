@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 60" fill="none">
+  <g transform="translate(10, 10)">
+    <!-- OpenPLC emblem -->
+    <rect x="2" y="4" width="32" height="32" rx="8" fill="#ff692e"/>
+    <path d="M12 20 L24 20 M18 14 L18 26" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+    <!-- OpenPLC text -->
+    <text x="44" y="24" font-family="'Inter', -apple-system, sans-serif" font-weight="900" font-size="22" letter-spacing="-0.02em" fill="#0a0d12">Open<tspan fill="#ff692e">PLC</tspan></text>
+    <text x="44" y="36" font-family="'Inter', -apple-system, sans-serif" font-weight="600" font-size="10" letter-spacing="0.12em" fill="#535862">PROJECT</text>
+  </g>
+</svg>

@@ -26,7 +26,7 @@ export default function SocialProof() {
             marginBottom: 36
           }}
         >
-          Our designers have been part of these teams
+          Benchmarked against critical infrastructure protocols
         </p>
         <div
           style={{
@@ -76,7 +76,7 @@ export default function SocialProof() {
             color: "var(--color-text-primary)"
           }}
         >
-          Finding a product designer takes months. Starting with UMANO takes minutes. Unlimited requests. Fixed monthly price. No commitment.
+          The attack doesn’t have to compromise the machine. It targets the operator. Sentinel-K intercepts spoofed instructions, simulates hydraulic transients, and verifies physical consequence before actuation.
         </h2>
       </div>
     </section>

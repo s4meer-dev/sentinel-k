@@ -43,11 +43,9 @@ export default function Preloader({ onComplete }) {
       }}
     >
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 20 }}>
-        <img
-          src="/assets/logo-nav.svg"
-          alt="UMANO"
-          style={{ height: 28, width: "auto" }}
-        />
+        <div style={{ fontFamily: "'AM Le Cygne', serif", fontSize: 24, fontWeight: 700, letterSpacing: "0.04em", color: "var(--color-text-primary)" }}>
+          SENTINEL-K
+        </div>
         <div
           style={{
             width: 180,

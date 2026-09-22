@@ -63,10 +63,10 @@ export default function BentoGrid({ onOpenBrief }) {
                 color: "var(--color-text-primary)"
               }}
             >
-              Your designer, from day one
+              Field Copilot on iQOO Hardware
             </h3>
             <p style={{ fontSize: 15, color: "var(--color-text-tertiary)", lineHeight: 1.5 }}>
-              Senior product designer fully dedicated to your company. Working like a founding designer, without the hiring process.
+              Dedicated on-device security intelligence for the critical-infrastructure field operator. Extracts observable evidence from urgency tokens, direct messages, and spoofed authority.
             </p>
           </div>
         </div>
@@ -117,10 +117,10 @@ export default function BentoGrid({ onOpenBrief }) {
                 color: "var(--color-text-primary)"
               }}
             >
-              Unlimited design requests
+              Deterministic Verification Pipeline
             </h3>
             <p style={{ fontSize: 15, color: "var(--color-text-tertiary)", lineHeight: 1.5 }}>
-              Submit as many tasks as you need. No per-task billing, no cap, no waiting list. Just continuous output.
+              Every operational instruction passes through an 8-stage verification barrier. Decompiles intent into Modbus registers, checks syntax, and invokes dynamic twin simulation.
             </p>
           </div>
         </div>
@@ -153,13 +153,13 @@ export default function BentoGrid({ onOpenBrief }) {
             <div
               style={{
                 fontFamily: "'AM Le Cygne', serif",
-                fontSize: 100,
+                fontSize: 80,
                 fontWeight: 700,
                 color: "var(--color-brand)",
                 lineHeight: 1
               }}
             >
-              4d
+              1.8s
             </div>
             <div
               style={{
@@ -169,7 +169,7 @@ export default function BentoGrid({ onOpenBrief }) {
                 color: "var(--color-text-secondary)"
               }}
             >
-              Average turnaround
+              Cross-domain triage
             </div>
           </div>
           <div style={{ padding: "32px 28px" }}>
@@ -181,10 +181,10 @@ export default function BentoGrid({ onOpenBrief }) {
                 color: "var(--color-text-primary)"
               }}
             >
-              Delivered in 4 days
+              Triage in under 2 seconds
             </h3>
             <p style={{ fontSize: 15, color: "var(--color-text-tertiary)", lineHeight: 1.5 }}>
-              Every task broken down into focused sprints. Work keeps moving forward, every single week.
+              Extracts human-side evidence, verifies cyber integrity, and executes hydraulic boundary checks before any physical valve or pump actuates.
             </p>
           </div>
         </div>
@@ -222,10 +222,10 @@ export default function BentoGrid({ onOpenBrief }) {
                 color: "var(--color-text-primary)"
               }}
             >
-              Your stack. No friction.
+              Industrial Stack. Zero Bypass.
             </h3>
             <p style={{ fontSize: 15, color: "var(--color-text-tertiary)", lineHeight: 1.5 }}>
-              We integrate directly into Figma, Notion, Linear, Slack, and your current workflow.
+              Connects seamlessly with OpenPLC, EPANET, WNTR, Modbus protocols, and the Vivo Office Kit edge bridge.
             </p>
           </div>
         </div>
@@ -273,10 +273,10 @@ export default function BentoGrid({ onOpenBrief }) {
                 color: "var(--color-text-primary)"
               }}
             >
-              Pause or cancel anytime
+              Autonomous Rejection &amp; Replanning
             </h3>
             <p style={{ fontSize: 15, color: "var(--color-text-tertiary)", lineHeight: 1.5 }}>
-              Scale up during heavy sprints, pause between milestones. Pay only when you have active design needs.
+              A secure patch is not necessarily a safe patch. When hydraulic limits are breached, Sentinel-K automatically synthesizes a gradual, safe ramp trajectory.
             </p>
           </div>
         </div>
@@ -327,10 +327,10 @@ export default function BentoGrid({ onOpenBrief }) {
                 color: "var(--color-text-primary)"
               }}
             >
-              100% intellectual property
+              100% Operator Authority Retained
             </h3>
             <p style={{ fontSize: 15, color: "var(--color-text-tertiary)", lineHeight: 1.5 }}>
-              Every Figma file, vector asset, and design system component is 100% yours forever.
+              Zero autonomous actuation without operator sign-off. Field engineers inspect side-by-side simulation plots and retain final execution authority.
             </p>
           </div>
         </div>

@@ -78,11 +78,9 @@ export default function Navbar({ onBookCall }) {
             fontSize: 16
           }}
         >
-          <img
-            src="/assets/logo-nav.svg"
-            alt="UMANO"
-            style={{ height: 18, width: "auto" }}
-          />
+          <span style={{ fontFamily: "'AM Le Cygne', serif", fontWeight: 700, fontSize: 18, color: "var(--color-text-primary)" }}>
+            SENTINEL-K
+          </span>
         </a>
 
         {!scrolled ? (
@@ -96,7 +94,7 @@ export default function Navbar({ onBookCall }) {
                   cursor: "default"
                 }}
               >
-                Design Studio
+                Field Copilot
               </span>
               <span
                 style={{
@@ -107,7 +105,7 @@ export default function Navbar({ onBookCall }) {
                 }}
                 onClick={() => scrollTo("client-stories")}
               >
-                Design Academy
+                Verification Hub
               </span>
             </div>
 
@@ -126,7 +124,7 @@ export default function Navbar({ onBookCall }) {
               onMouseEnter={(e) => (e.target.style.opacity = "0.88")}
               onMouseLeave={(e) => (e.target.style.opacity = "1")}
             >
-              Start today
+              Explore
             </button>
           </>
         ) : (
@@ -144,7 +142,7 @@ export default function Navbar({ onBookCall }) {
                   cursor: "pointer"
                 }}
               >
-                How it works
+                Pipeline
               </button>
               <button
                 onClick={() => scrollTo("client-stories")}
@@ -158,7 +156,7 @@ export default function Navbar({ onBookCall }) {
                   cursor: "pointer"
                 }}
               >
-                Client stories
+                Scenarios
               </button>
               <button
                 onClick={() => scrollTo("pricing")}
@@ -172,7 +170,7 @@ export default function Navbar({ onBookCall }) {
                   cursor: "pointer"
                 }}
               >
-                Pricing
+                Architecture
               </button>
             </div>
 
@@ -192,7 +190,7 @@ export default function Navbar({ onBookCall }) {
               onMouseEnter={(e) => (e.target.style.backgroundColor = "var(--color-brand-hover)")}
               onMouseLeave={(e) => (e.target.style.backgroundColor = "var(--color-brand)")}
             >
-              Book a call
+              Verify Action
             </button>
           </>
         )}

@@ -30,7 +30,7 @@ export default function FAQ() {
           Frequently Asked Questions
         </h2>
         <p style={{ fontSize: 16, color: "var(--color-text-tertiary)" }}>
-          Everything you need to know about working with Umano Design Studio.
+          Everything you need to know about Sentinel-K and the iQOO Hackathon submission.
         </p>
       </div>
 

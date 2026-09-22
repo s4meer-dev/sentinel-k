@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" fill="none">
+  <g transform="translate(10, 10)">
+    <!-- EPANET wave / water droplet symbol -->
+    <path d="M6 24 C10 16 18 10 22 20 C26 30 34 24 38 16" stroke="#0072CE" stroke-width="4" stroke-linecap="round"/>
+    <!-- EPANET text -->
+    <text x="46" y="24" font-family="'Inter', -apple-system, sans-serif" font-weight="900" font-size="22" letter-spacing="0.06em" fill="#0a0d12">EPANET</text>
+    <text x="46" y="36" font-family="'Inter', -apple-system, sans-serif" font-weight="600" font-size="9" letter-spacing="0.12em" fill="#535862">HYDRAULICS</text>
+  </g>
+</svg>

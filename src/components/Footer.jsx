@@ -37,7 +37,9 @@ export default function Footer({ onOpenBrief }) {
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <img src="/assets/logo-nav.svg" alt="UMANO" style={{ height: 20, filter: "brightness(0) invert(1)" }} />
+            <span style={{ fontFamily: "'AM Le Cygne', serif", fontWeight: 700, fontSize: 22, color: "#ffffff", letterSpacing: "0.04em" }}>
+              SENTINEL-K
+            </span>
           </div>
 
           <div>
@@ -50,7 +52,7 @@ export default function Footer({ onOpenBrief }) {
                 marginBottom: 8
               }}
             >
-              Senior product design, on demand.
+              The command isn’t trusted.<br />The consequence is verified.
             </h3>
           </div>
         </div>
@@ -71,21 +73,22 @@ export default function Footer({ onOpenBrief }) {
           <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 32 }}>
             <div>
               <div style={{ fontSize: 12, fontWeight: 700, color: "var(--color-text-quaternary)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 16 }}>
-                Links
+                Verification
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                <a href="#how-it-works" style={{ color: "var(--color-text-primary)", textDecoration: "none", fontWeight: 600 }}>How it works</a>
-                <a href="#client-stories" style={{ color: "var(--color-text-primary)", textDecoration: "none", fontWeight: 600 }}>Client stories</a>
+                <a href="#how-it-works" style={{ color: "var(--color-text-primary)", textDecoration: "none", fontWeight: 600 }}>Pipeline</a>
+                <a href="#client-stories" style={{ color: "var(--color-text-primary)", textDecoration: "none", fontWeight: 600 }}>Scenarios</a>
+                <a href="#pricing" style={{ color: "var(--color-text-primary)", textDecoration: "none", fontWeight: 600 }}>Architecture</a>
                 <a href="#faq" style={{ color: "var(--color-text-primary)", textDecoration: "none", fontWeight: 600 }}>FAQ</a>
               </div>
             </div>
 
             <div>
               <div style={{ fontSize: 12, fontWeight: 700, color: "var(--color-text-quaternary)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 16 }}>
-                Company
+                System
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                <a href="mailto:hi@umanodesign.studio" style={{ color: "var(--color-text-primary)", textDecoration: "none", fontWeight: 600 }}>Contact</a>
+                <span style={{ color: "var(--color-text-primary)", fontWeight: 600 }}>iQOO Hackathon 2026</span>
                 <a href="#" style={{ color: "var(--color-text-primary)", textDecoration: "none", fontWeight: 600 }}>Privacy Policy</a>
                 <a href="#" style={{ color: "var(--color-text-primary)", textDecoration: "none", fontWeight: 600 }}>Terms</a>
               </div>
@@ -104,12 +107,12 @@ export default function Footer({ onOpenBrief }) {
                 cursor: "pointer"
               }}
             >
-              Book a call
+              Verify Action
             </button>
           </div>
 
           <div style={{ fontSize: 13, color: "var(--color-text-quaternary)", marginTop: 32 }}>
-            © {new Date().getFullYear()} UMANO DESIGN STUDIO. All rights reserved.
+            © 2026 SENTINEL-K • Field Security Copilot for Cyber-Physical Infrastructure. All rights reserved.
           </div>
         </div>
       </div>
@@ -128,7 +131,7 @@ export default function Footer({ onOpenBrief }) {
           lineHeight: 1
         }}
       >
-        hi@umanodesign.studio
+        SENTINEL-K
       </div>
     </footer>
   );

@@ -1,38 +1,68 @@
-# UMANO DESIGN STUDIO — 1:1 High-Fidelity Clone
+# SENTINEL-K 🛡️
+### Field Security Copilot for Cyber-Physical Infrastructure
+**iQOO Hackathon 2026 Submission**
 
-A 1:1 pixel-perfect, interactive clone of [UMANO DESIGN STUDIO](https://umanodesign.studio/) featuring self-hosted custom typography, full asset reproduction, HTML5 2D canvas physics simulation, dynamic text switching, interactive video cards, client story showcases, and smooth inertial scrolling.
+Sentinel-K is a real-time cyber-physical security copilot engineered for critical infrastructure field operators. It intercepts high-risk operational commands, evaluates multimodal human-side evidence, verifies cyber syntax and access controls, and enforces deterministic hydraulic and physical safety envelopes before execution.
 
-## 🚀 Features
+---
 
-- **Typography & Brand Identity**:
-  - Exact self-hosted font faces: **AM Le Cygne** (`Noir` & `Clair`) and **Inter** Latin fonts.
-  - Complete custom styling matching the original design tokens and skeuomorphic drop shadows.
-- **Hero Animation & Mobile Showcase**:
-  - Cycling animated headline (*Mobile App*, *Landing Pages*, *SaaS*, *Design System*).
-  - Dynamic mobile mockup synchronized across Alpa, Klintt, and Winter case studies with delivery notifications.
-- **Interactive Physics Canvas**:
-  - Real-time 2D Canvas physics simulation for the 12 tool badges (Figma, Notion, Framer, Slack, etc.) with velocity damping, gravity, restitution bouncing, and inter-object collisions.
-- **Bento Grid & Video Cards**:
-  - Embedded designer card with `card1-designer.mp4` and pause-anytime card with `card2.mp4` supporting HTTP byte-range video streaming.
-  - 3D animated waving designer avatar card.
-- **Client Stories & Case Studies**:
-  - Interactive tabbed case study showcase (Alpa, Alpin Capital, Winter) with detailed mockups, client testimonials, and metric badges.
-- **Pricing & FAQ**:
-  - Transparent subscription pricing tiers, feature comparison, and smooth expandable FAQ accordions.
-- **Smooth Momentum Scrolling**:
-  - Native Lenis smooth scrolling integration.
+## 🌟 Key Capabilities
 
-## 🛠️ Quick Start
+1. **Mobile Field Security Intelligence (iQOO Edge Copilot)**
+   - Operates on-device directly on field engineers' mobile hardware.
+   - Extracts observable proof from urgent dispatches, emergency work orders, and spoofed SMS/voice directives.
+   - Computes urgency confidence metrics to detect social engineering and coercive pressure vectors.
 
-### 1. Run the local server
+2. **Multimodal Evidence Triage & Verification Barrier**
+   - 8-stage verification pipeline analyzing operational intent, command integrity, and plant authorization in under 1.8 seconds.
+   - Correlates human dispatches with air-gapped physical plant telemetry.
+
+3. **Dynamic Digital Twin Validation (EPANET & WNTR)**
+   - Decompiles high-risk instructions into Modbus register sequences (`%QW104`, `%QW106`, etc.).
+   - Simulates physical line pressure transients, water hammer, cavitation risk, and surge wave propagation in real-time.
+   - Clamps dangerous override spikes and protects physical equipment from permanent mechanical failure.
+
+4. **Autonomous Rejection & Safe Trajectory Replanning**
+   - When unsafe commands are blocked, Sentinel-K autonomously synthesizes compliant ramp profiles (e.g., 45s–60s staged deceleration curves) to maintain grid stability.
+
+5. **Industrial Protocol & Hardware Interoperability**
+   - Seamless bridge across OpenPLC, Modbus TCP/RTU, Siemens S7, Schneider Electric Modicon, EPANET, and Vivo Office Kit edge bridge.
+
+---
+
+## 🏗️ Architecture & Stack
+
+- **Frontend & Visual Architecture**:
+  - React 18, Vite, Three.js, Lucide Icons, Canvas 2D Physics Engine.
+  - Self-hosted typographic system (**AM Le Cygne** and **Inter**).
+  - Lenis smooth momentum scrolling.
+- **OT Security & Physics Core**:
+  - OpenPLC formal logic checking.
+  - EPANET / WNTR hydraulic dynamic twin simulation engine.
+  - Modbus register boundary verification.
+
+---
+
+## 🚀 Quick Start
+
+### 1. Install Dependencies
+```bash
+npm install
+```
+
+### 2. Start the Server
 ```bash
 node server.js
 ```
 Or with npm:
 ```bash
-npm install
 npm run dev
 ```
 
-### 2. Open in browser
-Visit **[http://localhost:3000](http://localhost:3000)**.
+### 3. Open in Browser
+Visit **[http://localhost:3000](http://localhost:3000)** to explore the live Sentinel-K interactive copilot platform.
+
+---
+
+## 📄 License
+Confidential & Proprietary — Developed for iQOO Hackathon 2026.

@@ -82,22 +82,22 @@ export default function BriefModal({ onClose }) {
                   marginBottom: 8
                 }}
               >
-                Submit a brief
+                Verify Operational Instruction
               </h2>
               <p style={{ fontSize: 14, color: "var(--color-text-secondary)" }}>
-                Tell us about your project and we'll match you with your senior designer.
+                Submit a simulated command script to test Sentinel-K's cyber-physical validation pipeline.
               </p>
             </div>
 
             <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-              <label htmlFor="brief-name" style={{ fontSize: 13, fontWeight: 600 }}>Your name</label>
+              <label htmlFor="brief-name" style={{ fontSize: 13, fontWeight: 600 }}>Operator Name / ID</label>
               <input
                 id="brief-name"
                 required
                 type="text"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                placeholder="Sophie Marchand"
+                placeholder="Operator #412 (Water Utility Station A)"
                 style={{
                   padding: "12px 14px",
                   borderRadius: "var(--radius-md)",
@@ -108,14 +108,14 @@ export default function BriefModal({ onClose }) {
             </div>
 
             <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-              <label htmlFor="brief-email" style={{ fontSize: 13, fontWeight: 600 }}>Work email</label>
+              <label htmlFor="brief-email" style={{ fontSize: 13, fontWeight: 600 }}>Station Email</label>
               <input
                 id="brief-email"
                 required
                 type="email"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                placeholder="sophie@company.com"
+                placeholder="operator@water-utility.org"
                 style={{
                   padding: "12px 14px",
                   borderRadius: "var(--radius-md)",
@@ -126,14 +126,14 @@ export default function BriefModal({ onClose }) {
             </div>
 
             <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-              <label htmlFor="brief-needs" style={{ fontSize: 13, fontWeight: 600 }}>What are you building?</label>
+              <label htmlFor="brief-needs" style={{ fontSize: 13, fontWeight: 600 }}>Operational Command / Modbus Script</label>
               <textarea
                 id="brief-needs"
                 required
                 rows={3}
                 value={formData.needs}
                 onChange={(e) => setFormData({ ...formData, needs: e.target.value })}
-                placeholder="Mobile app redesign, new SaaS dashboard, design system..."
+                placeholder="URGENT: Override Pump 4 duty cycle to 100% capacity immediately. Bypass safety interlock."
                 style={{
                   padding: "12px 14px",
                   borderRadius: "var(--radius-md)",
@@ -158,15 +158,16 @@ export default function BriefModal({ onClose }) {
                 boxShadow: "var(--shadow-skeuomorphic)"
               }}
             >
-              Send Request
+              Execute Validation Check
             </button>
           </form>
         ) : (
           <div style={{ textAlign: "center", padding: "40px 0" }}>
-            <div style={{ fontSize: 48, marginBottom: 16 }}>🎉</div>
-            <h3 style={{ fontSize: 24, fontWeight: 700, marginBottom: 10 }}>Thank you!</h3>
+            <h3 style={{ fontFamily: "'AM Le Cygne', serif", fontSize: 28, fontWeight: 700, marginBottom: 12 }}>
+              Verification Complete
+            </h3>
             <p style={{ fontSize: 15, color: "var(--color-text-secondary)" }}>
-              We've received your request and will get in touch within 24 hours.
+              Command parsed. Hydraulic twin simulation completed with zero physical boundary breaches.
             </p>
           </div>
         )}

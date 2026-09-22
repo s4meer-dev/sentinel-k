@@ -23,10 +23,10 @@ export default function Pricing({ onOpenBrief }) {
             marginBottom: 16
           }}
         >
-          Simple, transparent pricing.
+          Architecture Deployment Modes.
         </h2>
         <p style={{ fontSize: 18, color: "var(--color-text-secondary)", lineHeight: 1.5 }}>
-          A dedicated senior designer embedded in your team. Unlimited requests, rapid 4-day delivery, pause or cancel anytime.
+          Field-tested security modules for critical infrastructure. On-device mobile triage paired with deterministic hydraulic simulation clusters.
         </p>
       </div>
 

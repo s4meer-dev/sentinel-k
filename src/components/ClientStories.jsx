@@ -27,7 +27,7 @@ export default function ClientStories() {
               marginBottom: 20
             }}
           >
-            Stories of our clients.
+            Field Verification Scenarios.
           </h2>
           <p
             style={{
@@ -38,7 +38,7 @@ export default function ClientStories() {
               lineHeight: 1.5
             }}
           >
-            We've already helped 15+ startups deliver products, features, and brands, to grow their business and raise money.
+            Benchmarked against real-world attack vectors on simulated municipal water reclamation and distribution networks.
           </p>
 
           {/* Client Tabs */}
@@ -101,6 +101,12 @@ export default function ClientStories() {
               }}
             />
 
+            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
+              <span style={{ fontWeight: 700, fontSize: 16 }}>{activeCase.name}</span>
+              <span style={{ color: "rgba(255,255,255,0.4)" }}>•</span>
+              <span style={{ color: "rgba(255,255,255,0.6)", fontSize: 14 }}>{activeCase.role}</span>
+            </div>
+
             <h3
               style={{
                 fontSize: "clamp(24px, 3vw, 36px)",
@@ -143,7 +149,7 @@ export default function ClientStories() {
                 >
                   {activeCase.months} mos
                 </div>
-                <div style={{ fontSize: 13, color: "rgba(255,255,255,0.5)" }}>Partnership</div>
+                <div style={{ fontSize: 13, color: "rgba(255,255,255,0.5)" }}>Incident Phase</div>
               </div>
               <div>
                 <div
@@ -156,7 +162,7 @@ export default function ClientStories() {
                 >
                   {activeCase.tasks}+
                 </div>
-                <div style={{ fontSize: 13, color: "rgba(255,255,255,0.5)" }}>Tasks Delivered</div>
+                <div style={{ fontSize: 13, color: "rgba(255,255,255,0.5)" }}>Checks Executed</div>
               </div>
             </div>
           </div>
