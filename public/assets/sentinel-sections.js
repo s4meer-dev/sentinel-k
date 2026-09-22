@@ -126,7 +126,7 @@ export function HeroPhoneTerminal() {
           left: 0,
           right: 0,
           height: 2,
-          background: "linear-gradient(90deg, transparent, rgba(255,105,46,0.6), transparent)",
+          background: "linear-gradient(90deg, transparent, rgba(217,83,35,0.6), transparent)",
           top: `${(tick % 240) / 240 * 100}%`,
           pointerEvents: "none",
           zIndex: 5,
@@ -159,7 +159,7 @@ export function HeroPhoneTerminal() {
                   boxShadow: `0 0 6px ${activePhase === 3 ? "#ef4444" : "#10b981"}`
                 }
               }),
-              "NODE_04 // AIR-GAP"
+              "iQOO 13 // 45 TOPS NPU"
             ]
           }),
           (0, x.jsxs)("span", {
