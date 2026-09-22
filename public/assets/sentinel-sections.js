@@ -2504,3 +2504,252 @@ export function DynamicTwinVisual({ w, h }) {
     ]
   });
 }
+
+// ==========================================
+// CINEMATIC ATMOSPHERE & SCADA SYNTHESIZER
+// ==========================================
+export function CinematicAtmosphere() {
+  let canvasRef = (0, o.useRef)(null);
+  let [audioEnabled, setAudioEnabled] = (0, o.useState)(false);
+  let [scrollProgress, setScrollProgress] = (0, o.useState)(0);
+  let audioCtxRef = (0, o.useRef)(null);
+
+  // Sound synthesis function
+  let playBlip = (freq = 880, dur = 0.035, type = "sine") => {
+    if (!audioEnabled) return;
+    try {
+      if (!audioCtxRef.current) {
+        audioCtxRef.current = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      let ctx = audioCtxRef.current;
+      if (ctx.state === "suspended") ctx.resume();
+      let osc = ctx.createOscillator();
+      let gain = ctx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, ctx.currentTime);
+      gain.gain.setValueAtTime(0.04, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + dur);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + dur);
+    } catch {}
+  };
+
+  // Wire subtle global interaction clicks when audio is enabled
+  (0, o.useEffect)(() => {
+    let onClick = (e) => {
+      let target = e.target.closest("button, a, [role='button'], input");
+      if (target) playBlip(1200, 0.04, "triangle");
+    };
+    window.addEventListener("click", onClick, { passive: true });
+    return () => window.removeEventListener("click", onClick);
+  }, [audioEnabled]);
+
+  // Track scroll progress for hairline progress line
+  (0, o.useEffect)(() => {
+    let onScroll = () => {
+      let h = document.documentElement.scrollHeight - window.innerHeight;
+      if (h > 0) setScrollProgress(window.scrollY / h);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Canvas particle & fluid wave loop
+  (0, o.useEffect)(() => {
+    let canvas = canvasRef.current;
+    if (!canvas) return;
+    let ctx = canvas.getContext("2d");
+    let animId;
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+
+    let onResize = () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    };
+    window.addEventListener("resize", onResize, { passive: true });
+
+    let mouseX = width / 2;
+    let mouseY = height / 2;
+    let lastScrollY = window.scrollY;
+    let scrollVelocity = 0;
+
+    let onMouseMove = (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    };
+    window.addEventListener("mousemove", onMouseMove, { passive: true });
+
+    let onScroll = () => {
+      let sy = window.scrollY;
+      scrollVelocity = Math.min(25, Math.abs(sy - lastScrollY));
+      lastScrollY = sy;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    // Generate telemetry particles
+    let count = Math.min(48, Math.floor(width / 32));
+    let particles = Array.from({ length: count }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      vx: (Math.random() - 0.5) * 0.4,
+      vy: (Math.random() - 0.5) * 0.4,
+      rad: Math.random() * 1.6 + 0.8,
+      alpha: Math.random() * 0.4 + 0.15,
+      hue: Math.random() > 0.6 ? 24 : 198
+    }));
+
+    let frame = 0;
+    let render = () => {
+      frame++;
+      scrollVelocity *= 0.94;
+      ctx.clearRect(0, 0, width, height);
+
+      // Draw subtle undulating hydrodynamic waveforms
+      let waveCount = 3;
+      for (let w = 0; w < waveCount; w++) {
+        ctx.beginPath();
+        let baseY = height * (0.25 + w * 0.28);
+        ctx.moveTo(0, baseY);
+        for (let x = 0; x <= width; x += 40) {
+          let distMouse = Math.abs(x - mouseX) / width;
+          let mouseInfluence = Math.max(0, 1 - distMouse * 2.5) * (mouseY - baseY) * 0.12;
+          let waveY = baseY + Math.sin(frame * 0.012 + x * 0.003 + w * 1.5) * (14 + scrollVelocity * 1.2) + mouseInfluence;
+          ctx.lineTo(x, waveY);
+        }
+        ctx.strokeStyle = w === 1 ? "rgba(217, 83, 35, 0.045)" : "rgba(56, 189, 248, 0.035)";
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+
+      // Draw vector particles
+      for (let p of particles) {
+        p.x += p.vx;
+        p.y += p.vy;
+
+        // Subtle mouse repulsion
+        let dx = p.x - mouseX;
+        let dy = p.y - mouseY;
+        let dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 140 && dist > 1) {
+          p.x += (dx / dist) * 1.2;
+          p.y += (dy / dist) * 1.2;
+        }
+
+        if (p.x < 0) p.x = width;
+        if (p.x > width) p.x = 0;
+        if (p.y < 0) p.y = height;
+        if (p.y > height) p.y = 0;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.rad, 0, Math.PI * 2);
+        ctx.fillStyle = p.hue === 24 ? `rgba(217, 83, 35, ${p.alpha * 0.6})` : `rgba(56, 189, 248, ${p.alpha * 0.5})`;
+        ctx.fill();
+      }
+
+      animId = requestAnimationFrame(render);
+    };
+    animId = requestAnimationFrame(render);
+
+    return () => {
+      cancelAnimationFrame(animId);
+      window.removeEventListener("resize", onResize);
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
+
+  return (0, x.jsxs)(x.Fragment, {
+    children: [
+      // 1. Hairline Scroll Progress Bar along top edge
+      (0, x.jsx)("div", {
+        style: {
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: `${scrollProgress * 100}%`,
+          height: 2.5,
+          background: "linear-gradient(90deg, #d95323, #ff8c5a)",
+          zIndex: 10003,
+          pointerEvents: "none",
+          boxShadow: "0 0 8px rgba(217,83,35,0.7)",
+          transition: "width 0.1s linear"
+        }
+      }),
+
+      // 2. Micro-Film Grain Filter Overlay
+      (0, x.jsx)("div", {
+        style: {
+          position: "fixed",
+          inset: 0,
+          backgroundImage: "radial-gradient(circle at 50% 50%, transparent 80%, rgba(0,0,0,0.18)), url('data:image/svg+xml,%3Csvg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cfilter id=\"noise\"%3E%3CfeTurbulence type=\"fractalNoise\" baseFrequency=\"0.8\" numOctaves=\"3\" stitchTiles=\"stitch\"/%3E%3C/filter%3E%3Crect width=\"100%25\" height=\"100%25\" filter=\"url(%23noise)\" opacity=\"0.03\"/%3E%3C/svg%3E')",
+          pointerEvents: "none",
+          zIndex: 99990,
+          opacity: 0.8
+        }
+      }),
+
+      // 3. Cyber-Physical Fluid Wave Energy Canvas
+      (0, x.jsx)("canvas", {
+        ref: canvasRef,
+        style: {
+          position: "fixed",
+          inset: 0,
+          pointerEvents: "none",
+          zIndex: 0,
+          opacity: 0.75
+        }
+      }),
+
+      // 4. SCADA Audio Synthesizer Control Pill (Floating in bottom-left)
+      (0, x.jsxs)("button", {
+        onClick: () => {
+          setAudioEnabled(!audioEnabled);
+          if (!audioEnabled) playBlip(1760, 0.06, "sine");
+        },
+        "data-cursor-stick": true,
+        style: {
+          position: "fixed",
+          bottom: 24,
+          left: 28,
+          zIndex: 10000,
+          background: audioEnabled ? "rgba(16, 185, 129, 0.15)" : "rgba(255, 255, 255, 0.75)",
+          border: audioEnabled ? "1px solid rgba(16, 185, 129, 0.5)" : "1px solid rgba(0, 0, 0, 0.12)",
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
+          borderRadius: 100,
+          padding: "6px 14px",
+          display: "flex",
+          alignItems: "center",
+          gap: 8,
+          cursor: "pointer",
+          boxShadow: "0 4px 16px rgba(0,0,0,0.06)",
+          transition: "all 0.25s ease"
+        },
+        children: [
+          (0, x.jsxs)("div", {
+            style: { display: "flex", alignItems: "flex-end", gap: 2, height: 12 },
+            children: [
+              (0, x.jsx)("span", { style: { width: 2.5, height: audioEnabled ? 11 : 4, background: audioEnabled ? "#10b981" : "#7c766c", borderRadius: 1, transition: "height 0.2s ease" } }),
+              (0, x.jsx)("span", { style: { width: 2.5, height: audioEnabled ? 8 : 4, background: audioEnabled ? "#10b981" : "#7c766c", borderRadius: 1, transition: "height 0.3s ease" } }),
+              (0, x.jsx)("span", { style: { width: 2.5, height: audioEnabled ? 12 : 4, background: audioEnabled ? "#10b981" : "#7c766c", borderRadius: 1, transition: "height 0.15s ease" } })
+            ]
+          }),
+          (0, x.jsx)("span", {
+            style: {
+              fontFamily: "monospace",
+              fontSize: 9.5,
+              fontWeight: 800,
+              letterSpacing: "0.08em",
+              color: audioEnabled ? "#059669" : "#545b67"
+            },
+            children: audioEnabled ? "TELEMETRY AUDIO: ON" : "AUDIO: MUTED"
+          })
+        ]
+      })
+    ]
+  });
+}
+

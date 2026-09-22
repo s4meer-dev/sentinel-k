@@ -12,12 +12,12 @@ function s(e, t, n) {
   return (1 - n) * e + n * t;
 }
 
-// Draw smooth capsule when snapped (the select effect user loves)
+// Draw smooth organic capsule when snapped
 function drawCapsule(ctx, cx, cy, rad, f) {
   let pts = [];
   for (let idx = 0; idx < 8; idx++) {
     let angle = (idx / 8) * Math.PI * 2 - Math.PI / 2;
-    let wave = Math.sin(f / 55 + idx * 1.2) * 2;
+    let wave = Math.sin(f / 55 + idx * 1.2) * 1.8;
     pts.push([cx + Math.cos(angle) * (rad + wave), cy + Math.sin(angle) * (rad + wave)]);
   }
   ctx.beginPath();
@@ -60,8 +60,8 @@ function drawMinimalFluidCursor(ctx, cx, cy, color, vx, vy, rad) {
   ctx.beginPath();
   ctx.arc(0, 0, rad, 0, Math.PI * 2);
   ctx.strokeStyle = color;
-  ctx.lineWidth = 1.2;
-  ctx.globalAlpha = 0.48;
+  ctx.lineWidth = 1.25;
+  ctx.globalAlpha = 0.5;
   ctx.stroke();
 
   ctx.restore();
@@ -70,6 +70,7 @@ function drawMinimalFluidCursor(ctx, cx, cy, color, vx, vy, rad) {
 function CustomCursor() {
   let canvasRef = (0, r.useRef)(null);
   let dotRef = (0, r.useRef)(null);
+  let labelRef = (0, r.useRef)(null);
   let [isDesktop, setIsDesktop] = (0, r.useState)(false);
 
   (0, r.useEffect)(() => {
@@ -83,6 +84,7 @@ function CustomCursor() {
     if (!isDesktop) return;
     let canvas = canvasRef.current;
     let dot = dotRef.current;
+    let label = labelRef.current;
     if (!canvas || !dot) return;
 
     let ctx = canvas.getContext("2d");
@@ -94,10 +96,11 @@ function CustomCursor() {
     let smoothY = -200;
     let firstMove = true;
     let lerpSpeed = 1;
-    let currentRadius = 10;
+    let currentRadius = 11;
     let activeColor = a;
     let isSnapping = false;
     let isSelected = false;
+    let cursorText = "";
     let targetX = 0;
     let targetY = 0;
     let isHidden = false;
@@ -128,7 +131,6 @@ function CustomCursor() {
       }
 
       // Context color detection (light vs dark section)
-      let heroEl = document.getElementById("hero-section");
       let isOverDark = false;
       let darkEls = document.querySelectorAll("[data-cursor-dark], #clientstories, #pricing");
       for (let el of darkEls) {
@@ -145,21 +147,34 @@ function CustomCursor() {
       let isHide = elUnder?.closest("[data-cursor-hide]");
       isHidden = !!(isDot || isHide);
 
+      let cardEl = elUnder?.closest("[data-cursor='card'], [data-cursor-text]");
       let stickEl = (elUnder?.closest("[data-cursor-stick]"))?.querySelector("[data-cursor-anchor]");
       let targetEl = elUnder?.closest("[data-cursor-target]");
       let noStickEl = elUnder?.closest("[data-cursor-no-stick]");
       let interactive = !isDot && !noStickEl ? (stickEl || targetEl || elUnder?.closest("a, button, [role='button']")) : null;
 
-      if (interactive) {
-        let rect = interactive.getBoundingClientRect();
-        targetX = rect.left + rect.width / 2;
-        targetY = rect.top + rect.height / 2;
-        isSnapping = true;
+      if (cardEl && !interactive) {
+        isSnapping = false;
         isSelected = true;
-        lerpSpeed = 0.12;
+        cursorText = cardEl.getAttribute("data-cursor-text") || "EXPLORE";
+        lerpSpeed = 0.18;
+      } else if (interactive) {
+        let rect = interactive.getBoundingClientRect();
+        // If button is compact enough, magnetic center snap; if huge, follow smoothly
+        if (rect.width < 280 && rect.height < 120) {
+          targetX = rect.left + rect.width / 2;
+          targetY = rect.top + rect.height / 2;
+          isSnapping = true;
+        } else {
+          isSnapping = false;
+        }
+        isSelected = true;
+        cursorText = interactive.getAttribute("data-cursor-text") || "";
+        lerpSpeed = 0.14;
       } else {
         isSnapping = false;
         isSelected = false;
+        cursorText = "";
         lerpSpeed = 0.22;
       }
     };
@@ -170,7 +185,7 @@ function CustomCursor() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       // Center dot coordinates
-      dot.style.transform = `translate(${mouseX - 2}px, ${mouseY - 2}px)`;
+      dot.style.transform = `translate(${mouseX - 2.5}px, ${mouseY - 2.5}px)`;
       dot.style.background = activeColor;
       dot.style.opacity = isHidden || isSelected ? "0" : "1";
       canvas.style.opacity = isHidden ? "0" : "1";
@@ -181,16 +196,25 @@ function CustomCursor() {
       smoothX = s(smoothX, destX, lerpSpeed);
       smoothY = s(smoothY, destY, lerpSpeed);
 
+      if (label) {
+        label.style.transform = `translate(${smoothX}px, ${smoothY}px) translate(-50%, -50%)`;
+        label.style.opacity = !isHidden && isSelected && cursorText ? "1" : "0";
+        if (cursorText && label.textContent !== cursorText) {
+          label.textContent = cursorText;
+        }
+      }
+
       if (isSelected) {
-        // Smoothly expand into magnetic selection capsule (user-praised select effect)
-        currentRadius = s(currentRadius, 36, 0.08);
+        // Smoothly expand into magnetic selection capsule
+        let targetRad = cursorText ? 38 : 32;
+        currentRadius = s(currentRadius, targetRad, 0.09);
         drawCapsule(ctx, smoothX, smoothY, currentRadius, frame);
-        ctx.fillStyle = activeColor;
-        ctx.globalAlpha = 0.12;
+        ctx.fillStyle = cursorText ? activeColor : activeColor;
+        ctx.globalAlpha = cursorText ? 0.92 : 0.12;
         ctx.fill();
         ctx.strokeStyle = activeColor;
         ctx.lineWidth = 1.5;
-        ctx.globalAlpha = 0.55;
+        ctx.globalAlpha = cursorText ? 1 : 0.58;
         ctx.stroke();
       } else {
         // Smoothly return to ultra-clean fluid precision micro-ring
@@ -223,15 +247,34 @@ function CustomCursor() {
           position: "fixed",
           top: 0,
           left: 0,
-          width: 4,
-          height: 4,
+          width: 5,
+          height: 5,
           borderRadius: "50%",
           background: a,
           pointerEvents: "none",
           zIndex: 99998,
           willChange: "transform",
           transition: "background 0.2s ease, opacity 0.15s ease",
-          boxShadow: `0 0 4px ${a}`
+          boxShadow: `0 0 6px ${a}`
+        }
+      }),
+      (0, i.jsx)("div", {
+        ref: labelRef,
+        style: {
+          position: "fixed",
+          top: 0,
+          left: 0,
+          pointerEvents: "none",
+          zIndex: 99999,
+          fontFamily: "monospace",
+          fontSize: 9,
+          fontWeight: 800,
+          letterSpacing: "0.1em",
+          color: "#fff",
+          textTransform: "uppercase",
+          opacity: 0,
+          transition: "opacity 0.2s ease",
+          willChange: "transform"
         }
       }),
       (0, i.jsx)("canvas", {
