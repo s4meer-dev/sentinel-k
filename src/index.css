@@ -1,0 +1,160 @@
+@font-face {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/fonts/inter-latin.woff2) format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(/fonts/inter-latin.woff2) format("woff2");
+}
+
+@font-face {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(/fonts/inter-latin.woff2) format("woff2");
+}
+
+@font-face {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(/fonts/inter-latin.woff2) format("woff2");
+}
+
+@font-face {
+  font-family: "AM Le Cygne";
+  src: url(/fonts/AMLeCygne-Noir.otf) format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "AM Le Cygne";
+  src: url(/fonts/AMLeCygne-Clair.otf) format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --color-brand: #ff4405;
+  --color-brand-hover: #e53d04;
+  --color-brand-purple: #6941c6;
+  --color-brand-section: #53389e;
+  --color-text-primary: #181d27;
+  --color-text-secondary: #414651;
+  --color-text-tertiary: #535862;
+  --color-text-quaternary: #717680;
+  --color-text-white: #fff;
+  --color-text-brand: #6941c6;
+  --color-bg-primary: #fff;
+  --color-bg-secondary: #fafafa;
+  --color-border-primary: #d5d7da;
+  --color-border-secondary: #e9eaeb;
+  --color-success-bg: #dcfae6;
+  --color-success-text: #067647;
+  --color-warning-bg: #fef0c7;
+  --color-warning-text: #b54708;
+  --color-error-bg: #fee4e2;
+  --color-error-text: #b42318;
+  --color-info-bg: #eff8ff;
+  --color-info-text: #175cd3;
+  --shadow-xs: 0px 1px 2px 0px rgba(10, 13, 18, 0.05);
+  --shadow-sm: 0px 1px 3px 0px rgba(10, 13, 18, 0.1), 0px 1px 2px 0px rgba(10, 13, 18, 0.06);
+  --shadow-md: 0px 4px 8px -2px rgba(10, 13, 18, 0.1), 0px 2px 4px -2px rgba(10, 13, 18, 0.06);
+  --shadow-lg: 0px 12px 16px 0px rgba(10, 13, 18, 0.08), 0px 4px 6px 0px rgba(10, 13, 18, 0.03), 0px 2px 2px 0px rgba(10, 13, 18, 0.04);
+  --shadow-skeuomorphic: 0px 1px 2px 0px rgba(10, 13, 18, 0.05), inset 0px -2px 0px 0px rgba(10, 13, 18, 0.05), inset 0px 0px 0px 1px rgba(10, 13, 18, 0.18);
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+  --radius-full: 9999px;
+}
+
+*, ::before, ::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-secondary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 14px;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  background: none;
+}
+
+/* Custom cursor */
+.custom-cursor {
+  position: fixed;
+  pointer-events: none;
+  z-index: 99999;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              height 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.25s ease,
+              border-radius 0.25s ease,
+              opacity 0.2s ease;
+}
+
+.custom-cursor-dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-brand);
+}
+
+.custom-cursor-card {
+  width: 44px;
+  height: 44px;
+  background-color: rgba(255, 68, 5, 0.15);
+  border: 1.5px solid var(--color-brand);
+}
+
+/* Animations */
+@keyframes pulseGreen {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.3); opacity: 0.6; }
+}
+
+.pulse-dot {
+  animation: pulseGreen 2s infinite ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
