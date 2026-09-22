@@ -64,18 +64,17 @@ import{DigitalTwinSection as _DigitalTwin,AgentBentoSection as _AgentBento,Playb
       e.style.borderBottomRightRadius=`${r*42}px`;
       if(m.current)return;
       let i=window.innerWidth<=768,
-          a=i?n*.08:n*.22,
-          o=i?0:Math.min(12,n*.022),
-          s=1+Math.min(.06,n*.00012),
-          tiltY=i?0:Math.sin(n*.004)*2.5;
+          a=i?n*.08:n*.18,
+          o=i?0:Math.min(6,n*.012),
+          s=1+Math.min(.04,n*.00008);
       
-      // Combine scroll tilt with dynamic mouse gyro perspective!
-      let dynamicRotX = o + (i ? 0 : mouse.y * -8);
-      let dynamicRotY = tiltY + (i ? 0 : mouse.x * 10);
+      // Subtle, rock-steady 3D perspective without sideways scroll wobble
+      let dynamicRotX = o + (i ? 0 : mouse.y * -2.2);
+      let dynamicRotY = i ? 0 : mouse.x * 2.8;
 
-      t.style.transformOrigin=i?"50% 100%":"50% 40%";
-      t.style.transform=`perspective(1200px) rotateX(${dynamicRotX}deg) rotateY(${dynamicRotY}deg) scale(${s}) translateY(${a}px)`;
-      t.style.filter=`drop-shadow(0 ${24+n*.04}px ${56+n*.06}px rgba(0,0,0,0.35)) drop-shadow(0 0 ${20+n*.04}px rgba(217,83,35,0.2))`;
+      t.style.transformOrigin=i?"50% 100%":"50% 45%";
+      t.style.transform=`perspective(1400px) rotateX(${dynamicRotX}deg) rotateY(${dynamicRotY}deg) scale(${s}) translateY(${a}px)`;
+      t.style.filter=`drop-shadow(0 ${24+n*.04}px ${56+n*.06}px rgba(0,0,0,0.32))`;
     };
     window.addEventListener("scroll",n,{passive:!0});
     n();
@@ -308,13 +307,13 @@ import{DigitalTwinSection as _DigitalTwin,AgentBentoSection as _AgentBento,Playb
             }
           }),
 
-          // iQOO 13 Flagship Screen Overlay (Calibrated Inside Hand Glass)
+          // iQOO 13 Flagship Screen Overlay (Sub-Pixel Calibrated to Physical Bezel)
           (0,x.jsxs)("div",{
             style:{
               position:"absolute",
-              left:330,top:52,width:232,height:508,borderRadius:24,
+              left:322,top:54,width:247,height:543,borderRadius:35,
               border:"none",
-              boxShadow:"inset 0 0 14px rgba(0,0,0,0.7)",
+              boxShadow:"inset 0 0 0 1px rgba(255,255,255,0.08), inset 0 0 18px rgba(0,0,0,0.85)",
               background:"#05070a",
               overflow:"hidden",
               zIndex:5

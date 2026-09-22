@@ -92,18 +92,16 @@ export function HeroPhoneTerminal() {
     style: {
       width: "100%",
       height: "100%",
-      background: "linear-gradient(180deg, #090c12 0%, #05070a 100%)",
+      background: "linear-gradient(180deg, #0b0f17 0%, #05070a 100%)",
       color: "#fff",
       display: "flex",
       flexDirection: "column",
       justifyContent: "space-between",
-      padding: "10px 9px 8px",
+      padding: "28px 12px 14px",
       boxSizing: "border-box",
-      borderRadius: 14,
       fontFamily: L,
       overflow: "hidden",
-      position: "relative",
-      boxShadow: "inset 0 0 24px rgba(0,0,0,0.8)"
+      position: "relative"
     },
     children: [
       // Ambient scanline overlay
@@ -111,11 +109,11 @@ export function HeroPhoneTerminal() {
         style: {
           position: "absolute",
           inset: 0,
-          background: "linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%)",
+          background: "linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.22) 50%)",
           backgroundSize: "100% 3px",
           pointerEvents: "none",
           zIndex: 4,
-          opacity: 0.35
+          opacity: 0.3
         }
       }),
 
@@ -126,7 +124,7 @@ export function HeroPhoneTerminal() {
           left: 0,
           right: 0,
           height: 2,
-          background: "linear-gradient(90deg, transparent, rgba(217,83,35,0.6), transparent)",
+          background: "linear-gradient(90deg, transparent, rgba(217,83,35,0.65), transparent)",
           top: `${(tick % 240) / 240 * 100}%`,
           pointerEvents: "none",
           zIndex: 5,
@@ -134,90 +132,204 @@ export function HeroPhoneTerminal() {
         }
       }),
 
-      // Top Header HUD
+      // 1. Top Enclave Header + 5-Stage Progress Strip
       (0, x.jsxs)("div", {
-        style: {
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          fontSize: 7.5,
-          color: "#98a2b3",
-          borderBottom: "1px solid rgba(255,255,255,0.08)",
-          paddingBottom: 5,
-          zIndex: 6
-        },
+        style: { position: "relative", zIndex: 6 },
         children: [
-          (0, x.jsxs)("span", {
-            style: { display: "flex", alignItems: "center", gap: 4, fontWeight: 700, letterSpacing: "0.05em" },
+          (0, x.jsxs)("div", {
+            style: {
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              fontSize: 8,
+              color: "#98a2b3",
+              borderBottom: "1px solid rgba(255,255,255,0.08)",
+              paddingBottom: 6
+            },
             children: [
-              (0, x.jsx)("span", {
-                style: {
-                  width: 5,
-                  height: 5,
-                  borderRadius: "50%",
-                  background: activePhase === 3 ? "#ef4444" : "#10b981",
-                  boxShadow: `0 0 6px ${activePhase === 3 ? "#ef4444" : "#10b981"}`
-                }
+              (0, x.jsxs)("span", {
+                style: { display: "flex", alignItems: "center", gap: 5, fontWeight: 800, letterSpacing: "0.05em", color: "#e2e8f0" },
+                children: [
+                  (0, x.jsx)("span", {
+                    style: {
+                      width: 6,
+                      height: 6,
+                      borderRadius: "50%",
+                      background: activePhase === 3 ? "#ef4444" : "#10b981",
+                      boxShadow: `0 0 8px ${activePhase === 3 ? "#ef4444" : "#10b981"}`
+                    }
+                  }),
+                  "iQOO 13 // 45 TOPS NPU"
+                ]
               }),
-              "iQOO 13 // 45 TOPS NPU"
+              (0, x.jsxs)("span", {
+                style: {
+                  color: phases[activePhase].color,
+                  fontWeight: 800,
+                  fontFamily: "monospace",
+                  background: "rgba(255,255,255,0.07)",
+                  padding: "2px 6px",
+                  borderRadius: 4,
+                  fontSize: 7.5
+                },
+                children: ["STAGE 0", activePhase + 1, "/05"]
+              })
             ]
           }),
-          (0, x.jsxs)("span", {
-            style: {
-              color: phases[activePhase].color,
-              fontWeight: 800,
-              fontFamily: "monospace",
-              background: "rgba(255,255,255,0.06)",
-              padding: "1px 5px",
-              borderRadius: 4
-            },
-            children: ["STAGE 0", activePhase + 1, "/05"]
+
+          // 5 Interactive Stage Selector Pills
+          (0, x.jsx)("div", {
+            style: { display: "flex", gap: 4, margin: "7px 0 0" },
+            children: [0, 1, 2, 3, 4].map((idx) => (
+              (0, x.jsx)("div", {
+                key: idx,
+                onClick: () => { setActivePhase(idx); setIsInteracting(true); },
+                style: {
+                  flex: 1,
+                  height: 3.5,
+                  borderRadius: 2,
+                  background: activePhase === idx ? phases[idx].color : "rgba(255,255,255,0.14)",
+                  boxShadow: activePhase === idx ? `0 0 8px ${phases[idx].color}` : "none",
+                  cursor: "pointer",
+                  transition: "all 0.25s ease"
+                }
+              })
+            ))
           })
         ]
       }),
 
-      // 5 Interactive Stage Selector Pills
-      (0, x.jsx)("div", {
-        style: { display: "flex", gap: 3, margin: "4px 0", zIndex: 6 },
-        children: [0, 1, 2, 3, 4].map((idx) => (
-          (0, x.jsx)("div", {
-            key: idx,
-            onClick: () => { setActivePhase(idx); setIsInteracting(true); },
-            style: {
-              flex: 1,
-              height: 3,
-              borderRadius: 2,
-              background: activePhase === idx ? phases[idx].color : "rgba(255,255,255,0.15)",
-              boxShadow: activePhase === idx ? `0 0 6px ${phases[idx].color}80` : "none",
-              cursor: "pointer",
-              transition: "all 0.25s ease"
-            }
-          })
-        ))
-      }),
-
-      // Dynamic Stage Body Container
+      // 2. Center Always-On Live EPANET 2.2 + NPU Oscilloscope Viewport (Eliminates Empty Space!)
       (0, x.jsxs)("div", {
         style: {
-          flex: 1,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          background: "rgba(255,255,255,0.025)",
-          borderRadius: 10,
-          padding: "7px 8px",
-          border: "1px solid rgba(255,255,255,0.06)",
+          background: "rgba(15, 23, 42, 0.65)",
+          border: `1px solid ${activePhase === 3 ? "rgba(239,68,68,0.4)" : "rgba(255,255,255,0.09)"}`,
+          borderRadius: 12,
+          padding: "9px 10px",
           position: "relative",
           zIndex: 6,
-          overflow: "hidden"
+          display: "flex",
+          flexDirection: "column",
+          gap: 7,
+          boxShadow: "inset 0 0 20px rgba(0,0,0,0.6)"
+        },
+        children: [
+          // Viewport Header
+          (0, x.jsxs)("div", {
+            style: { display: "flex", justifyContent: "space-between", alignItems: "center", fontFamily: "monospace", fontSize: 7.5 },
+            children: [
+              (0, x.jsx)("span", { style: { color: "#94a3b8", fontWeight: 700 }, children: "EPANET 2.2 // LIVE TRANSIENT" }),
+              (0, x.jsx)("span", {
+                style: {
+                  color: activePhase === 4 ? "#10b981" : "#ef4444",
+                  background: activePhase === 4 ? "rgba(16,185,129,0.15)" : "rgba(239,68,68,0.18)",
+                  padding: "1.5px 5px",
+                  borderRadius: 4,
+                  fontWeight: 800
+                },
+                children: activePhase === 4 ? "7.4 BAR (SAFE)" : "11.4 BAR SURGE"
+              })
+            ]
+          }),
+
+          // Live SVG Hydrodynamic Waveform Graph
+          (0, x.jsxs)("div", {
+            style: {
+              height: 82,
+              background: "rgba(0,0,0,0.55)",
+              borderRadius: 8,
+              border: "1px solid rgba(255,255,255,0.06)",
+              position: "relative",
+              overflow: "hidden",
+              padding: "4px"
+            },
+            children: [
+              (0, x.jsxs)("svg", {
+                viewBox: "0 0 200 70",
+                style: { width: "100%", height: "100%", display: "block" },
+                children: [
+                  // Subtle grid lines
+                  (0, x.jsx)("line", { x1: 0, y1: 18, x2: 200, y2: 18, stroke: "rgba(239,68,68,0.55)", strokeDasharray: "3 3", strokeWidth: 1 }),
+                  (0, x.jsx)("text", { x: 196, y: 14, textAnchor: "end", fill: "#ef4444", fontSize: 6.5, fontFamily: "monospace", fontWeight: 700, children: "9.2 BAR CEILING" }),
+                  (0, x.jsx)("line", { x1: 0, y1: 45, x2: 200, y2: 45, stroke: "rgba(255,255,255,0.07)", strokeWidth: 0.8 }),
+
+                  // Unchecked Surge Trajectory (Red)
+                  (0, x.jsx)("path", {
+                    d: `M 0 56 Q 45 54 85 ${activePhase === 4 ? 36 : 7 + Math.sin(tick * 0.12) * 3} T 155 ${activePhase === 4 ? 38 : 22} T 200 ${activePhase === 4 ? 36 : 26}`,
+                    fill: "none",
+                    stroke: activePhase === 4 ? "rgba(239,68,68,0.3)" : "#ef4444",
+                    strokeWidth: activePhase === 4 ? 1.2 : 2.2,
+                    strokeDasharray: activePhase === 4 ? "2 2" : "none"
+                  }),
+
+                  // Safe Replanned Trajectory (Emerald)
+                  (0, x.jsx)("path", {
+                    d: `M 0 56 Q 55 52 105 ${36 + Math.cos(tick * 0.1) * 1.5} T 200 35`,
+                    fill: "none",
+                    stroke: "#10b981",
+                    strokeWidth: activePhase === 4 ? 2.4 : 1.5,
+                    opacity: activePhase === 4 ? 1 : 0.65
+                  }),
+
+                  // Pulsing Telemetry Cursor Node
+                  (0, x.jsx)("circle", {
+                    cx: 85,
+                    cy: activePhase === 4 ? 36 : 9,
+                    r: 3.5,
+                    fill: activePhase === 4 ? "#10b981" : "#ef4444"
+                  })
+                ]
+              })
+            ]
+          }),
+
+          // 3 Hardware Mini-Gauges Row
+          (0, x.jsx)("div", {
+            style: { display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 5 },
+            children: [
+              { label: "BOOSTER 04", val: activePhase === 4 ? "680 RPM" : "850 RPM", col: activePhase === 4 ? "#10b981" : "#f59e0b" },
+              { label: "VALVE RV-02", val: activePhase === 4 ? "40% OPEN" : "0% SHUT", col: activePhase === 4 ? "#10b981" : "#ef4444" },
+              { label: "NPU LATENCY", val: "18.4 ms", col: "#38bdf8" }
+            ].map((g, i) => (
+              (0, x.jsxs)("div", {
+                key: i,
+                style: {
+                  background: "rgba(255,255,255,0.04)",
+                  border: "1px solid rgba(255,255,255,0.07)",
+                  borderRadius: 6,
+                  padding: "4px 5px",
+                  textAlign: "center"
+                },
+                children: [
+                  (0, x.jsx)("div", { style: { fontSize: 6.5, color: "#64748b", fontFamily: "monospace" }, children: g.label }),
+                  (0, x.jsx)("div", { style: { fontSize: 8, fontWeight: 800, color: g.col, fontFamily: "monospace", marginTop: 1 }, children: g.val })
+                ]
+              })
+            ))
+          })
+        ]
+      }),
+
+      // 3. Active Stage Dossier Card
+      (0, x.jsxs)("div", {
+        style: {
+          background: "rgba(255,255,255,0.03)",
+          borderRadius: 12,
+          padding: "10px 10px",
+          border: `1px solid ${phases[activePhase].color}35`,
+          position: "relative",
+          zIndex: 6,
+          display: "flex",
+          flexDirection: "column",
+          gap: 6
         },
         children: [
           // Stage Title Bar
           (0, x.jsxs)("div", {
-            style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 },
+            style: { display: "flex", justifyContent: "space-between", alignItems: "center" },
             children: [
               (0, x.jsx)("span", {
-                style: { fontSize: 8, fontWeight: 800, color: phases[activePhase].color, letterSpacing: "0.06em", fontFamily: "monospace" },
+                style: { fontSize: 8, fontWeight: 800, color: phases[activePhase].color, letterSpacing: "0.05em", fontFamily: "monospace" },
                 children: phases[activePhase].title
               }),
               (0, x.jsx)("span", {
@@ -226,9 +338,9 @@ export function HeroPhoneTerminal() {
                   background: `${phases[activePhase].color}20`,
                   color: phases[activePhase].color,
                   border: `1px solid ${phases[activePhase].color}40`,
-                  padding: "1px 4px",
-                  borderRadius: 3,
-                  fontWeight: 700,
+                  padding: "1.5px 5px",
+                  borderRadius: 4,
+                  fontWeight: 800,
                   fontFamily: "monospace"
                 },
                 children: phases[activePhase].badge
@@ -238,52 +350,21 @@ export function HeroPhoneTerminal() {
 
           // STAGE 0: Live Voiceprint Forensic Intercept
           activePhase === 0 && (0, x.jsxs)("div", {
-            style: { display: "flex", flexDirection: "column", gap: 4 },
+            style: { display: "flex", flexDirection: "column", gap: 5 },
             children: [
               (0, x.jsxs)("div", {
-                style: { fontSize: 8.5, fontWeight: 700, color: "#fff", display: "flex", alignItems: "center", gap: 4 },
+                style: { fontSize: 9, fontWeight: 700, color: "#fff", display: "flex", alignItems: "center", gap: 5 },
                 children: [
-                  (0, x.jsx)("span", { style: { width: 4, height: 4, borderRadius: "50%", background: "#f59e0b" } }),
+                  (0, x.jsx)("span", { style: { width: 5, height: 5, borderRadius: "50%", background: "#f59e0b" } }),
                   "Voice Clone Intercepted"
                 ]
               }),
               (0, x.jsx)("div", {
-                style: { fontSize: 7, color: "#94a3b8", lineHeight: 1.25, background: "rgba(0,0,0,0.4)", padding: "4px 6px", borderRadius: 4, borderLeft: "2px solid #f59e0b" },
+                style: { fontSize: 7.5, color: "#cbd5e1", lineHeight: 1.35, background: "rgba(0,0,0,0.45)", padding: "5px 7px", borderRadius: 6, borderLeft: "2px solid #f59e0b" },
                 children: '"Urgent Miller! Ramp Booster Pump 4 to 850 RPM immediately!"'
               }),
-
-              // Living Dynamic Audio Oscilloscope
-              (0, x.jsx)("div", {
-                style: {
-                  height: 28,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  gap: 2,
-                  padding: "2px 4px",
-                  background: "rgba(0,0,0,0.6)",
-                  borderRadius: 6,
-                  border: "1px solid rgba(245,158,11,0.2)"
-                },
-                children: Array.from({ length: 22 }).map((_, i) => {
-                  let barH = 5 + Math.abs(Math.sin(tick * 0.15 + i * 0.45)) * 18;
-                  let isAlert = i >= 8 && i <= 14;
-                  return (0, x.jsx)("div", {
-                    key: i,
-                    style: {
-                      flex: 1,
-                      height: `${barH}px`,
-                      background: isAlert ? "#ef4444" : "#f59e0b",
-                      borderRadius: 1.5,
-                      boxShadow: isAlert ? "0 0 4px #ef4444" : "none",
-                      transition: "height 0.08s ease"
-                    }
-                  });
-                })
-              }),
-
               (0, x.jsxs)("div", {
-                style: { fontSize: 7, color: "#f87171", fontWeight: 700, display: "flex", justifyContent: "space-between", fontFamily: "monospace" },
+                style: { fontSize: 7.5, color: "#f87171", fontWeight: 700, display: "flex", justifyContent: "space-between", fontFamily: "monospace" },
                 children: [
                   (0, x.jsx)("span", { children: "SPECTRAL MATCH: 71%" }),
                   (0, x.jsx)("span", { children: "ROSTER: OFFLINE" })
@@ -294,35 +375,30 @@ export function HeroPhoneTerminal() {
 
           // STAGE 1: Snapdragon 8 Elite NPU Decompilation
           activePhase === 1 && (0, x.jsxs)("div", {
-            style: { display: "flex", flexDirection: "column", gap: 3 },
+            style: { display: "flex", flexDirection: "column", gap: 4 },
             children: [
               (0, x.jsxs)("div", {
-                style: { fontSize: 8.5, fontWeight: 700, color: "#38bdf8", display: "flex", justifyContent: "space-between" },
+                style: { fontSize: 9, fontWeight: 700, color: "#38bdf8", display: "flex", justifyContent: "space-between" },
                 children: [
                   (0, x.jsx)("span", { children: "Snapdragon NPU 45 TOPS" }),
                   (0, x.jsx)("span", { style: { color: "#10b981", fontFamily: "monospace" }, children: "18.4ms" })
                 ]
               }),
-              (0, x.jsx)("div", {
-                style: { fontSize: 7, color: "#94a3b8" },
-                children: "Compiling spoken speech to PLC register writes:"
-              }),
               (0, x.jsxs)("div", {
                 style: {
                   background: "#000",
-                  padding: "5px 6px",
-                  borderRadius: 5,
+                  padding: "6px 7px",
+                  borderRadius: 6,
                   fontFamily: "monospace",
-                  fontSize: 7,
+                  fontSize: 7.5,
                   color: "#38bdf8",
                   border: "1px solid rgba(56,189,248,0.25)",
-                  lineHeight: 1.4
+                  lineHeight: 1.45
                 },
                 children: [
                   (0, x.jsxs)("div", { style: { color: "#94a3b8" }, children: [">> TARGET: ", (0, x.jsx)("span", { style: { color: "#fff" }, children: "STATION_04_PLC" })] }),
                   (0, x.jsxs)("div", { style: { color: "#fbbf24" }, children: [">> REG: ", (0, x.jsx)("span", { style: { color: "#34d399" }, children: "HOLDING_40012 := 850" })] }),
-                  (0, x.jsxs)("div", { style: { color: "#a78bfa" }, children: [">> HEX: ", (0, x.jsx)("span", { children: "0x01 0x06 0x9C 0x2C 0x03 0x52" })] }),
-                  (0, x.jsx)("div", { style: { color: "#10b981", marginTop: 2, fontWeight: 700 }, children: "✓ PARSED IN 18ms (AIR-GAPPED)" })
+                  (0, x.jsx)("div", { style: { color: "#10b981", marginTop: 2, fontWeight: 700 }, children: "✓ PARSED ON-DEVICE (AIR-GAPPED)" })
                 ]
               })
             ]
@@ -330,12 +406,11 @@ export function HeroPhoneTerminal() {
 
           // STAGE 2: Deterministic Cyber Gate
           activePhase === 2 && (0, x.jsxs)("div", {
-            style: { display: "flex", flexDirection: "column", gap: 3 },
+            style: { display: "flex", flexDirection: "column", gap: 4 },
             children: [
-              (0, x.jsx)("div", { style: { fontSize: 8.5, fontWeight: 700, color: "#fff" }, children: "IT/OT Firewall Paradox" }),
-              (0, x.jsx)("div", { style: { fontSize: 7, color: "#94a3b8" }, children: "Standard firewall permits command blindly:" }),
+              (0, x.jsx)("div", { style: { fontSize: 9, fontWeight: 700, color: "#fff" }, children: "IT/OT Firewall Paradox" }),
               (0, x.jsxs)("div", {
-                style: { background: "rgba(16,185,129,0.08)", padding: "5px 6px", borderRadius: 5, border: "1px solid rgba(16,185,129,0.25)", fontSize: 7, lineHeight: 1.4 },
+                style: { background: "rgba(16,185,129,0.08)", padding: "6px 7px", borderRadius: 6, border: "1px solid rgba(16,185,129,0.25)", fontSize: 7.5, lineHeight: 1.45 },
                 children: [
                   (0, x.jsx)("div", { style: { color: "#34d399", fontWeight: 700 }, children: "✓ Modbus CRC-16 Checksum: VALID (0x9B4E)" }),
                   (0, x.jsx)("div", { style: { color: "#34d399" }, children: "✓ Authorized Operator Credentials" }),
@@ -347,21 +422,20 @@ export function HeroPhoneTerminal() {
 
           // STAGE 3: EPANET Hydrodynamic Surge Rejection
           activePhase === 3 && (0, x.jsxs)("div", {
-            style: { display: "flex", flexDirection: "column", gap: 3 },
+            style: { display: "flex", flexDirection: "column", gap: 4 },
             children: [
               (0, x.jsxs)("div", {
                 style: { display: "flex", justifyContent: "space-between", alignItems: "center" },
                 children: [
-                  (0, x.jsx)("div", { style: { fontSize: 8.5, fontWeight: 800, color: "#ef4444" }, children: "11.4 Bar Catastrophe!" }),
-                  (0, x.jsx)("div", { style: { fontSize: 7, color: "#ef4444", background: "rgba(239,68,68,0.2)", padding: "1px 4px", borderRadius: 3, fontWeight: 800 }, children: "BLOWOUT" })
+                  (0, x.jsx)("div", { style: { fontSize: 9, fontWeight: 800, color: "#ef4444" }, children: "11.4 Bar Catastrophe!" }),
+                  (0, x.jsx)("div", { style: { fontSize: 7, color: "#ef4444", background: "rgba(239,68,68,0.2)", padding: "1px 5px", borderRadius: 3, fontWeight: 800 }, children: "BLOWOUT" })
                 ]
               }),
-              (0, x.jsx)("div", { style: { fontSize: 7, color: "#94a3b8", lineHeight: 1.25 }, children: "Relief Valve closed. 850 RPM induces severe water hammer:" }),
               (0, x.jsxs)("div", {
-                style: { background: "rgba(239,68,68,0.15)", padding: "5px 6px", borderRadius: 5, border: "1px solid rgba(239,68,68,0.35)", fontSize: 7, lineHeight: 1.35 },
+                style: { background: "rgba(239,68,68,0.15)", padding: "6px 7px", borderRadius: 6, border: "1px solid rgba(239,68,68,0.35)", fontSize: 7.5, lineHeight: 1.45 },
                 children: [
-                  (0, x.jsxs)("div", { style: { color: "#f87171", fontWeight: 800, fontSize: 8 }, children: ["SIMULATED SURGE: 11.4 BAR"] }),
-                  (0, x.jsx)("div", { style: { color: "#cbd5e1" }, children: "Flange Safety Ceiling: 9.2 BAR" }),
+                  (0, x.jsx)("div", { style: { color: "#f87171", fontWeight: 800 }, children: "SIMULATED SURGE: 11.4 BAR (CEILING 9.2)" }),
+                  (0, x.jsx)("div", { style: { color: "#cbd5e1" }, children: "Relief Valve 02 closed -> Joukowsky shockwave" }),
                   (0, x.jsx)("div", { style: { color: "#ef4444", fontWeight: 800, marginTop: 2 }, children: "⛔ TWIN HARD REJECT: VALVE BLOWN" })
                 ]
               })
@@ -370,22 +444,26 @@ export function HeroPhoneTerminal() {
 
           // STAGE 4: Autonomous Replan & Biometric Enclave
           activePhase === 4 && (0, x.jsxs)("div", {
-            style: { display: "flex", flexDirection: "column", gap: 3 },
+            style: { display: "flex", flexDirection: "column", gap: 4 },
             children: [
-              (0, x.jsx)("div", { style: { fontSize: 8.5, fontWeight: 800, color: "#10b981" }, children: "Autonomous Replan Synthesized" }),
-              (0, x.jsx)("div", { style: { fontSize: 7, color: "#94a3b8", lineHeight: 1.25 }, children: "Pre-open Valve 02 to 40%, ramp Pump 4 over 60s:" }),
+              (0, x.jsx)("div", { style: { fontSize: 9, fontWeight: 800, color: "#10b981" }, children: "Autonomous Replan Synthesized" }),
               (0, x.jsxs)("div", {
-                style: { background: "rgba(16,185,129,0.12)", padding: "5px 6px", borderRadius: 5, border: "1px solid rgba(16,185,129,0.3)", fontSize: 7, lineHeight: 1.35 },
+                style: { background: "rgba(16,185,129,0.12)", padding: "6px 7px", borderRadius: 6, border: "1px solid rgba(16,185,129,0.3)", fontSize: 7.5, lineHeight: 1.45 },
                 children: [
-                  (0, x.jsx)("div", { style: { color: "#34d399", fontWeight: 800, fontSize: 8 }, children: "✓ REPLANNED PEAK: 7.4 BAR (SAFE)" }),
-                  (0, x.jsx)("div", { style: { color: "#cbd5e1" }, children: "Zero kinetic water hammer. Flange preserved." }),
+                  (0, x.jsx)("div", { style: { color: "#34d399", fontWeight: 800 }, children: "✓ REPLANNED PEAK: 7.4 BAR (SAFE)" }),
+                  (0, x.jsx)("div", { style: { color: "#cbd5e1" }, children: "Pre-open RV-02 to 40%, stepped 60s ramp." }),
                   (0, x.jsx)("div", { style: { color: "#38bdf8", fontWeight: 700, marginTop: 2 }, children: "🛡️ TEE KEY 0x8F92 CRYPTO SIGNED" })
                 ]
               })
             ]
-          }),
+          })
+        ]
+      }),
 
-          // Bottom Action Stepper Button
+      // 4. Bottom Action Stepper + Android Navigation Indicator
+      (0, x.jsxs)("div", {
+        style: { position: "relative", zIndex: 6, display: "flex", flexDirection: "column", alignItems: "center", gap: 8 },
+        children: [
           (0, x.jsx)("button", {
             onClick: () => {
               setActivePhase((p) => (p + 1) % 5);
@@ -395,9 +473,9 @@ export function HeroPhoneTerminal() {
               background: phases[activePhase].color,
               color: "#fff",
               border: "none",
-              borderRadius: 6,
-              padding: "5px 8px",
-              fontSize: 7.5,
+              borderRadius: 8,
+              padding: "7px 10px",
+              fontSize: 8,
               fontWeight: 800,
               cursor: "pointer",
               width: "100%",
@@ -406,10 +484,9 @@ export function HeroPhoneTerminal() {
               justifyContent: "center",
               gap: 4,
               fontFamily: I,
-              letterSpacing: "0.04em",
-              boxShadow: `0 2px 8px ${phases[activePhase].color}40`,
-              transition: "all 0.2s ease",
-              marginTop: 4
+              letterSpacing: "0.05em",
+              boxShadow: `0 4px 14px ${phases[activePhase].color}50`,
+              transition: "all 0.2s ease"
             },
             children: [
               activePhase === 0 && "STEP 02: NPU INFERENCE →",
@@ -418,6 +495,15 @@ export function HeroPhoneTerminal() {
               activePhase === 3 && "STEP 05: AUTO-REPLAN →",
               activePhase === 4 && "✓ ACTION SIGNED & COMMITTED"
             ]
+          }),
+          // Native OriginOS 5 Gesture Pill
+          (0, x.jsx)("div", {
+            style: {
+              width: 76,
+              height: 3.5,
+              borderRadius: 4,
+              background: "rgba(255,255,255,0.28)"
+            }
           })
         ]
       })

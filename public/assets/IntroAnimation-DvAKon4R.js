@@ -149,10 +149,10 @@ function g({onComplete:e,onNavReveal:t}){
             (0,i.jsx)(`img`,{src:a,alt:``,style:{position:`absolute`,top:-31,left:-85,width:1061,height:707,pointerEvents:`none`,opacity:N?1:0,transition:N?`opacity 0.7s ease 0.15s`:`none`}}),
             (0,i.jsxs)(`div`,{
               style:{
-                position:`absolute`,left:330,top:52,width:232,height:P?508:62,
-                background:`#05070a`,borderRadius:24,padding:8,display:`flex`,flexDirection:`column`,gap:9,
+                position:`absolute`,left:322,top:54,width:247,height:P?543:62,
+                background:`#05070a`,borderRadius:35,padding:10,display:`flex`,flexDirection:`column`,gap:9,
                 overflow:`hidden`,opacity:M?1:0,transform:M?`translateY(0)`:`translateY(8px)`,
-                boxShadow:`inset 0 0 14px rgba(0,0,0,0.7)`,
+                boxShadow:`inset 0 0 0 1px rgba(255,255,255,0.08), inset 0 0 18px rgba(0,0,0,0.85)`,
                 transition:P?`height 0.55s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s ease, transform 0.4s ease`:`opacity 0.4s ease, transform 0.4s ease`
               },
               children:[
