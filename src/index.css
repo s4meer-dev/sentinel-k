@@ -34,7 +34,7 @@
 @font-face {
   font-family: "AM Le Cygne";
   src: url(/fonts/AMLeCygne-Noir.otf) format("opentype");
-  font-weight: 700;
+  font-weight: 400 900;
   font-style: normal;
   font-display: swap;
 }
@@ -50,14 +50,19 @@
 :root {
   --color-brand: #ff4405;
   --color-brand-hover: #e53d04;
+  --color-brand-orange: #ff692e;
   --color-brand-purple: #6941c6;
   --color-brand-section: #53389e;
+  --color-dark: #140906;
+  --color-obsidian: #0a0d12;
+  --color-stone: #ECE7DB;
+  --color-parchment: #F4F2EC;
   --color-text-primary: #181d27;
   --color-text-secondary: #414651;
   --color-text-tertiary: #535862;
   --color-text-quaternary: #717680;
   --color-text-white: #fff;
-  --color-text-brand: #6941c6;
+  --color-text-brand: #ff4405;
   --color-bg-primary: #fff;
   --color-bg-secondary: #fafafa;
   --color-border-primary: #d5d7da;
@@ -77,9 +82,10 @@
   --shadow-skeuomorphic: 0px 1px 2px 0px rgba(10, 13, 18, 0.05), inset 0px -2px 0px 0px rgba(10, 13, 18, 0.05), inset 0px 0px 0px 1px rgba(10, 13, 18, 0.18);
   --radius-sm: 6px;
   --radius-md: 8px;
-  --radius-lg: 10px;
-  --radius-xl: 12px;
-  --radius-2xl: 16px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+  --radius-3xl: 32px;
   --radius-full: 9999px;
 }
 
@@ -95,7 +101,7 @@ html {
 
 body {
   color: var(--color-text-primary);
-  background-color: var(--color-bg-secondary);
+  background-color: #fafafa;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -113,7 +119,23 @@ button {
   background: none;
 }
 
-/* Custom cursor */
+/* Typography Helpers */
+.font-cygne {
+  font-family: "AM Le Cygne", "Playfair Display", Georgia, serif;
+  font-weight: 400 !important;
+  letter-spacing: -0.01em;
+}
+
+.font-sans-tight {
+  font-family: "TWK Lausanne", "Inter", -apple-system, sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.font-mono-code {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* Custom Cursor */
 .custom-cursor {
   position: fixed;
   pointer-events: none;
@@ -140,6 +162,56 @@ button {
   border: 1.5px solid var(--color-brand);
 }
 
+/* Glassmorphism & Surface Tokens */
+.glass-card {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(20, 9, 6, 0.08);
+  box-shadow: 0 10px 30px -10px rgba(20, 9, 6, 0.06);
+}
+
+.glass-pill {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(20, 9, 6, 0.08);
+}
+
+.glass-sheen {
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-sheen::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.9), transparent);
+  pointer-events: none;
+}
+
+/* Delicate Network Dot Grid */
+.network-grid {
+  background-image: radial-gradient(rgba(20, 9, 6, 0.12) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Subscrr Organic Noise Texture */
+.subscrr-grain {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
 /* Animations */
 @keyframes pulseGreen {
   0%, 100% { transform: scale(1); opacity: 1; }
@@ -157,4 +229,27 @@ button {
 
 .fade-in {
   animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes logoMarquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(calc(-33.333% - 16px)); }
+}
+
+/* 3D Card Swap Container Styles */
+.card-swap-container {
+  position: relative;
+  perspective: 1200px;
+}
+
+.card-swap-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-style: preserve-3d;
+  will-change: transform;
+  border-radius: 24px;
+  background: #ffffff;
+  border: 1px solid rgba(20, 9, 6, 0.08);
+  box-shadow: 0 16px 40px -12px rgba(20, 9, 6, 0.12);
 }

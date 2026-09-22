@@ -30,8 +30,11 @@ const server = http.createServer((req, res) => {
   let reqUrl = decodeURIComponent(req.url.split('?')[0]);
   if (reqUrl === '/') reqUrl = '/index.html';
 
-  // Check root first, then public/
-  let filePath = path.join(__dirname, reqUrl);
+  // Check dist first (production build), then root, then public/
+  let filePath = path.join(__dirname, 'dist', reqUrl);
+  if (!fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
+    filePath = path.join(__dirname, reqUrl);
+  }
   if (!fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
     filePath = path.join(__dirname, 'public', reqUrl);
   }
@@ -39,7 +42,9 @@ const server = http.createServer((req, res) => {
   if (!fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
     // If not found, try fallback for SPA or 404
     if (path.extname(reqUrl) === '') {
-      filePath = path.join(__dirname, 'index.html');
+      filePath = fs.existsSync(path.join(__dirname, 'dist', 'index.html'))
+        ? path.join(__dirname, 'dist', 'index.html')
+        : path.join(__dirname, 'index.html');
     } else {
       res.writeHead(404, { 'Content-Type': 'text/plain' });
       res.end('Not Found');

@@ -1,8 +1,9 @@
 export const PARTNER_LOGOS = [
-  { name: "OpenPLC", src: "/assets/504005ac7071697bbdfd9ee4625ed5dff8ee529a.svg" },
-  { name: "EPANET", src: "/assets/bbce9ed952a7420976ed2c9f616ed1df87bdb9aa.svg" },
-  { name: "WNTR", src: "/assets/c711fe9ebd777477bb6d7ed5d01bcceba139f212.svg" },
-  { name: "Modbus", src: "/assets/7b95b73d9de4dcf48f3ddcb20e754ae7f424ef4a.svg" }
+  { name: "Siemens S7", src: "/assets/logo-siemens.svg" },
+  { name: "Schneider Modicon", src: "/assets/logo-schneider.svg" },
+  { name: "OpenPLC", src: "/assets/logo-openplc.svg" },
+  { name: "Modbus TCP", src: "/assets/logo-modbus.svg" },
+  { name: "EPANET 2.2", src: "/assets/logo-epanet.svg" }
 ];
 
 export const TOOL_STACK = Array.from({ length: 12 }, (_, i) => `/stack/tool-${i}.png`);

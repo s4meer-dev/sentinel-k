@@ -1,39 +1,34 @@
 import React, { useState, useEffect } from "react";
+import PhoneTerminal from "./PhoneTerminal";
+import { DELIVERABLES, BRAND } from "../data/sentinelData";
+import { ArrowDown, Shield, Waves, Terminal } from "lucide-react";
 
-const DELIVERABLES = ["Intake Pumps", "Modbus Logic", "Surge Valves", "Digital Twins"];
-const SCREENS = [
-  "/assets/alpa-dashboard-today.webp",
-  "/assets/alpin-klintt-app.webp",
-  "/assets/winter-actions.webp"
-];
-
-export default function Hero() {
-  const [deliverableIndex, setDeliverableIndex] = useState(0);
-  const [screenIndex, setScreenIndex] = useState(0);
+export default function Hero({ onExplorePipeline, onOpenSandbox }) {
+  const [delivIdx, setDelivIdx] = useState(0);
   const [fade, setFade] = useState(true);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setFade(false);
       setTimeout(() => {
-        setDeliverableIndex((prev) => (prev + 1) % DELIVERABLES.length);
-        setScreenIndex((prev) => (prev + 1) % SCREENS.length);
+        setDelivIdx((prev) => (prev + 1) % DELIVERABLES.length);
         setFade(true);
       }, 300);
-    }, 3800);
+    }, 2800);
 
     return () => clearInterval(interval);
   }, []);
 
   return (
     <section
+      id="hero"
       style={{
         position: "relative",
         minHeight: "100vh",
-        background: "linear-gradient(180deg, #ff4e00 0%, #ff5e1a 60%, #ff6b2b 100%)",
+        background: "linear-gradient(180deg, #ff4405 0%, #ff5714 55%, #ff6e26 100%)",
         color: "#ffffff",
-        paddingTop: 140,
-        paddingBottom: 0,
+        paddingTop: 120,
+        paddingBottom: 60,
         overflow: "hidden",
         display: "flex",
         flexDirection: "column",
@@ -41,17 +36,18 @@ export default function Hero() {
         textAlign: "center"
       }}
     >
-      {/* Background clouds */}
+      {/* Background Cloud Accents */}
       <img
         src="/assets/cloud1.webp"
         alt=""
         style={{
           position: "absolute",
-          top: 0,
-          left: 0,
-          width: "50%",
-          opacity: 0.25,
-          pointerEvents: "none"
+          top: "-5%",
+          left: "-10%",
+          width: "55%",
+          opacity: 0.22,
+          pointerEvents: "none",
+          willChange: "transform"
         }}
       />
       <img
@@ -59,171 +55,166 @@ export default function Hero() {
         alt=""
         style={{
           position: "absolute",
-          top: "10%",
-          right: 0,
-          width: "55%",
-          opacity: 0.25,
-          pointerEvents: "none"
+          top: "8%",
+          right: "-10%",
+          width: "60%",
+          opacity: 0.22,
+          pointerEvents: "none",
+          willChange: "transform"
         }}
       />
 
-      {/* Main Headline */}
-      <div style={{ maxWidth: 960, padding: "0 24px", position: "relative", zIndex: 2 }}>
-        <h1
+      {/* Hero Header Content */}
+      <div style={{ maxWidth: 980, padding: "0 24px", position: "relative", zIndex: 2 }}>
+        {/* Top Hackathon Pill */}
+        <div
           style={{
-            fontFamily: "'AM Le Cygne', serif",
-            fontSize: "clamp(48px, 8vw, 96px)",
-            lineHeight: 1.05,
-            letterSpacing: "-0.03em",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 8,
+            padding: "8px 18px",
+            borderRadius: 999,
+            background: "rgba(0,0,0,0.18)",
+            backdropFilter: "blur(10px)",
+            border: "1px solid rgba(255,255,255,0.2)",
+            fontSize: 12,
             fontWeight: 700,
-            marginBottom: 24,
-            textShadow: "0 4px 20px rgba(0,0,0,0.15)"
+            letterSpacing: "0.06em",
+            textTransform: "uppercase",
+            marginBottom: 24
           }}
         >
-          The command isn’t trusted.<br />
-          The consequence is verified.
+          <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#fff" }} />
+          <span>{BRAND.subTag}</span>
+          <span style={{ opacity: 0.4 }}>/</span>
+          <span style={{ color: "#ffd580" }}>DUAL-DOMAIN CAUSAL SECURITY</span>
+        </div>
+
+        {/* Display Serif Headline (AM Le Cygne) */}
+        <h1
+          className="font-cygne"
+          style={{
+            fontSize: "clamp(44px, 7.5vw, 92px)",
+            lineHeight: 1.04,
+            letterSpacing: "-0.03em",
+            fontWeight: 700,
+            marginBottom: 20,
+            textShadow: "0 4px 24px rgba(0,0,0,0.18)"
+          }}
+        >
+          {BRAND.heroHeadlineTop}
+          <br />
+          {BRAND.heroHeadlineBottom}
         </h1>
 
+        {/* Dynamic Deliverable Subtitle */}
         <p
+          className="font-sans-tight"
           style={{
-            fontSize: "clamp(18px, 2.5vw, 24px)",
+            fontSize: "clamp(17px, 2.2vw, 23px)",
             fontWeight: 500,
             opacity: 0.95,
-            minHeight: 36
+            maxWidth: 780,
+            margin: "0 auto 32px",
+            lineHeight: 1.4
           }}
         >
           We protect your{" "}
           <strong
             style={{
-              fontWeight: 700,
+              fontWeight: 800,
               textDecoration: "underline",
               textUnderlineOffset: 6,
               transition: "opacity 0.3s ease",
-              opacity: fade ? 1 : 0
+              opacity: fade ? 1 : 0.3,
+              color: "#fff"
             }}
           >
-            {DELIVERABLES[deliverableIndex]}
+            {DELIVERABLES[delivIdx]}
           </strong>{" "}
-          before execution, for verified physical safety.
+          before execution through on-device SLM reasoning and forward hydrodynamic digital twin verification.
         </p>
+
+        {/* Primary Call to Actions */}
+        <div style={{ display: "flex", justifyContent: "center", gap: 14, flexWrap: "wrap", marginBottom: 44 }}>
+          <button
+            onClick={onExplorePipeline}
+            style={{
+              background: "#140906",
+              color: "#fff",
+              padding: "14px 28px",
+              borderRadius: 44,
+              fontSize: 14,
+              fontWeight: 700,
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              cursor: "pointer",
+              boxShadow: "0 10px 25px rgba(20, 9, 6, 0.3)",
+              transition: "transform 0.2s ease, background 0.2s ease"
+            }}
+          >
+            <Terminal style={{ width: 16, height: 16, color: "#ff692e" }} />
+            <span>EXPLORE 8-STAGE PIPELINE</span>
+          </button>
+
+          <button
+            onClick={onOpenSandbox}
+            style={{
+              background: "rgba(255,255,255,0.18)",
+              backdropFilter: "blur(12px)",
+              color: "#fff",
+              border: "1.5px solid rgba(255,255,255,0.35)",
+              padding: "14px 28px",
+              borderRadius: 44,
+              fontSize: 14,
+              fontWeight: 700,
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              cursor: "pointer",
+              transition: "background 0.2s ease"
+            }}
+          >
+            <Waves style={{ width: 16, height: 16, color: "#ffd580" }} />
+            <span>KINETIC TWIN SANDBOX</span>
+          </button>
+        </div>
       </div>
 
-      {/* Hero Phone Showcase */}
+      {/* Central 3D Interactive Phone Terminal Showcase */}
       <div
         style={{
           position: "relative",
-          marginTop: 48,
+          zIndex: 3,
           width: "100%",
-          maxWidth: 620,
-          height: 600,
           display: "flex",
           justifyContent: "center",
-          alignItems: "flex-end"
+          alignItems: "center",
+          padding: "0 16px"
         }}
       >
-        {/* Hand holding phone image */}
-        <div
-          style={{
-            position: "relative",
-            width: 380,
-            height: 560
-          }}
-        >
-          {/* Mockup Frame / Hand */}
-          <img
-            src="/assets/mission-phone.webp"
-            alt="Product Mockup"
-            style={{
-              position: "absolute",
-              inset: 0,
-              width: "100%",
-              height: "100%",
-              objectFit: "contain",
-              zIndex: 3,
-              pointerEvents: "none"
-            }}
-          />
+        <PhoneTerminal />
+      </div>
 
-          {/* Screen Content */}
-          <div
-            style={{
-              position: "absolute",
-              top: 56,
-              left: 54,
-              right: 54,
-              bottom: 120,
-              borderRadius: 32,
-              overflow: "hidden",
-              background: "#181d27",
-              zIndex: 2
-            }}
-          >
-            {/* Dynamic island */}
-            <div
-              style={{
-                position: "absolute",
-                top: 10,
-                left: "50%",
-                transform: "translateX(-50%)",
-                width: 72,
-                height: 18,
-                background: "#000",
-                borderRadius: 12,
-                zIndex: 10
-              }}
-            />
-
-            {/* Notification Pill */}
-            <div
-              style={{
-                position: "absolute",
-                top: 36,
-                left: 12,
-                right: 12,
-                background: "#fff",
-                borderRadius: 16,
-                padding: "8px 12px",
-                display: "flex",
-                alignItems: "center",
-                gap: 10,
-                boxShadow: "0 8px 16px rgba(0,0,0,0.18)",
-                zIndex: 8
-              }}
-            >
-              <div
-                style={{
-                  width: 28,
-                  height: 28,
-                  borderRadius: 8,
-                  background: "var(--color-brand)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center"
-                }}
-              >
-                <img src="/favicon.png" alt="" style={{ width: 16, height: 16 }} />
-              </div>
-              <div style={{ textAlign: "left" }}>
-                <div style={{ fontSize: 10, color: "#717680", fontWeight: 600 }}>Field Security Node</div>
-                <div style={{ fontSize: 12, color: "#181d27", fontWeight: 700 }}>Hydraulic boundary verified</div>
-              </div>
-            </div>
-
-            {/* Cycling screen mockups */}
-            <img
-              src={SCREENS[screenIndex]}
-              alt="Design screen"
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                objectPosition: "top",
-                transition: "opacity 0.5s ease",
-                opacity: fade ? 1 : 0.4
-              }}
-            />
-          </div>
-        </div>
+      {/* Bottom Scroll Cue */}
+      <div
+        style={{
+          marginTop: 40,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 6,
+          opacity: 0.8,
+          fontSize: 11,
+          letterSpacing: "0.08em",
+          fontWeight: 700,
+          cursor: "pointer"
+        }}
+        onClick={onExplorePipeline}
+      >
+        <span>SCROLL TO VERIFY</span>
+        <ArrowDown style={{ width: 14, height: 14, animation: "bounce 2s infinite" }} />
       </div>
     </section>
   );

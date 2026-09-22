@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FAQS } from "../data/content";
+import { FAQS } from "../data/sentinelData";
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState(null);

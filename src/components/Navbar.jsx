@@ -1,21 +1,32 @@
 import React, { useState, useEffect } from "react";
+import { Terminal, Shield, Menu, X } from "lucide-react";
 
-export default function Navbar({ onBookCall }) {
+export default function Navbar({ onOpenTestbed }) {
   const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState("how-it-works");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("pipeline");
+
+  const NAV_LINKS = [
+    { label: "PIPELINE", id: "pipeline" },
+    { label: "DIGITAL TWIN", id: "digital-twin" },
+    { label: "AGENTS", id: "agents" },
+    { label: "PLAYBOOK", id: "playbook" },
+    { label: "TEAM", id: "team" },
+    { label: "FAQ", id: "faq" }
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
       const y = window.scrollY;
-      setScrolled(y > 300);
+      setScrolled(y > 200);
 
-      const sections = ["how-it-works", "client-stories", "pricing"];
-      for (const s of sections) {
-        const el = document.getElementById(s);
+      const sectionIds = ["pipeline", "digital-twin", "agents", "playbook", "team", "faq"];
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
         if (el) {
           const rect = el.getBoundingClientRect();
-          if (rect.top <= 200 && rect.bottom >= 200) {
-            setActiveSection(s);
+          if (rect.top <= 250 && rect.bottom >= 250) {
+            setActiveSection(id);
             break;
           }
         }
@@ -27,6 +38,7 @@ export default function Navbar({ onBookCall }) {
   }, []);
 
   const scrollTo = (id) => {
+    setMobileMenuOpen(false);
     const el = document.getElementById(id);
     if (el) {
       el.scrollIntoView({ behavior: "smooth" });
@@ -34,167 +46,201 @@ export default function Navbar({ onBookCall }) {
   };
 
   return (
-    <header
-      style={{
-        position: "fixed",
-        top: 24,
-        left: 0,
-        right: 0,
-        display: "flex",
-        justifyContent: "center",
-        zIndex: 1000,
-        pointerEvents: "none"
-      }}
-    >
-      <nav
+    <>
+      <header
         style={{
-          pointerEvents: "auto",
+          position: "fixed",
+          top: 20,
+          left: 0,
+          right: 0,
           display: "flex",
-          alignItems: "center",
-          gap: 28,
-          background: "rgba(255, 255, 255, 0.92)",
-          backdropFilter: "blur(12px)",
-          WebkitBackdropFilter: "blur(12px)",
-          padding: "8px 12px 8px 24px",
-          borderRadius: "var(--radius-full)",
-          boxShadow: "var(--shadow-lg), 0 0 0 1px rgba(0, 0, 0, 0.06)",
-          transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)"
+          justifyContent: "center",
+          zIndex: 1000,
+          pointerEvents: "none",
+          padding: "0 16px"
         }}
       >
-        {/* Logo */}
-        <a
-          href="#"
-          onClick={(e) => {
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: "smooth" });
-          }}
+        <nav
           style={{
+            pointerEvents: "auto",
             display: "flex",
             alignItems: "center",
-            gap: 8,
-            textDecoration: "none",
-            color: "var(--color-text-primary)",
-            fontWeight: 700,
-            fontSize: 16
+            gap: 20,
+            background: "rgba(240, 240, 240, 0.95)",
+            backdropFilter: "blur(14px)",
+            WebkitBackdropFilter: "blur(14px)",
+            padding: "8px 12px 8px 22px",
+            borderRadius: 999,
+            boxShadow: "0 10px 30px rgba(0,0,0,0.1), 0 0 0 1px rgba(0,0,0,0.06)",
+            transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)"
           }}
         >
-          <span style={{ fontFamily: "'AM Le Cygne', serif", fontWeight: 700, fontSize: 18, color: "var(--color-text-primary)" }}>
-            SENTINEL-K
-          </span>
-        </a>
-
-        {!scrolled ? (
-          <>
-            <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-              <span
-                style={{
-                  fontSize: 14,
-                  fontWeight: 600,
-                  color: "var(--color-brand)",
-                  cursor: "default"
-                }}
-              >
-                Field Copilot
-              </span>
-              <span
-                style={{
-                  fontSize: 14,
-                  fontWeight: 500,
-                  color: "var(--color-text-secondary)",
-                  cursor: "pointer"
-                }}
-                onClick={() => scrollTo("client-stories")}
-              >
-                Verification Hub
-              </span>
-            </div>
-
-            <button
-              onClick={onBookCall}
+          {/* Logo */}
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              textDecoration: "none",
+              cursor: "pointer"
+            }}
+          >
+            <div
               style={{
-                background: "var(--color-text-primary)",
-                color: "#fff",
-                padding: "10px 20px",
-                borderRadius: "var(--radius-full)",
-                fontSize: 14,
-                fontWeight: 600,
-                cursor: "pointer",
-                transition: "opacity 0.2s"
+                width: 24,
+                height: 24,
+                borderRadius: 7,
+                background: "#ff4405",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "#fff"
               }}
-              onMouseEnter={(e) => (e.target.style.opacity = "0.88")}
-              onMouseLeave={(e) => (e.target.style.opacity = "1")}
             >
-              Explore
-            </button>
-          </>
-        ) : (
-          <>
-            <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
-              <button
-                onClick={() => scrollTo("how-it-works")}
-                style={{
-                  fontSize: 14,
-                  fontWeight: activeSection === "how-it-works" ? 600 : 500,
-                  color:
-                    activeSection === "how-it-works"
-                      ? "var(--color-brand)"
-                      : "var(--color-text-secondary)",
-                  cursor: "pointer"
-                }}
-              >
-                Pipeline
-              </button>
-              <button
-                onClick={() => scrollTo("client-stories")}
-                style={{
-                  fontSize: 14,
-                  fontWeight: activeSection === "client-stories" ? 600 : 500,
-                  color:
-                    activeSection === "client-stories"
-                      ? "var(--color-brand)"
-                      : "var(--color-text-secondary)",
-                  cursor: "pointer"
-                }}
-              >
-                Scenarios
-              </button>
-              <button
-                onClick={() => scrollTo("pricing")}
-                style={{
-                  fontSize: 14,
-                  fontWeight: activeSection === "pricing" ? 600 : 500,
-                  color:
-                    activeSection === "pricing"
-                      ? "var(--color-brand)"
-                      : "var(--color-text-secondary)",
-                  cursor: "pointer"
-                }}
-              >
-                Architecture
-              </button>
+              <Shield style={{ width: 14, height: 14 }} />
             </div>
-
-            <button
-              onClick={onBookCall}
+            <span
+              className="font-cygne"
               style={{
-                background: "var(--color-brand)",
-                color: "#fff",
-                padding: "10px 20px",
-                borderRadius: "var(--radius-full)",
-                fontSize: 14,
-                fontWeight: 600,
-                cursor: "pointer",
-                boxShadow: "var(--shadow-skeuomorphic)",
-                transition: "background-color 0.2s"
+                fontWeight: 700,
+                fontSize: 18,
+                color: "#140906",
+                letterSpacing: "-0.02em"
               }}
-              onMouseEnter={(e) => (e.target.style.backgroundColor = "var(--color-brand-hover)")}
-              onMouseLeave={(e) => (e.target.style.backgroundColor = "var(--color-brand)")}
             >
-              Verify Action
+              SENTINEL-K
+            </span>
+          </a>
+
+          {/* Desktop Nav Links */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 4
+            }}
+            className="hidden md:flex"
+          >
+            {NAV_LINKS.map((link) => {
+              const isCurrent = activeSection === link.id;
+              return (
+                <button
+                  key={link.id}
+                  onClick={() => scrollTo(link.id)}
+                  style={{
+                    padding: "8px 12px",
+                    fontSize: 12,
+                    fontWeight: 700,
+                    fontFamily: "Inter, sans-serif",
+                    color: isCurrent ? "#ff4405" : "#140906",
+                    cursor: "pointer",
+                    borderRadius: 8,
+                    transition: "color 0.2s ease"
+                  }}
+                >
+                  {link.label}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Action CTA Button */}
+          <button
+            onClick={onOpenTestbed}
+            style={{
+              background: "#140906",
+              color: "#ffffff",
+              padding: "9px 18px",
+              borderRadius: 999,
+              fontSize: 12,
+              fontWeight: 700,
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              gap: 6,
+              boxShadow: "0 4px 12px rgba(20, 9, 6, 0.15)",
+              transition: "transform 0.15s ease, background 0.2s ease"
+            }}
+          >
+            <Terminal style={{ width: 13, height: 13, color: "#ff692e" }} />
+            <span>VALIDATE ACTION</span>
+          </button>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            style={{
+              background: "none",
+              border: "none",
+              padding: 6,
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center"
+            }}
+            className="md:hidden"
+          >
+            {mobileMenuOpen ? <X style={{ width: 20, height: 20 }} /> : <Menu style={{ width: 20, height: 20 }} />}
+          </button>
+        </nav>
+      </header>
+
+      {/* Mobile Drawer */}
+      {mobileMenuOpen && (
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 999,
+            background: "rgba(10, 13, 18, 0.95)",
+            backdropFilter: "blur(16px)",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: 24,
+            padding: 24
+          }}
+        >
+          {NAV_LINKS.map((link) => (
+            <button
+              key={link.id}
+              onClick={() => scrollTo(link.id)}
+              className="font-cygne"
+              style={{
+                fontSize: 32,
+                fontWeight: 700,
+                color: "#ffffff",
+                cursor: "pointer"
+              }}
+            >
+              {link.label}
             </button>
-          </>
-        )}
-      </nav>
-    </header>
+          ))}
+          <button
+            onClick={() => {
+              setMobileMenuOpen(false);
+              onOpenTestbed();
+            }}
+            style={{
+              marginTop: 20,
+              padding: "16px 32px",
+              borderRadius: 30,
+              background: "#ff4405",
+              color: "#fff",
+              fontSize: 16,
+              fontWeight: 800,
+              cursor: "pointer"
+            }}
+          >
+            VALIDATE ACTION
+          </button>
+        </div>
+      )}
+    </>
   );
 }
