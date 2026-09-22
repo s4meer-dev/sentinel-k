@@ -512,7 +512,7 @@ export function HeroPhoneTerminal() {
 }
 
 
-// 2. The 3D Popping-Up Cards Component (Next-Level Tactical Telemetry HUDs)
+// 2. The 3D Popping-Up Cards Component (Warm Architectural Alabaster & Terracotta Tactile Dossiers)
 export function Card3DVisual({ index, testimonial, isHovered }) {
   let [tick, setTick] = (0, o.useState)(0);
   (0, o.useEffect)(() => {
@@ -529,13 +529,13 @@ export function Card3DVisual({ index, testimonial, isHovered }) {
     {
       tier: "TIER 01 // HUMAN SECURITY",
       flag: "8.9 URGENCY FLAG",
-      flagColor: "#f59e0b",
-      flagBg: "rgba(245, 158, 11, 0.15)",
+      flagColor: "#d95323",
+      flagBg: "rgba(217, 83, 35, 0.1)",
       sub: "CELLULAR INGESTION // VOICE BIOMETRICS",
       title: "SPOOFED AUTHORITY DISPATCH",
       desc: "Deepfake voice clone detected with 71% spectral similarity. Duty roster indicates Supervisor Reynolds is offline on annual leave.",
       status: "STATUS: QUARANTINED",
-      statusColor: "#f59e0b",
+      statusColor: "#d95323",
       pills: [
         { label: "ANOMALY", value: "8.9 Urgency" },
         { label: "LATENCY", value: "18ms NPU" },
@@ -546,34 +546,34 @@ export function Card3DVisual({ index, testimonial, isHovered }) {
     {
       tier: "TIER 03 // CYBER GATE",
       flag: "CRC VALID // PASS",
-      flagColor: "#10b981",
-      flagBg: "rgba(16, 185, 129, 0.15)",
+      flagColor: "#181d27",
+      flagBg: "rgba(24, 29, 39, 0.08)",
       sub: "DETERMINISTIC SCADA GATE // MODBUS TCP",
       title: "THE KINETIC PARADOX",
       desc: "Standard firewall permits command. Modbus CRC 0x9B4E matches, register 40012 accessible. Physical consequences remain unchecked.",
       status: "CYBER RESULT: APPROVED (BLIND)",
-      statusColor: "#10b981",
+      statusColor: "#181d27",
       pills: [
         { label: "PROTOCOL", value: "Modbus TCP" },
         { label: "REGISTER", value: "HR_40012" },
-        { label: "FIREWALL", value: "Approved (Blind)" }
+        { label: "FIREWALL", value: "Blind Pass" }
       ],
       type: "modbus"
     },
     {
       tier: "TIER 04 // PHYSICAL TWIN",
-      flag: "11.4 BAR // HARD REJECT",
-      flagColor: "#ef4444",
-      flagBg: "rgba(239, 68, 68, 0.15)",
-      sub: "EPANET 2.2 / WNTR DYNAMIC TWIN",
-      title: "OVERPRESSURE SURGE PREDICTED",
-      desc: "Relief Valve 02 is closed (0%). Forward kinetic simulation calculates 11.4 bar shockwave at Node 14 (safety ceiling: 9.2 bar). Action halted!",
-      status: "PHYSICAL SAFETY: REJECTED",
-      statusColor: "#ef4444",
+      flag: "11.4 BAR -> 7.4 BAR",
+      flagColor: "#15803d",
+      flagBg: "rgba(21, 128, 61, 0.1)",
+      sub: "EPANET 2.2 / WNTR KINETIC REACTOR",
+      title: "AUTONOMOUS SURGE EQUILIBRIUM",
+      desc: "Forward kinetic simulation intercepts 11.4 bar shockwave at Node 14 and synthesizes a 60s staged PRV-02 valve ramp capped at 7.4 bar.",
+      status: "PHYSICAL SAFETY: VERIFIED SAFE",
+      statusColor: "#15803d",
       pills: [
-        { label: "PEAK SURGE", value: "11.4 Bar" },
-        { label: "LIMIT", value: "9.2 Bar" },
-        { label: "VERDICT", value: "Hard Reject" }
+        { label: "RAW SURGE", value: "11.4 Bar" },
+        { label: "REPLANNED", value: "7.4 Bar" },
+        { label: "VERDICT", value: "Zero Surge" }
       ],
       type: "hydro"
     }
@@ -585,24 +585,38 @@ export function Card3DVisual({ index, testimonial, isHovered }) {
     style: {
       width: "100%",
       height: "100%",
-      background: "linear-gradient(145deg, #0e131d 0%, #080b11 100%)",
-      color: "#fff",
+      background: "linear-gradient(155deg, #ffffff 0%, #f7f4ed 55%, #eee8dc 100%)",
+      color: "#181d27",
       padding: 18,
       display: "flex",
       flexDirection: "column",
       justifyContent: "space-between",
       boxSizing: "border-box",
-      borderRadius: 16,
-      border: `1px solid ${isHovered ? c.flagColor : "rgba(255, 255, 255, 0.1)"}`,
+      borderRadius: 18,
+      border: `1.5px solid ${isHovered ? "#d95323" : "rgba(24, 29, 39, 0.1)"}`,
       fontFamily: L,
       position: "relative",
       overflow: "hidden",
-      boxShadow: isHovered ? `0 20px 50px rgba(0,0,0,0.5), 0 0 20px ${c.flagColor}30` : "0 16px 40px rgba(0,0,0,0.35)",
-      transition: "border 0.3s ease, box-shadow 0.3s ease"
+      boxShadow: isHovered
+        ? "0 24px 54px rgba(24, 29, 39, 0.14), 0 0 0 3px rgba(217, 83, 35, 0.12), inset 0 1px 0 #ffffff"
+        : "0 16px 40px rgba(24, 29, 39, 0.08), inset 0 1px 0 #ffffff",
+      transition: "all 0.35s cubic-bezier(0.16, 1, 0.3, 1)"
     },
     children: [
+      // Subtle architectural dot matrix
+      (0, x.jsx)("div", {
+        style: {
+          position: "absolute",
+          inset: 0,
+          backgroundImage: "radial-gradient(rgba(24, 29, 39, 0.06) 1px, transparent 1px)",
+          backgroundSize: "14px 14px",
+          pointerEvents: "none"
+        }
+      }),
+
       // Top row
       (0, x.jsxs)("div", {
+        style: { position: "relative", zIndex: 2 },
         children: [
           (0, x.jsxs)("div", {
             style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 },
@@ -610,26 +624,26 @@ export function Card3DVisual({ index, testimonial, isHovered }) {
               (0, x.jsx)("span", {
                 style: {
                   fontFamily: "monospace",
-                  fontSize: 9.5,
+                  fontSize: 9,
                   fontWeight: 800,
-                  color: "#cbd5e1",
-                  background: "rgba(255,255,255,0.06)",
+                  color: "#181d27",
+                  background: "#f3efe6",
                   padding: "3px 8px",
                   borderRadius: 100,
-                  border: "1px solid rgba(255,255,255,0.08)"
+                  border: "1px solid rgba(24,29,39,0.1)"
                 },
                 children: c.tier
               }),
               (0, x.jsx)("span", {
                 style: {
                   fontFamily: "monospace",
-                  fontSize: 9,
+                  fontSize: 8.5,
                   fontWeight: 800,
                   color: c.flagColor,
                   background: c.flagBg,
                   padding: "3px 8px",
                   borderRadius: 100,
-                  border: `1px solid ${c.flagColor}40`
+                  border: `1px solid ${c.flagColor}30`
                 },
                 children: c.flag
               })
@@ -637,151 +651,222 @@ export function Card3DVisual({ index, testimonial, isHovered }) {
           }),
 
           // Sub & Title
-          (0, x.jsx)("div", { style: { fontSize: 9.5, fontFamily: "monospace", fontWeight: 800, color: R, letterSpacing: "0.08em", marginBottom: 3 }, children: c.sub }),
+          (0, x.jsx)("div", { style: { fontSize: 9, fontFamily: "monospace", fontWeight: 800, color: "#d95323", letterSpacing: "0.08em", marginBottom: 3 }, children: c.sub }),
           (0, x.jsx)("h3", {
-            style: { fontFamily: F, fontSize: 17, fontWeight: 700, color: "#fff", margin: "0 0 6px", lineHeight: 1.2 },
+            style: { fontFamily: F, fontSize: 17.5, fontWeight: 700, color: "#181d27", margin: "0 0 5px", lineHeight: 1.15, letterSpacing: "-0.02em" },
             children: c.title
           }),
           (0, x.jsx)("p", {
-            style: { fontSize: 11, color: "#94a3b8", lineHeight: 1.45, margin: 0 },
+            style: { fontSize: 11, color: "#57534e", lineHeight: 1.45, margin: 0 },
             children: c.desc
           })
         ]
       }),
 
-      // Animated Industrial Telemetry Visual in Center
+      // Tactile Architectural Instrument Well in Center
       (0, x.jsxs)("div", {
         style: {
-          height: 88,
-          background: "rgba(0,0,0,0.6)",
-          borderRadius: 10,
-          border: "1px solid rgba(255,255,255,0.08)",
+          height: 94,
+          background: "linear-gradient(180deg, #efeae0 0%, #e6dfd1 100%)",
+          borderRadius: 12,
+          border: "1px solid rgba(24,29,39,0.09)",
+          boxShadow: "inset 0 2px 6px rgba(24,29,39,0.05)",
           margin: "8px 0",
-          padding: 8,
+          padding: "8px 10px",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
           position: "relative",
-          overflow: "hidden"
+          overflow: "hidden",
+          zIndex: 2
         },
         children: [
-          // Ambient grid
-          (0, x.jsx)("div", {
-            style: {
-              position: "absolute",
-              inset: 0,
-              backgroundImage: "linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)",
-              backgroundSize: "16px 16px",
-              pointerEvents: "none"
-            }
-          }),
-
-          // Visual 1: Acoustic Spectrogram
+          // Visual 1: Warm Architectural Voiceprint Harmonics
           c.type === "acoustic" && (0, x.jsxs)("div", {
-            style: { width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between", position: "relative", zIndex: 2 },
+            style: { width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between" },
             children: [
               (0, x.jsxs)("div", {
-                style: { display: "flex", justifyContent: "space-between", fontSize: 8, fontFamily: "monospace", color: "#f59e0b" },
+                style: { display: "flex", justifyContent: "space-between", fontSize: 8, fontFamily: "monospace", color: "#57534e", fontWeight: 700 },
                 children: [
-                  (0, x.jsx)("span", { children: "VOICEPRINT SPECTROGRAM" }),
-                  (0, x.jsx)("span", { children: "ALERT // CLONE DETECTED" })
+                  (0, x.jsx)("span", { children: "NPU VOICEPRINT HARMONICS" }),
+                  (0, x.jsx)("span", { style: { color: "#d95323", fontWeight: 800 }, children: "JITTER: 98.4%" })
                 ]
               }),
               (0, x.jsx)("div", {
-                style: { display: "flex", alignItems: "flex-end", gap: 3, height: 42, padding: "0 4px" },
-                children: Array.from({ length: 18 }).map((_, i) => {
-                  let h = 8 + Math.abs(Math.sin(tick * 0.12 + i * 0.5)) * 30;
-                  let isAlert = i >= 6 && i <= 12;
+                style: { display: "flex", alignItems: "center", gap: 2.5, height: 42 },
+                children: Array.from({ length: 24 }).map((_, i) => {
+                  let barH = 8 + Math.abs(Math.sin(tick * 0.12 + i * 0.45)) * 28;
+                  let isHighlight = i >= 8 && i <= 15;
                   return (0, x.jsx)("div", {
                     key: i,
                     style: {
                       flex: 1,
-                      height: `${h}px`,
-                      background: isAlert ? "#ef4444" : "#f59e0b",
-                      borderRadius: 2,
-                      boxShadow: isAlert ? "0 0 6px #ef4444" : "none"
+                      height: `${barH}px`,
+                      background: isHighlight ? "#d95323" : "#181d27",
+                      opacity: isHighlight ? 0.95 : 0.35,
+                      borderRadius: 2
                     }
                   });
                 })
               }),
               (0, x.jsxs)("div", {
-                style: { display: "flex", justifyContent: "space-between", fontSize: 7.5, fontFamily: "monospace", color: "#cbd5e1" },
+                style: { display: "flex", justifyContent: "space-between", fontSize: 7.5, fontFamily: "monospace", color: "#57534e" },
                 children: [
-                  (0, x.jsx)("span", { children: "MATCH: 71.4%" }),
-                  (0, x.jsx)("span", { style: { color: "#f87171" }, children: "ANOMALY: 8.9 SIGMA" })
+                  (0, x.jsx)("span", { children: "WHISPER-V3 INT4" }),
+                  (0, x.jsx)("span", { style: { color: "#181d27", fontWeight: 800 }, children: "DEEPFAKE QUARANTINED" })
                 ]
               })
             ]
           }),
 
-          // Visual 2: Modbus TCP Frame Inspection
+          // Visual 2: Modbus Formal Register Gate
           c.type === "modbus" && (0, x.jsxs)("div", {
-            style: { width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between", position: "relative", zIndex: 2 },
+            style: { width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between" },
             children: [
               (0, x.jsxs)("div", {
-                style: { display: "flex", justifyContent: "space-between", fontSize: 8, fontFamily: "monospace", color: "#38bdf8" },
+                style: { display: "flex", justifyContent: "space-between", fontSize: 8, fontFamily: "monospace", color: "#57534e", fontWeight: 700 },
                 children: [
-                  (0, x.jsx)("span", { children: "MODBUS TCP FRAME [PORT 502]" }),
-                  (0, x.jsx)("span", { style: { color: "#10b981" }, children: "CRC VALID: 0x9B4E" })
+                  (0, x.jsx)("span", { children: "REGISTER DECOMPILATION" }),
+                  (0, x.jsx)("span", { style: { color: "#d95323", fontWeight: 800 }, children: "HR_40012 := 850" })
                 ]
               }),
-              (0, x.jsxs)("div", {
-                style: { background: "#000", padding: "4px 8px", borderRadius: 4, fontFamily: "monospace", fontSize: 8, color: "#38bdf8", border: "1px solid rgba(56,189,248,0.2)" },
+              (0, x.jsx)("div", {
+                style: { display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 5 },
                 children: [
-                  (0, x.jsx)("div", { children: "HEX: 00 01 00 00 00 06 01 06 9C 2C 03 52" }),
-                  (0, x.jsx)("div", { style: { color: "#fbbf24" }, children: "WRITE_HOLDING_REG(40012) -> 850 RPM" })
-                ]
+                  { k: "FUNC", v: "0x06" },
+                  { k: "ADDR", v: "%QW104" },
+                  { k: "CRC16", v: "0x9B4E" },
+                  { k: "Z3 SMT", v: "HOLD" }
+                ].map((cell, idx) => (
+                  (0, x.jsxs)("div", {
+                    key: idx,
+                    style: {
+                      background: idx === 3 ? "#d95323" : "#ffffff",
+                      color: idx === 3 ? "#ffffff" : "#181d27",
+                      borderRadius: 6,
+                      padding: "5px 4px",
+                      textAlign: "center",
+                      border: "1px solid rgba(24,29,39,0.08)"
+                    },
+                    children: [
+                      (0, x.jsx)("div", { style: { fontSize: 6.5, fontFamily: "monospace", opacity: 0.7 }, children: cell.k }),
+                      (0, x.jsx)("div", { style: { fontSize: 8.5, fontFamily: "monospace", fontWeight: 800, marginTop: 1 }, children: cell.v })
+                    ]
+                  })
+                ))
               }),
               (0, x.jsxs)("div", {
-                style: { display: "flex", justifyContent: "space-between", fontSize: 7.5, fontFamily: "monospace", color: "#cbd5e1" },
+                style: { display: "flex", justifyContent: "space-between", fontSize: 7.5, fontFamily: "monospace", color: "#57534e" },
                 children: [
-                  (0, x.jsx)("span", { style: { color: "#10b981" }, children: "FIREWALL: PERMITTED" }),
-                  (0, x.jsx)("span", { style: { color: "#ef4444", fontWeight: 700 }, children: "PHYSICAL TWIN: PENDING" })
+                  (0, x.jsx)("span", { children: "ACL SYNTAX: PERMITTED" }),
+                  (0, x.jsx)("span", { style: { color: "#d95323", fontWeight: 800 }, children: "TWIN CHECK REQUIRED →" })
                 ]
               })
             ]
           }),
 
-          // Visual 3: EPANET Hydrodynamic Pipe Surge
+          // Visual 3 (THE 3RD POPPING-UP CARD): Interactive Kinetic Turbine & Flange Equilibrium Reactor
           c.type === "hydro" && (0, x.jsxs)("div", {
-            style: { width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between", position: "relative", zIndex: 2 },
+            style: { width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between" },
             children: [
               (0, x.jsxs)("div", {
-                style: { display: "flex", justifyContent: "space-between", fontSize: 8, fontFamily: "monospace", color: "#ef4444" },
+                style: { display: "flex", justifyContent: "space-between", fontSize: 8, fontFamily: "monospace", color: "#181d27", fontWeight: 800 },
                 children: [
-                  (0, x.jsx)("span", { children: "EPANET KINETIC SOLVER" }),
-                  (0, x.jsx)("span", { style: { background: "rgba(239,68,68,0.2)", padding: "1px 4px", borderRadius: 3, fontWeight: 800 }, children: "11.4 BAR SURGE" })
+                  (0, x.jsx)("span", { children: "TURBINE HARMONIC DAMPENER" }),
+                  (0, x.jsx)("span", { style: { background: "#15803d", color: "#fff", padding: "1px 6px", borderRadius: 100, fontSize: 7.5 }, children: "7.4 BAR LOCKED" })
                 ]
               }),
-              (0, x.jsxs)("svg", {
-                viewBox: "0 0 240 40",
-                style: { width: "100%", height: 36 },
+              // Interactive Dual-Dial & Harmonic Pressure Bars
+              (0, x.jsxs)("div", {
+                style: { display: "flex", alignItems: "center", gap: 10, height: 46 },
                 children: [
-                  // Safety ceiling line
-                  (0, x.jsx)("line", { x1: 0, y1: 18, x2: 240, y2: 18, stroke: "#ef4444", strokeDasharray: "3 3", strokeWidth: 1 }),
-                  // Surge wave
-                  (0, x.jsx)("path", {
-                    d: "M 0 32 Q 50 32 80 4 T 140 28 T 240 30",
-                    fill: "none",
-                    stroke: "#ef4444",
-                    strokeWidth: 2,
-                    style: { filter: "drop-shadow(0 0 4px #ef4444)" }
+                  // Rotating Precision Impeller SVG
+                  (0, x.jsxs)("svg", {
+                    viewBox: "0 0 48 48",
+                    style: { width: 42, height: 42, flexShrink: 0 },
+                    children: [
+                      (0, x.jsx)("circle", { cx: 24, cy: 24, r: 21, fill: "#ffffff", stroke: "rgba(24,29,39,0.15)", strokeWidth: 1.5 }),
+                      (0, x.jsx)("circle", { cx: 24, cy: 24, r: 16, fill: "none", stroke: "#d95323", strokeWidth: 1.5, strokeDasharray: "4 3", transform: `rotate(${(tick * 2) % 360} 24 24)` }),
+                      (0, x.jsxs)("g", {
+                        transform: `rotate(${(-tick * 3) % 360} 24 24)`,
+                        children: [
+                          (0, x.jsx)("line", { x1: 24, y1: 10, x2: 24, y2: 38, stroke: "#181d27", strokeWidth: 2 }),
+                          (0, x.jsx)("line", { x1: 10, y1: 24, x2: 38, y2: 24, stroke: "#181d27", strokeWidth: 2 })
+                        ]
+                      }),
+                      (0, x.jsx)("circle", { cx: 24, cy: 24, r: 4.5, fill: "#15803d" })
+                    ]
                   }),
-                  // Safe trajectory
-                  (0, x.jsx)("path", {
-                    d: "M 0 32 Q 60 32 120 22 T 240 22",
-                    fill: "none",
-                    stroke: "#10b981",
-                    strokeWidth: 2,
-                    style: { filter: "drop-shadow(0 0 4px #10b981)" }
+                  // Live Stepped Ramp Progression Bars
+                  (0, x.jsxs)("div", {
+                    style: { flex: 1, display: "flex", flexDirection: "column", gap: 4 },
+                    children: [
+                      (0, x.jsxs)("div", {
+                        style: { display: "flex", alignItems: "center", gap: 6 },
+                        children: [
+                          (0, x.jsx)("span", { style: { fontSize: 7, fontFamily: "monospace", width: 48, color: "#57534e", fontWeight: 700 }, children: "RAW 11.4B" }),
+                          (0, x.jsx)("div", {
+                            style: { flex: 1, height: 7, background: "rgba(24,29,39,0.08)", borderRadius: 4, overflow: "hidden" },
+                            children: (0, x.jsx)("div", { style: { width: "92%", height: "100%", background: "#d95323", borderRadius: 4 } })
+                          })
+                        ]
+                      }),
+                      (0, x.jsxs)("div", {
+                        style: { display: "flex", alignItems: "center", gap: 6 },
+                        children: [
+                          (0, x.jsx)("span", { style: { fontSize: 7, fontFamily: "monospace", width: 48, color: "#15803d", fontWeight: 800 }, children: "SAFE 7.4B" }),
+                          (0, x.jsx)("div", {
+                            style: { flex: 1, height: 7, background: "rgba(24,29,39,0.08)", borderRadius: 4, overflow: "hidden" },
+                            children: (0, x.jsx)("div", {
+                              style: {
+                                width: `${58 + Math.sin(tick * 0.08) * 4}%`,
+                                height: "100%",
+                                background: "#15803d",
+                                borderRadius: 4
+                              }
+                            })
+                          })
+                        ]
+                      })
+                    ]
                   })
                 ]
               }),
+              // 8-Segment Runge-Kutta Pressure Harmonic Strip
+              (0, x.jsx)("div", {
+                style: {
+                  display: "grid",
+                  gridTemplateColumns: "repeat(8, 1fr)",
+                  gap: 3,
+                  padding: "4px 6px",
+                  background: "#ffffff",
+                  borderRadius: 6,
+                  border: "1px solid rgba(24,29,39,0.08)"
+                },
+                children: [0, 1, 2, 3, 4, 5, 6, 7].map(seg => {
+                  const active = seg <= 5;
+                  return (0, x.jsxs)("div", {
+                    key: seg,
+                    style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 2 },
+                    children: [
+                      (0, x.jsx)("div", {
+                        style: {
+                          width: "100%",
+                          height: 4,
+                          borderRadius: 2,
+                          background: active ? (seg >= 4 ? "#15803d" : "#181d27") : "rgba(24,29,39,0.12)"
+                        }
+                      }),
+                      (0, x.jsx)("span", { style: { fontSize: 6, fontFamily: "monospace", color: "#57534e", fontWeight: 700 }, children: `T+${(seg + 1) * 7}s` })
+                    ]
+                  });
+                })
+              }),
               (0, x.jsxs)("div", {
-                style: { display: "flex", justifyContent: "space-between", fontSize: 7.5, fontFamily: "monospace", color: "#cbd5e1" },
+                style: { display: "flex", justifyContent: "space-between", fontSize: 7.5, fontFamily: "monospace", color: "#57534e" },
                 children: [
-                  (0, x.jsx)("span", { style: { color: "#ef4444" }, children: "BURST: 11.4 BAR" }),
-                  (0, x.jsx)("span", { style: { color: "#10b981" }, children: "REPLANNED: 7.4 BAR" })
+                  (0, x.jsx)("span", { children: "PRV-02 OPENED TO 45%" }),
+                  (0, x.jsx)("span", { style: { color: "#15803d", fontWeight: 800 }, children: "FLANGE INTEGRITY 100%" })
                 ]
               })
             ]
@@ -789,8 +874,9 @@ export function Card3DVisual({ index, testimonial, isHovered }) {
         ]
       }),
 
-      // Bottom Row: Telemetry Pills
+      // Bottom Row: Telemetry Pills & Verdict Strip
       (0, x.jsxs)("div", {
+        style: { position: "relative", zIndex: 2 },
         children: [
           (0, x.jsx)("div", {
             style: { display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 6, marginBottom: 8 },
@@ -798,32 +884,32 @@ export function Card3DVisual({ index, testimonial, isHovered }) {
               (0, x.jsxs)("div", {
                 key: idx,
                 style: {
-                  background: "rgba(255,255,255,0.04)",
-                  border: "1px solid rgba(255,255,255,0.06)",
-                  borderRadius: 6,
+                  background: "#ffffff",
+                  border: "1px solid rgba(24,29,39,0.08)",
+                  borderRadius: 8,
                   padding: "4px 6px",
-                  textAlign: "center"
+                  textAlign: "center",
+                  boxShadow: "0 2px 5px rgba(24,29,39,0.03)"
                 },
                 children: [
-                  (0, x.jsx)("div", { style: { fontSize: 7.5, color: "#64748b", fontFamily: "monospace", textTransform: "uppercase" }, children: pill.label }),
-                  (0, x.jsx)("div", { style: { fontSize: 8.5, fontWeight: 700, color: "#fff", fontFamily: "monospace", marginTop: 1 }, children: pill.value })
+                  (0, x.jsx)("div", { style: { fontSize: 7, color: "#78716c", fontFamily: "monospace", textTransform: "uppercase" }, children: pill.label }),
+                  (0, x.jsx)("div", { style: { fontSize: 8.5, fontWeight: 800, color: "#181d27", fontFamily: "monospace", marginTop: 1 }, children: pill.value })
                 ]
               })
             ))
           }),
           (0, x.jsxs)("div", {
             style: {
-              background: "rgba(255,255,255,0.04)",
-              border: "1px solid rgba(255,255,255,0.08)",
-              borderRadius: 8,
-              padding: "6px 10px",
+              background: "#181d27",
+              borderRadius: 10,
+              padding: "7px 12px",
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center"
             },
             children: [
-              (0, x.jsx)("span", { style: { fontSize: 8.5, fontWeight: 800, color: c.statusColor, fontFamily: "monospace" }, children: c.status }),
-              (0, x.jsx)("span", { style: { fontSize: 8.5, color: "#cbd5e1", fontWeight: 700 }, children: "SENTINEL-K VERIFIED →" })
+              (0, x.jsx)("span", { style: { fontSize: 8, fontWeight: 800, color: "#faf8f5", fontFamily: "monospace", letterSpacing: "0.04em" }, children: c.status }),
+              (0, x.jsx)("span", { style: { fontSize: 8, color: "#d95323", fontWeight: 800, fontFamily: "monospace" }, children: "VERIFIED →" })
             ]
           })
         ]
@@ -937,18 +1023,18 @@ export function DigitalTwinSection() {
             ))
           }),
 
-          // Main Simulator Cockpit
+          // Main Simulator Cockpit — Warm Architectural Alabaster & Sand Glass
           (0, x.jsxs)("div", {
             style: {
               display: "grid",
               gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
               gap: 28,
-              background: V,
+              background: "linear-gradient(155deg, #ffffff 0%, #f7f4ed 55%, #eee8dc 100%)",
               borderRadius: 24,
               padding: "clamp(24px, 4vw, 44px)",
-              color: "#fff",
-              boxShadow: "0 24px 64px rgba(0,0,0,0.25)",
-              border: "1px solid rgba(255,255,255,0.08)",
+              color: "#181d27",
+              boxShadow: "0 24px 56px rgba(24,29,39,0.08), inset 0 1px 0 #ffffff",
+              border: "1px solid rgba(24,29,39,0.12)",
               position: "relative",
               overflow: "hidden"
             },
@@ -959,12 +1045,13 @@ export function DigitalTwinSection() {
                 children: [
                   // Pump Slider
                   (0, x.jsxs)("div", {
+                    style: { background: "#efeae0", border: "1px solid rgba(24,29,39,0.08)", borderRadius: 16, padding: "16px 18px" },
                     children: [
                       (0, x.jsxs)("div", {
-                        style: { display: "flex", justifyContent: "space-between", alignItems: "center", fontFamily: I, fontSize: 13, color: "#98a2b3", marginBottom: 8 },
+                        style: { display: "flex", justifyContent: "space-between", alignItems: "center", fontFamily: I, fontSize: 13, color: "#57534e", fontWeight: 700, marginBottom: 8 },
                         children: [
                           (0, x.jsx)("span", { children: "PUMP SPEED (BOOSTER 04)" }),
-                          (0, x.jsxs)("span", { style: { color: R, fontWeight: 800, fontFamily: "monospace", fontSize: 15 }, children: [rpm, " RPM"] })
+                          (0, x.jsxs)("span", { style: { color: "#d95323", fontWeight: 800, fontFamily: "monospace", fontSize: 15 }, children: [rpm, " RPM"] })
                         ]
                       }),
                       (0, x.jsx)("input", {
@@ -981,13 +1068,13 @@ export function DigitalTwinSection() {
                         style: {
                           width: "100%",
                           height: 8,
-                          accentColor: R,
+                          accentColor: "#d95323",
                           cursor: "pointer",
                           borderRadius: 4
                         }
                       }),
                       (0, x.jsxs)("div", {
-                        style: { display: "flex", justifyContent: "space-between", fontSize: 10, color: "#64748b", fontFamily: "monospace", marginTop: 4 },
+                        style: { display: "flex", justifyContent: "space-between", fontSize: 10, color: "#78716c", fontFamily: "monospace", marginTop: 6 },
                         children: [(0, x.jsx)("span", { children: "0 RPM (IDLE)" }), (0, x.jsx)("span", { children: "600 RPM" }), (0, x.jsx)("span", { children: "1,200 RPM (MAX)" })]
                       })
                     ]
@@ -995,12 +1082,13 @@ export function DigitalTwinSection() {
 
                   // Valve Slider
                   (0, x.jsxs)("div", {
+                    style: { background: "#efeae0", border: "1px solid rgba(24,29,39,0.08)", borderRadius: 16, padding: "16px 18px" },
                     children: [
                       (0, x.jsxs)("div", {
-                        style: { display: "flex", justifyContent: "space-between", alignItems: "center", fontFamily: I, fontSize: 13, color: "#98a2b3", marginBottom: 8 },
+                        style: { display: "flex", justifyContent: "space-between", alignItems: "center", fontFamily: I, fontSize: 13, color: "#57534e", fontWeight: 700, marginBottom: 8 },
                         children: [
                           (0, x.jsx)("span", { children: "RELIEF VALVE APERTURE (RV-02)" }),
-                          (0, x.jsxs)("span", { style: { color: valve < 15 ? "#ef4444" : "#10b981", fontWeight: 800, fontFamily: "monospace", fontSize: 15 }, children: [valve, "%"] })
+                          (0, x.jsxs)("span", { style: { color: valve < 15 ? "#dc2626" : "#15803d", fontWeight: 800, fontFamily: "monospace", fontSize: 15 }, children: [valve, "%"] })
                         ]
                       }),
                       (0, x.jsx)("input", {
@@ -1017,17 +1105,17 @@ export function DigitalTwinSection() {
                         style: {
                           width: "100%",
                           height: 8,
-                          accentColor: valve < 15 ? "#ef4444" : "#10b981",
+                          accentColor: valve < 15 ? "#dc2626" : "#15803d",
                           cursor: "pointer",
                           borderRadius: 4
                         }
                       }),
                       (0, x.jsxs)("div", {
-                        style: { display: "flex", justifyContent: "space-between", fontSize: 10, color: "#64748b", fontFamily: "monospace", marginTop: 4 },
+                        style: { display: "flex", justifyContent: "space-between", fontSize: 10, color: "#78716c", fontFamily: "monospace", marginTop: 6 },
                         children: [
-                          (0, x.jsx)("span", { style: { color: "#ef4444" }, children: "0% (BLOCKED - DANGER)" }),
+                          (0, x.jsx)("span", { style: { color: "#dc2626", fontWeight: 700 }, children: "0% (BLOCKED - DANGER)" }),
                           (0, x.jsx)("span", { children: "50%" }),
-                          (0, x.jsx)("span", { style: { color: "#10b981" }, children: "100% (FULL BYPASS)" })
+                          (0, x.jsx)("span", { style: { color: "#15803d", fontWeight: 700 }, children: "100% (FULL BYPASS)" })
                         ]
                       })
                     ]
@@ -1044,10 +1132,10 @@ export function DigitalTwinSection() {
                     ].map((m, idx) => (
                       (0, x.jsxs)("div", {
                         key: idx,
-                        style: { background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 10, padding: "10px 12px" },
+                        style: { background: "#ffffff", border: "1px solid rgba(24,29,39,0.08)", borderRadius: 12, padding: "12px 14px", boxShadow: "0 2px 6px rgba(24,29,39,0.03)" },
                         children: [
-                          (0, x.jsx)("div", { style: { fontSize: 10, color: "#64748b", fontFamily: "monospace", textTransform: "uppercase" }, children: m.label }),
-                          (0, x.jsx)("div", { style: { fontSize: 14, fontWeight: 800, color: "#cbd5e1", fontFamily: "monospace", marginTop: 2 }, children: m.val })
+                          (0, x.jsx)("div", { style: { fontSize: 10, color: "#78716c", fontFamily: "monospace", textTransform: "uppercase" }, children: m.label }),
+                          (0, x.jsx)("div", { style: { fontSize: 15, fontWeight: 800, color: "#181d27", fontFamily: "monospace", marginTop: 3 }, children: m.val })
                         ]
                       })
                     ))
@@ -1062,81 +1150,107 @@ export function DigitalTwinSection() {
                   // Semicircular Pressure Gauge & Verdict Banner
                   (0, x.jsxs)("div", {
                     style: {
-                      background: isBreach ? "rgba(239,68,68,0.12)" : "rgba(16,185,129,0.1)",
-                      border: `1px solid ${isBreach ? "rgba(239,68,68,0.3)" : "rgba(16,185,129,0.3)"}`,
-                      borderRadius: 16,
-                      padding: 20,
+                      background: isBreach ? "rgba(220,38,38,0.07)" : "rgba(21,128,61,0.07)",
+                      border: `1.5px solid ${isBreach ? "rgba(220,38,38,0.3)" : "rgba(21,128,61,0.3)"}`,
+                      borderRadius: 18,
+                      padding: 22,
                       display: "flex",
                       justifyContent: "space-between",
-                      alignItems: "center"
+                      alignItems: "center",
+                      flexWrap: "wrap",
+                      gap: 12
                     },
                     children: [
                       (0, x.jsxs)("div", {
                         children: [
-                          (0, x.jsx)("div", { style: { fontSize: 11, fontFamily: "monospace", color: isBreach ? "#f87171" : "#34d399", fontWeight: 700 }, children: isBreach ? "CRITICAL BURST DETECTED" : "HYDRODYNAMIC STABILITY PASS" }),
-                          (0, x.jsxs)("div", { style: { fontSize: "clamp(28px, 4vw, 44px)", fontFamily: F, fontWeight: 700, color: isBreach ? "#ef4444" : "#10b981", lineHeight: 1.1, margin: "4px 0" }, children: [calculatedPressure, " BAR"] }),
-                          (0, x.jsx)("div", { style: { fontSize: 11, color: "#94a3b8" }, children: "Safety ceiling threshold: 8.0 BAR" })
+                          (0, x.jsx)("div", { style: { fontSize: 11, fontFamily: "monospace", color: isBreach ? "#dc2626" : "#15803d", fontWeight: 800 }, children: isBreach ? "CRITICAL BURST DETECTED" : "HYDRODYNAMIC STABILITY PASS" }),
+                          (0, x.jsxs)("div", { style: { fontSize: "clamp(30px, 4vw, 46px)", fontFamily: F, fontWeight: 700, color: isBreach ? "#dc2626" : "#15803d", lineHeight: 1.08, margin: "4px 0" }, children: [calculatedPressure, " BAR"] }),
+                          (0, x.jsx)("div", { style: { fontSize: 11, color: "#57534e", fontFamily: "monospace" }, children: "Safety ceiling threshold: 8.0 BAR" })
                         ]
                       }),
                       (0, x.jsxs)("div", {
                         style: {
-                          background: isBreach ? "#ef4444" : "#10b981",
-                          color: "#fff",
-                          padding: "10px 16px",
+                          background: isBreach ? "#dc2626" : "#181d27",
+                          color: "#faf8f5",
+                          padding: "11px 18px",
                           borderRadius: 100,
                           fontSize: 12,
                           fontWeight: 800,
-                          fontFamily: I,
+                          fontFamily: "monospace",
                           letterSpacing: "0.05em",
-                          boxShadow: `0 8px 24px ${isBreach ? "#ef444460" : "#10b98160"}`
+                          boxShadow: `0 8px 20px ${isBreach ? "rgba(220,38,38,0.28)" : "rgba(24,29,39,0.18)"}`
                         },
                         children: [isBreach ? "⛔ HARD REJECT" : "✓ SAFE TO COMMIT"]
                       })
                     ]
                   }),
 
-                  // Dynamic Joukowsky Shockwave Visual
+                  // Dynamic Joukowsky Shockwave Visual — Strictly Bounded Cubic Bezier
                   (0, x.jsxs)("div", {
                     style: {
-                      background: "rgba(0,0,0,0.5)",
-                      borderRadius: 16,
-                      border: "1px solid rgba(255,255,255,0.06)",
-                      padding: 16,
+                      background: "#efeae0",
+                      borderRadius: 18,
+                      border: "1px solid rgba(24,29,39,0.09)",
+                      padding: "16px 18px",
                       position: "relative",
-                      height: 150
+                      height: 168,
+                      boxShadow: "inset 0 2px 6px rgba(24,29,39,0.04)"
                     },
                     children: [
-                      (0, x.jsxs)("svg", {
-                        viewBox: "0 0 400 120",
-                        style: { width: "100%", height: "100%" },
+                      (0, x.jsxs)("div", {
+                        style: { display: "flex", justifyContent: "space-between", fontSize: 10, fontFamily: "monospace", color: "#57534e", marginBottom: 6, fontWeight: 700 },
                         children: [
-                          // 8.0 Bar Limit line
-                          (0, x.jsx)("line", { x1: 0, y1: 45, x2: 400, y2: 45, stroke: "#ef4444", strokeDasharray: "4 4", strokeWidth: 1.5 }),
-                          (0, x.jsx)("text", { x: 395, y: 40, textAnchor: "end", fill: "#ef4444", fontSize: 9, fontFamily: "monospace", children: "8.0 BAR BURST LIMIT" }),
-
-                          // Dynamic curve based on calculatedPressure
-                          (0, x.jsx)("path", {
-                            d: `M 0 95 Q 100 95 180 ${Math.max(10, 110 - calculatedPressure * 8.5)} T 300 ${Math.max(25, 95 - calculatedPressure * 4)} T 400 ${Math.max(30, 95 - calculatedPressure * 5)}`,
-                            fill: "none",
-                            stroke: isBreach ? "#ef4444" : "#10b981",
-                            strokeWidth: 3,
-                            style: { filter: `drop-shadow(0 0 8px ${isBreach ? "#ef4444" : "#10b981"})` }
-                          })
+                          (0, x.jsx)("span", { children: "EPANET 2.2 TRANSIENT WAVEFORM (JUNCTION J-104)" }),
+                          (0, x.jsxs)("span", { style: { color: isBreach ? "#dc2626" : "#15803d" }, children: ["STRESS INDEX: ", stressPercent, "%"] })
                         ]
                       }),
+                      (() => {
+                        const peakY = Math.max(12, Math.min(98, Math.round(108 - calculatedPressure * 7.8)));
+                        const midY = Math.max(24, Math.min(100, Math.round(104 - calculatedPressure * 4.6)));
+                        const endY = Math.max(32, Math.min(102, Math.round(104 - calculatedPressure * 4.2)));
+                        const curvePath = `M 0 98 C 65 98, 105 ${peakY}, 155 ${peakY} C 205 ${peakY}, 240 ${midY}, 295 ${midY} C 345 ${midY}, 370 ${endY}, 400 ${endY}`;
+                        return (0, x.jsxs)("svg", {
+                          viewBox: "0 0 400 116",
+                          style: { width: "100%", height: 112, display: "block", overflow: "hidden" },
+                          children: [
+                            (0, x.jsxs)("defs", {
+                              children: [
+                                (0, x.jsxs)("linearGradient", {
+                                  id: "twinSandFill", x1: "0", y1: "0", x2: "0", y2: "1",
+                                  children: [
+                                    (0, x.jsx)("stop", { offset: "0%", stopColor: isBreach ? "#dc2626" : "#15803d", stopOpacity: "0.24" }),
+                                    (0, x.jsx)("stop", { offset: "100%", stopColor: isBreach ? "#dc2626" : "#15803d", stopOpacity: "0.0" })
+                                  ]
+                                })
+                              ]
+                            }),
+                            (0, x.jsx)("line", { x1: 0, y1: 45, x2: 400, y2: 45, stroke: "#dc2626", strokeDasharray: "4 4", strokeWidth: 1.4 }),
+                            (0, x.jsx)("text", { x: 395, y: 39, textAnchor: "end", fill: "#dc2626", fontSize: 9, fontFamily: "monospace", fontWeight: 700, children: "8.0 BAR FLANGE BURST CEILING" }),
+                            (0, x.jsx)("path", { d: `${curvePath} L 400 114 L 0 114 Z`, fill: "url(#twinSandFill)" }),
+                            (0, x.jsx)("path", {
+                              d: curvePath,
+                              fill: "none",
+                              stroke: isBreach ? "#dc2626" : "#15803d",
+                              strokeWidth: 3,
+                              strokeLinecap: "round"
+                            }),
+                            (0, x.jsx)("circle", { cx: 155, cy: peakY, r: 4.5, fill: isBreach ? "#dc2626" : "#15803d", stroke: "#ffffff", strokeWidth: 1.5 })
+                          ]
+                        });
+                      })(),
                       isCavitation && (0, x.jsx)("div", {
                         style: {
                           position: "absolute",
-                          bottom: 12,
+                          bottom: 10,
                           left: 16,
-                          background: "rgba(245,158,11,0.2)",
-                          border: "1px solid rgba(245,158,11,0.4)",
-                          color: "#fbbf24",
-                          padding: "4px 8px",
+                          background: "rgba(217,83,35,0.12)",
+                          border: "1px solid rgba(217,83,35,0.35)",
+                          color: "#d95323",
+                          padding: "3px 9px",
                           borderRadius: 6,
                           fontSize: 9.5,
                           fontFamily: "monospace",
-                          fontWeight: 700
+                          fontWeight: 800
                         },
                         children: "⚠️ CAVITATION RISK: Rapid Pressure Drop Near Flange"
                       })
@@ -1318,9 +1432,9 @@ export function AgentBentoSection() {
                     onClick: () => setActiveAgent(i),
                     onMouseEnter: () => setActiveAgent(i),
                     style: {
-                      background: isSelected ? V : `#fff`,
-                      color: isSelected ? `#fff` : V,
-                      border: `1px solid ${isSelected ? R : `rgba(24,29,39,0.08)`}`,
+                      background: isSelected ? `#181d27` : `#ffffff`,
+                      color: isSelected ? `#faf8f5` : `#181d27`,
+                      border: `1px solid ${isSelected ? `#d95323` : `rgba(24,29,39,0.09)`}`,
                       borderRadius: 20,
                       padding: `22px 26px`,
                       cursor: `pointer`,
@@ -1329,7 +1443,7 @@ export function AgentBentoSection() {
                       alignItems: `center`,
                       justifyContent: `space-between`,
                       gap: 16,
-                      boxShadow: isSelected ? `0 20px 44px rgba(10,13,18,0.18)` : `0 2px 8px rgba(0,0,0,0.02)`,
+                      boxShadow: isSelected ? `0 18px 40px rgba(24,29,39,0.14)` : `0 2px 8px rgba(24,29,39,0.03)`,
                       transform: isSelected ? `translateX(6px)` : `translateX(0)`
                     },
                     children: [
@@ -1341,8 +1455,8 @@ export function AgentBentoSection() {
                               fontFamily: `monospace`,
                               fontSize: 12,
                               fontWeight: 800,
-                              color: isSelected ? `#fff` : R,
-                              background: isSelected ? R : `rgba(217, 83, 35, 0.1)`,
+                              color: isSelected ? `#fff` : `#d95323`,
+                              background: isSelected ? `#d95323` : `rgba(217, 83, 35, 0.1)`,
                               padding: `6px 10px`,
                               borderRadius: 8
                             },
@@ -1364,7 +1478,7 @@ export function AgentBentoSection() {
                                 style: {
                                   fontFamily: `monospace`,
                                   fontSize: 11.5,
-                                  color: isSelected ? `#94a3b8` : `#64748b`
+                                  color: isSelected ? `#d6d3d1` : `#57534e`
                                 },
                                 children: `${a.engine}  •  ${a.target}`
                               })
@@ -1376,11 +1490,11 @@ export function AgentBentoSection() {
                         style: { textAlign: `right`, flexShrink: 0 },
                         children: [
                           (0, x.jsx)(`div`, {
-                            style: { fontFamily: `monospace`, fontSize: 13, fontWeight: 800, color: isSelected ? `#10b981` : V },
+                            style: { fontFamily: `monospace`, fontSize: 13, fontWeight: 800, color: isSelected ? `#4ade80` : `#181d27` },
                             children: a.latency
                           }),
                           (0, x.jsx)(`div`, {
-                            style: { fontFamily: `monospace`, fontSize: 10, color: R, fontWeight: 700, letterSpacing: `0.06em` },
+                            style: { fontFamily: `monospace`, fontSize: 10, color: `#d95323`, fontWeight: 700, letterSpacing: `0.06em` },
                             children: a.status
                           })
                         ]
@@ -1390,18 +1504,18 @@ export function AgentBentoSection() {
                 })
               }),
 
-              // Right Column: Deep-Inspection Telemetry Dossier
+              // Right Column: Deep-Inspection Telemetry Dossier — Warm Alabaster & Sand Glass
               (0, x.jsxs)(`div`, {
                 style: {
-                  background: V,
-                  color: `#fff`,
+                  background: `linear-gradient(155deg, #ffffff 0%, #f7f4ed 55%, #eee8dc 100%)`,
+                  color: `#181d27`,
                   borderRadius: 24,
                   padding: `clamp(28px, 4vw, 44px)`,
                   display: `flex`,
                   flexDirection: `column`,
                   justifyContent: `space-between`,
-                  border: `1px solid rgba(255,255,255,0.08)`,
-                  boxShadow: `0 28px 68px rgba(10,13,18,0.22)`,
+                  border: `1px solid rgba(24,29,39,0.12)`,
+                  boxShadow: `0 24px 56px rgba(24,29,39,0.08), inset 0 1px 0 #ffffff`,
                   position: `relative`,
                   overflow: `hidden`
                 },
@@ -1409,50 +1523,51 @@ export function AgentBentoSection() {
                   (0, x.jsxs)(`div`, {
                     children: [
                       (0, x.jsxs)(`div`, {
-                        style: { display: `flex`, justifyContent: `space-between`, alignItems: `center`, marginBottom: 24, paddingBottom: 16, borderBottom: `1px solid rgba(255,255,255,0.08)` },
+                        style: { display: `flex`, justifyContent: `space-between`, alignItems: `center`, marginBottom: 24, paddingBottom: 16, borderBottom: `1px solid rgba(24,29,39,0.09)` },
                         children: [
                           (0, x.jsxs)(`div`, {
                             style: { display: `flex`, alignItems: `center`, gap: 10 },
                             children: [
-                              (0, x.jsx)(`span`, { style: { width: 8, height: 8, borderRadius: `50%`, background: `#10b981`, boxShadow: `0 0 10px #10b981` } }),
-                              (0, x.jsxs)(`span`, { style: { fontFamily: `monospace`, fontSize: 11, color: `#94a3b8`, letterSpacing: `0.1em` }, children: [`AGENT NODE // `, current.id, ` OF 05`] })
+                              (0, x.jsx)(`span`, { style: { width: 8, height: 8, borderRadius: `50%`, background: `#15803d`, boxShadow: `0 0 8px rgba(21,128,61,0.4)` } }),
+                              (0, x.jsxs)(`span`, { style: { fontFamily: `monospace`, fontSize: 11, color: `#57534e`, fontWeight: 700, letterSpacing: `0.1em` }, children: [`AGENT NODE // `, current.id, ` OF 05`] })
                             ]
                           }),
                           (0, x.jsx)(`span`, {
-                            style: { fontFamily: `monospace`, fontSize: 11, color: R, background: `rgba(217,83,35,0.14)`, padding: `4px 10px`, borderRadius: 100, fontWeight: 700 },
+                            style: { fontFamily: `monospace`, fontSize: 11, color: `#d95323`, background: `rgba(217,83,35,0.12)`, padding: `4px 12px`, borderRadius: 100, fontWeight: 800 },
                             children: `SLA LATENCY: ${current.latency}`
                           })
                         ]
                       }),
 
                       (0, x.jsx)(`h3`, {
-                        style: { fontFamily: F, fontSize: `clamp(28px, 3.5vw, 40px)`, fontWeight: 700, margin: `0 0 14px`, letterSpacing: `-0.025em` },
+                        style: { fontFamily: F, fontSize: `clamp(28px, 3.5vw, 40px)`, fontWeight: 700, color: `#181d27`, margin: `0 0 14px`, letterSpacing: `-0.025em` },
                         children: current.role
                       }),
                       (0, x.jsx)(`p`, {
-                        style: { fontFamily: L, fontSize: 16.5, color: `#cbd5e1`, lineHeight: 1.65, margin: `0 0 28px` },
+                        style: { fontFamily: L, fontSize: 16.5, color: `#57534e`, lineHeight: 1.65, margin: `0 0 28px` },
                         children: current.desc
                       }),
 
-                      // Live NPU / Enclave Execution Trace Terminal
+                      // Live NPU / Enclave Execution Trace Terminal — Recessed Sand Well
                       (0, x.jsxs)(`div`, {
                         style: {
-                          background: `rgba(0,0,0,0.45)`,
-                          border: `1px solid rgba(255,255,255,0.08)`,
+                          background: `#efeae0`,
+                          border: `1px solid rgba(24,29,39,0.09)`,
                           borderRadius: 16,
                           padding: 20,
                           fontFamily: `monospace`,
                           fontSize: 12,
                           lineHeight: 1.75,
-                          marginBottom: 24
+                          marginBottom: 24,
+                          boxShadow: `inset 0 2px 6px rgba(24,29,39,0.04)`
                         },
                         children: [
-                          (0, x.jsx)(`div`, { style: { color: `#64748b`, fontSize: 10.5, marginBottom: 10, letterSpacing: `0.08em` }, children: `// LIVE ENCLAVE EXECUTION TRACE` }),
+                          (0, x.jsx)(`div`, { style: { color: `#78716c`, fontSize: 10.5, fontWeight: 700, marginBottom: 10, letterSpacing: `0.08em` }, children: `// LIVE ENCLAVE EXECUTION TRACE` }),
                           current.trace.map((line, idx) => (
                             (0, x.jsxs)(`div`, {
                               key: idx,
-                              style: { color: idx === 2 ? `#10b981` : `#e2e8f0`, marginBottom: idx < 2 ? 6 : 0 },
-                              children: [(0, x.jsx)(`span`, { style: { color: R, marginRight: 8 }, children: `>` }), line]
+                              style: { color: idx === 2 ? `#15803d` : `#181d27`, fontWeight: idx === 2 ? 800 : 600, marginBottom: idx < 2 ? 6 : 0 },
+                              children: [(0, x.jsx)(`span`, { style: { color: `#d95323`, fontWeight: 800, marginRight: 8 }, children: `>` }), line]
                             })
                           ))
                         ]
@@ -1467,20 +1582,20 @@ export function AgentBentoSection() {
                       gridTemplateColumns: `1fr 1fr`,
                       gap: 12,
                       paddingTop: 18,
-                      borderTop: `1px solid rgba(255,255,255,0.08)`
+                      borderTop: `1px solid rgba(24,29,39,0.09)`
                     },
                     children: [
                       (0, x.jsxs)(`div`, {
                         children: [
-                          (0, x.jsx)(`div`, { style: { fontFamily: `monospace`, fontSize: 10, color: `#64748b`, textTransform: `uppercase` }, children: `COMPUTE TARGET` }),
-                          (0, x.jsx)(`div`, { style: { fontFamily: `monospace`, fontSize: 13, fontWeight: 700, color: `#fff`, marginTop: 3 }, children: current.target })
+                          (0, x.jsx)(`div`, { style: { fontFamily: `monospace`, fontSize: 10, color: `#78716c`, textTransform: `uppercase` }, children: `COMPUTE TARGET` }),
+                          (0, x.jsx)(`div`, { style: { fontFamily: `monospace`, fontSize: 13, fontWeight: 800, color: `#181d27`, marginTop: 3 }, children: current.target })
                         ]
                       }),
                       (0, x.jsxs)(`div`, {
                         style: { textAlign: `right` },
                         children: [
-                          (0, x.jsx)(`div`, { style: { fontFamily: `monospace`, fontSize: 10, color: `#64748b`, textTransform: `uppercase` }, children: current.metricLabel }),
-                          (0, x.jsx)(`div`, { style: { fontFamily: `monospace`, fontSize: 13, fontWeight: 700, color: `#10b981`, marginTop: 3 }, children: current.metricValue })
+                          (0, x.jsx)(`div`, { style: { fontFamily: `monospace`, fontSize: 10, color: `#78716c`, textTransform: `uppercase` }, children: current.metricLabel }),
+                          (0, x.jsx)(`div`, { style: { fontFamily: `monospace`, fontSize: 13, fontWeight: 800, color: `#15803d`, marginTop: 3 }, children: current.metricValue })
                         ]
                       })
                     ]
@@ -1581,8 +1696,8 @@ export function PlaybookSection() {
                 "data-cursor-text": isPlaying ? `PAUSE` : `AUTO-PLAY`,
                 onClick: () => setIsPlaying(!isPlaying),
                 style: {
-                  background: isPlaying ? R : V,
-                  color: `#fff`,
+                  background: isPlaying ? `#d95323` : `#181d27`,
+                  color: `#faf8f5`,
                   border: `none`,
                   borderRadius: 100,
                   padding: `14px 26px`,
@@ -1594,35 +1709,35 @@ export function PlaybookSection() {
                   display: `flex`,
                   alignItems: `center`,
                   gap: 10,
-                  boxShadow: `0 12px 28px rgba(10,13,18,0.18)`
+                  boxShadow: `0 12px 28px rgba(24,29,39,0.14)`
                 },
                 children: [
-                  (0, x.jsx)(`span`, { style: { width: 8, height: 8, borderRadius: `50%`, background: isPlaying ? `#fff` : `#10b981` } }),
+                  (0, x.jsx)(`span`, { style: { width: 8, height: 8, borderRadius: `50%`, background: isPlaying ? `#fff` : `#4ade80` } }),
                   isPlaying ? `⏸ PAUSE SIMULATION` : `▶ AUTO-SIMULATE 10S CONTAINMENT`
                 ]
               })
             ]
           }),
 
-          // Interactive Scrubber Console
+          // Interactive Scrubber Console — Warm Architectural Alabaster & Sand Glass
           (0, x.jsxs)(`div`, {
             style: {
-              background: V,
+              background: `linear-gradient(155deg, #ffffff 0%, #f7f4ed 55%, #eee8dc 100%)`,
               borderRadius: 24,
               padding: `clamp(24px, 4vw, 44px)`,
-              color: `#fff`,
-              boxShadow: `0 28px 68px rgba(10,13,18,0.25)`,
-              border: `1px solid rgba(255,255,255,0.08)`
+              color: `#181d27`,
+              boxShadow: `0 24px 56px rgba(24,29,39,0.08), inset 0 1px 0 #ffffff`,
+              border: `1px solid rgba(24,29,39,0.12)`
             },
             children: [
               // Progress bar across 10 steps
               (0, x.jsx)(`div`, {
-                style: { width: `100%`, height: 4, background: `rgba(255,255,255,0.08)`, borderRadius: 4, marginBottom: 20, overflow: `hidden` },
+                style: { width: `100%`, height: 5, background: `rgba(24,29,39,0.08)`, borderRadius: 4, marginBottom: 20, overflow: `hidden` },
                 children: (0, x.jsx)(`div`, {
                   style: {
                     width: `${((step + 1) / steps.length) * 100}%`,
                     height: `100%`,
-                    background: isDangerStep ? `#ef4444` : R,
+                    background: isDangerStep ? `#dc2626` : `#d95323`,
                     transition: `width 0.35s cubic-bezier(0.16, 1, 0.3, 1)`
                   }
                 })
@@ -1636,7 +1751,7 @@ export function PlaybookSection() {
                   gap: 8,
                   overflowX: `auto`,
                   paddingBottom: 20,
-                  borderBottom: `1px solid ${BORDER_DARK}`,
+                  borderBottom: `1px solid rgba(24,29,39,0.09)`,
                   scrollbarWidth: `none`
                 },
                 children: steps.map((s, i) => (
@@ -1644,14 +1759,14 @@ export function PlaybookSection() {
                     key: i,
                     onClick: () => { setIsPlaying(false); setStep(i); },
                     style: {
-                      background: step === i ? (i === 5 ? `#ef4444` : R) : `rgba(255, 255, 255, 0.04)`,
-                      color: step === i ? `#fff` : `#98a2b3`,
-                      border: `1px solid ${step === i ? `transparent` : `rgba(255,255,255,0.06)`}`,
+                      background: step === i ? (i === 5 ? `#dc2626` : `#181d27`) : `#efeae0`,
+                      color: step === i ? `#faf8f5` : `#57534e`,
+                      border: `1px solid ${step === i ? `transparent` : `rgba(24,29,39,0.08)`}`,
                       borderRadius: 12,
                       padding: `10px 12px`,
                       fontFamily: `monospace`,
                       fontSize: 11,
-                      fontWeight: 700,
+                      fontWeight: 800,
                       cursor: `pointer`,
                       display: `flex`,
                       flexDirection: `column`,
@@ -1661,10 +1776,10 @@ export function PlaybookSection() {
                     },
                     children: [
                       (0, x.jsxs)(`div`, {
-                        style: { display: `flex`, justifyContent: `space-between`, width: `100%`, opacity: 0.8 },
+                        style: { display: `flex`, justifyContent: `space-between`, width: `100%`, opacity: 0.85 },
                         children: [(0, x.jsx)(`span`, { children: `0${i + 1}` }), (0, x.jsx)(`span`, { children: `T+${i}s` })]
                       }),
-                      (0, x.jsx)(`span`, { style: { fontSize: 10, letterSpacing: `0.04em`, color: step === i ? `#fff` : `#cbd5e1` }, children: s.phase })
+                      (0, x.jsx)(`span`, { style: { fontSize: 10, letterSpacing: `0.04em`, color: step === i ? `#faf8f5` : `#181d27` }, children: s.phase })
                     ]
                   })
                 ))
@@ -1689,8 +1804,8 @@ export function PlaybookSection() {
                             style: {
                               fontFamily: `monospace`,
                               fontSize: 12,
-                              color: isDangerStep ? `#ef4444` : R,
-                              background: isDangerStep ? `rgba(239,68,68,0.15)` : `rgba(255, 105, 46, 0.15)`,
+                              color: isDangerStep ? `#dc2626` : `#d95323`,
+                              background: isDangerStep ? `rgba(220,38,38,0.12)` : `rgba(217, 83, 35, 0.12)`,
                               padding: `5px 12px`,
                               borderRadius: 8,
                               fontWeight: 800
@@ -1698,17 +1813,17 @@ export function PlaybookSection() {
                             children: [`T+`, step, `s  //  `, currentStep.time]
                           }),
                           (0, x.jsx)(`span`, {
-                            style: { fontFamily: `monospace`, fontSize: 12, color: `#98a2b3`, textTransform: `uppercase`, letterSpacing: `0.1em` },
+                            style: { fontFamily: `monospace`, fontSize: 12, color: `#57534e`, fontWeight: 700, textTransform: `uppercase`, letterSpacing: `0.1em` },
                             children: `PHASE: ${currentStep.phase}`
                           })
                         ]
                       }),
                       (0, x.jsx)(`h3`, {
-                        style: { fontFamily: F, fontSize: `clamp(26px, 3.2vw, 36px)`, fontWeight: 700, color: `#fff`, margin: `0 0 16px`, lineHeight: 1.12 },
+                        style: { fontFamily: F, fontSize: `clamp(26px, 3.2vw, 36px)`, fontWeight: 700, color: `#181d27`, margin: `0 0 16px`, lineHeight: 1.12 },
                         children: currentStep.title
                       }),
                       (0, x.jsx)(`p`, {
-                        style: { fontFamily: L, fontSize: 16.5, color: `#cbd5e1`, lineHeight: 1.65, margin: `0 0 24px` },
+                        style: { fontFamily: L, fontSize: 16.5, color: `#57534e`, lineHeight: 1.65, margin: `0 0 24px` },
                         children: currentStep.detail
                       }),
                       // Prev / Next step controls
@@ -1717,12 +1832,12 @@ export function PlaybookSection() {
                         children: [
                           (0, x.jsx)(`button`, {
                             onClick: () => { setIsPlaying(false); setStep((step - 1 + steps.length) % steps.length); },
-                            style: { background: `rgba(255,255,255,0.06)`, border: `1px solid rgba(255,255,255,0.12)`, color: `#fff`, borderRadius: 100, padding: `8px 18px`, fontFamily: `monospace`, fontSize: 11, cursor: `pointer` },
+                            style: { background: `#efeae0`, border: `1px solid rgba(24,29,39,0.12)`, color: `#181d27`, borderRadius: 100, padding: `9px 18px`, fontFamily: `monospace`, fontSize: 11, fontWeight: 700, cursor: `pointer` },
                             children: `← PREV SECOND`
                           }),
                           (0, x.jsx)(`button`, {
                             onClick: () => { setIsPlaying(false); setStep((step + 1) % steps.length); },
-                            style: { background: R, border: `none`, color: `#fff`, borderRadius: 100, padding: `8px 18px`, fontFamily: `monospace`, fontSize: 11, fontWeight: 700, cursor: `pointer` },
+                            style: { background: `#d95323`, border: `none`, color: `#fff`, borderRadius: 100, padding: `9px 18px`, fontFamily: `monospace`, fontSize: 11, fontWeight: 800, cursor: `pointer` },
                             children: `NEXT SECOND →`
                           })
                         ]
@@ -1730,29 +1845,31 @@ export function PlaybookSection() {
                     ]
                   }),
 
-                  // Telemetry readout box
+                  // Telemetry readout box — Recessed Sand Well
                   (0, x.jsxs)(`div`, {
                     style: {
-                      background: `rgba(0, 0, 0, 0.45)`,
-                      border: `1px solid ${isDangerStep ? `rgba(239,68,68,0.4)` : BORDER_DARK}`,
+                      background: `#efeae0`,
+                      border: `1.5px solid ${isDangerStep ? `rgba(220,38,38,0.4)` : `rgba(24,29,39,0.09)`}`,
                       borderRadius: 18,
                       padding: 24,
                       fontFamily: `monospace`,
                       fontSize: 13,
-                      lineHeight: 1.85
+                      lineHeight: 1.85,
+                      color: `#181d27`,
+                      boxShadow: `inset 0 2px 6px rgba(24,29,39,0.04)`
                     },
                     children: [
                       (0, x.jsxs)(`div`, {
-                        style: { display: `flex`, justifyContent: `space-between`, color: `#98a2b3`, borderBottom: `1px solid ${BORDER_DARK}`, paddingBottom: 10, marginBottom: 14 },
+                        style: { display: `flex`, justifyContent: `space-between`, color: `#57534e`, fontWeight: 700, borderBottom: `1px solid rgba(24,29,39,0.09)`, paddingBottom: 10, marginBottom: 14 },
                         children: [
                           (0, x.jsx)(`span`, { children: `// SENTINEL-K REAL-TIME TELEMETRY` }),
-                          (0, x.jsx)(`span`, { style: { color: isDangerStep ? `#ef4444` : `#10b981`, fontWeight: 800 }, children: `${currentStep.pressure} BAR` })
+                          (0, x.jsx)(`span`, { style: { color: isDangerStep ? `#dc2626` : `#15803d`, fontWeight: 800 }, children: `${currentStep.pressure} BAR` })
                         ]
                       }),
-                      (0, x.jsxs)(`div`, { children: [`[TIMESTAMP]: `, (0, x.jsx)(`span`, { style: { color: `#fff` }, children: `2026-03-20 ` + currentStep.time })] }),
-                      (0, x.jsxs)(`div`, { children: [`[TARGET PLC]: `, (0, x.jsx)(`span`, { style: { color: R }, children: `OpenPLC_Booster_04 (%QW104)` })] }),
-                      (0, x.jsxs)(`div`, { children: [`[PRESSURE]  : `, (0, x.jsx)(`span`, { style: { color: isDangerStep ? `#ef4444` : `#10b981`, fontWeight: 700 }, children: isDangerStep ? `11.4 bar (BURST CEILING BREACH)` : `${currentStep.pressure} bar (BOUNDED SAFE)` })] }),
-                      (0, x.jsxs)(`div`, { children: [`[GATE STATE]: `, (0, x.jsx)(`span`, { style: { color: step === 9 ? `#10b981` : R }, children: step === 9 ? `EXECUTED_TEE_SIGNED` : `INTERCEPTED_IN_VERIFICATION` })] })
+                      (0, x.jsxs)(`div`, { children: [`[TIMESTAMP]: `, (0, x.jsx)(`span`, { style: { color: `#181d27`, fontWeight: 700 }, children: `2026-03-20 ` + currentStep.time })] }),
+                      (0, x.jsxs)(`div`, { children: [`[TARGET PLC]: `, (0, x.jsx)(`span`, { style: { color: `#d95323`, fontWeight: 700 }, children: `OpenPLC_Booster_04 (%QW104)` })] }),
+                      (0, x.jsxs)(`div`, { children: [`[PRESSURE]  : `, (0, x.jsx)(`span`, { style: { color: isDangerStep ? `#dc2626` : `#15803d`, fontWeight: 800 }, children: isDangerStep ? `11.4 bar (BURST CEILING BREACH)` : `${currentStep.pressure} bar (BOUNDED SAFE)` })] }),
+                      (0, x.jsxs)(`div`, { children: [`[GATE STATE]: `, (0, x.jsx)(`span`, { style: { color: step === 9 ? `#15803d` : `#d95323`, fontWeight: 800 }, children: step === 9 ? `EXECUTED_TEE_SIGNED` : `INTERCEPTED_IN_VERIFICATION` })] })
                     ]
                   })
                 ]
@@ -1846,11 +1963,11 @@ export function HackathonTeamSection() {
                 "data-cursor": `card`,
                 "data-cursor-text": `SPEC`,
                 style: {
-                  background: `#fff`,
-                  border: `1px solid rgba(24,29,39,0.08)`,
+                  background: `linear-gradient(155deg, #ffffff 0%, #f7f4ed 55%, #eee8dc 100%)`,
+                  border: `1px solid rgba(24,29,39,0.1)`,
                   borderRadius: 22,
                   padding: 32,
-                  boxShadow: `0 8px 24px rgba(0,0,0,0.03)`,
+                  boxShadow: `0 12px 32px rgba(24,29,39,0.05), inset 0 1px 0 #ffffff`,
                   display: `flex`,
                   flexDirection: `column`,
                   justifyContent: `space-between`
@@ -1861,12 +1978,12 @@ export function HackathonTeamSection() {
                       (0, x.jsxs)(`div`, {
                         style: { display: `flex`, justifyContent: `space-between`, alignItems: `center`, marginBottom: 16 },
                         children: [
-                          (0, x.jsx)(`span`, { style: { fontFamily: `monospace`, fontSize: 11, fontWeight: 800, color: R, letterSpacing: `0.08em` }, children: p.code }),
-                          (0, x.jsx)(`span`, { style: { fontFamily: `monospace`, fontSize: 10, color: `#64748b`, background: `#f5f3ee`, padding: `4px 8px`, borderRadius: 6 }, children: p.subtitle })
+                          (0, x.jsx)(`span`, { style: { fontFamily: `monospace`, fontSize: 11, fontWeight: 800, color: `#d95323`, letterSpacing: `0.08em` }, children: p.code }),
+                          (0, x.jsx)(`span`, { style: { fontFamily: `monospace`, fontSize: 10, color: `#57534e`, fontWeight: 700, background: `#efeae0`, padding: `4px 8px`, borderRadius: 6 }, children: p.subtitle })
                         ]
                       }),
-                      (0, x.jsx)(`h3`, { style: { fontFamily: F, fontSize: 24, fontWeight: 700, color: V, margin: `0 0 12px`, letterSpacing: `-0.02em` }, children: p.title }),
-                      (0, x.jsx)(`p`, { style: { fontFamily: L, fontSize: 14.5, color: `#535862`, lineHeight: 1.65, margin: 0 }, children: p.desc })
+                      (0, x.jsx)(`h3`, { style: { fontFamily: F, fontSize: 24, fontWeight: 700, color: `#181d27`, margin: `0 0 12px`, letterSpacing: `-0.02em` }, children: p.title }),
+                      (0, x.jsx)(`p`, { style: { fontFamily: L, fontSize: 14.5, color: `#57534e`, lineHeight: 1.65, margin: 0 }, children: p.desc })
                     ]
                   })
                 ]
@@ -1874,21 +1991,22 @@ export function HackathonTeamSection() {
             ))
           }),
 
-          // The Builders
+          // The Builders — Warm Architectural Alabaster & Sand Glass
           (0, x.jsxs)(`div`, {
             style: {
-              background: V,
+              background: `linear-gradient(155deg, #ffffff 0%, #f7f4ed 55%, #eee8dc 100%)`,
               borderRadius: 24,
               padding: `clamp(28px, 4vw, 44px)`,
-              color: `#fff`,
-              boxShadow: `0 24px 60px rgba(10,13,18,0.2)`
+              color: `#181d27`,
+              border: `1px solid rgba(24,29,39,0.12)`,
+              boxShadow: `0 24px 56px rgba(24,29,39,0.07), inset 0 1px 0 #ffffff`
             },
             children: [
               (0, x.jsxs)(`div`, {
-                style: { display: `flex`, justifyContent: `space-between`, alignItems: `center`, marginBottom: 28, borderBottom: `1px solid ${BORDER_DARK}`, paddingBottom: 18, flexWrap: `wrap`, gap: 12 },
+                style: { display: `flex`, justifyContent: `space-between`, alignItems: `center`, marginBottom: 28, borderBottom: `1px solid rgba(24,29,39,0.09)`, paddingBottom: 18, flexWrap: `wrap`, gap: 12 },
                 children: [
-                  (0, x.jsx)(`h3`, { style: { fontFamily: F, fontSize: 28, fontWeight: 700, margin: 0, color: `#fff`, letterSpacing: `-0.02em` }, children: `The Engineering Team` }),
-                  (0, x.jsx)(`span`, { style: { fontFamily: `monospace`, fontSize: 12, color: R, fontWeight: 700, letterSpacing: `0.08em` }, children: `iQOO HACKATHON 2026 // SOVEREIGN DEFENSE SQUAD` })
+                  (0, x.jsx)(`h3`, { style: { fontFamily: F, fontSize: 28, fontWeight: 700, margin: 0, color: `#181d27`, letterSpacing: `-0.02em` }, children: `The Engineering Team` }),
+                  (0, x.jsx)(`span`, { style: { fontFamily: `monospace`, fontSize: 12, color: `#d95323`, fontWeight: 800, letterSpacing: `0.08em` }, children: `iQOO HACKATHON 2026 // SOVEREIGN DEFENSE SQUAD` })
                 ]
               }),
               (0, x.jsx)(`div`, {
@@ -1901,16 +2019,17 @@ export function HackathonTeamSection() {
                   (0, x.jsxs)(`div`, {
                     key: i,
                     style: {
-                      background: `rgba(255, 255, 255, 0.04)`,
-                      border: `1px solid ${BORDER_DARK}`,
+                      background: `#efeae0`,
+                      border: `1px solid rgba(24,29,39,0.08)`,
                       borderRadius: 18,
-                      padding: 26
+                      padding: 26,
+                      boxShadow: `inset 0 2px 5px rgba(24,29,39,0.03)`
                     },
                     children: [
-                      (0, x.jsx)(`div`, { style: { fontFamily: `monospace`, fontSize: 10.5, color: `#64748b`, marginBottom: 8, letterSpacing: `0.08em` }, children: b.id }),
-                      (0, x.jsx)(`div`, { style: { fontFamily: F, fontSize: 24, fontWeight: 700, color: `#fff`, marginBottom: 6 }, children: b.name }),
-                      (0, x.jsx)(`div`, { style: { fontFamily: I, fontSize: 12.5, color: R, fontWeight: 600, marginBottom: 12 }, children: b.role }),
-                      (0, x.jsx)(`div`, { style: { fontFamily: `monospace`, fontSize: 11.5, color: `#98a2b3`, lineHeight: 1.5 }, children: b.focus })
+                      (0, x.jsx)(`div`, { style: { fontFamily: `monospace`, fontSize: 10.5, color: `#78716c`, fontWeight: 700, marginBottom: 8, letterSpacing: `0.08em` }, children: b.id }),
+                      (0, x.jsx)(`div`, { style: { fontFamily: F, fontSize: 24, fontWeight: 700, color: `#181d27`, marginBottom: 6 }, children: b.name }),
+                      (0, x.jsx)(`div`, { style: { fontFamily: I, fontSize: 12.5, color: `#d95323`, fontWeight: 700, marginBottom: 12 }, children: b.role }),
+                      (0, x.jsx)(`div`, { style: { fontFamily: `monospace`, fontSize: 11.5, color: `#57534e`, lineHeight: 1.5 }, children: b.focus })
                     ]
                   })
                 ))
@@ -1924,12 +2043,12 @@ export function HackathonTeamSection() {
 }
 
 // ==========================================
-// THREAT RADAR COCKPIT FOR PARAGRAPH SECTION (he)
+// THREAT RADAR COCKPIT FOR PARAGRAPH SECTION (he) — WARM ARCHITECTURAL INSTRUMENT
 // ==========================================
 export function ThreatRadarCockpit({ scrollProgress = 0 }) {
   let [mousePos, setMousePos] = (0, o.useState)({ x: 0, y: 0, active: false });
   let [tick, setTick] = (0, o.useState)(0);
-  let [selectedNode, setSelectedNode] = (0, o.useState)(null);
+  let [selectedNode, setSelectedNode] = (0, o.useState)(0);
   let animRef = (0, o.useRef)(null);
 
   (0, o.useEffect)(() => {
@@ -1950,13 +2069,18 @@ export function ThreatRadarCockpit({ scrollProgress = 0 }) {
 
   let handleMouseLeave = () => {
     setMousePos({ x: 0, y: 0, active: false });
-    setSelectedNode(null);
   };
 
-  let rotX = mousePos.active ? mousePos.y * -14 : 0;
-  let rotY = mousePos.active ? mousePos.x * 16 : 0;
-  let sweepAngle = (tick * 2.2) % 360;
-  let isSafePhase = scrollProgress >= 0.5;
+  let rotX = mousePos.active ? mousePos.y * -8 : 0;
+  let rotY = mousePos.active ? mousePos.x * 10 : 0;
+  let sweepAngle = (tick * 2.0) % 360;
+  let isSafePhase = scrollProgress >= 0.45;
+
+  const nodes = [
+    { id: "N1", name: "BOOSTER 04", x: 106, y: 42, val: isSafePhase ? "680 RPM" : "850 RPM" },
+    { id: "N2", name: "VALVE RV-02", x: 46, y: 108, val: isSafePhase ? "45% OPEN" : "0% SHUT" },
+    { id: "N3", name: "FLANGE J-104", x: 114, y: 112, val: isSafePhase ? "7.4 BAR" : "11.4 BAR" }
+  ];
 
   return (0, x.jsxs)("div", {
     onMouseMove: handleMouseMove,
@@ -1966,41 +2090,30 @@ export function ThreatRadarCockpit({ scrollProgress = 0 }) {
       width: "100%",
       maxWidth: 520,
       height: 470,
-      background: "linear-gradient(145deg, rgba(22, 27, 36, 0.94) 0%, rgba(10, 13, 19, 0.98) 100%)",
-      borderRadius: 22,
-      border: "1px solid rgba(255, 255, 255, 0.12)",
-      boxShadow: "0 28px 70px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.15)",
-      padding: "20px 22px",
+      background: "linear-gradient(155deg, #ffffff 0%, #f7f3eb 55%, #ece5d8 100%)",
+      borderRadius: 24,
+      border: "1.5px solid rgba(24, 29, 39, 0.1)",
+      boxShadow: "0 28px 64px rgba(24, 29, 39, 0.1), inset 0 1px 0 #ffffff",
+      padding: "22px 24px",
       boxSizing: "border-box",
-      color: "#fff",
+      color: "#181d27",
       fontFamily: L,
       display: "flex",
       flexDirection: "column",
       justifyContent: "space-between",
       overflow: "hidden",
-      transform: `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg)`,
-      transition: "transform 0.15s ease-out, box-shadow 0.2s ease",
+      transform: `perspective(1200px) rotateX(${rotX}deg) rotateY(${rotY}deg)`,
+      transition: "transform 0.18s ease-out, box-shadow 0.25s ease",
       willChange: "transform"
     },
     children: [
-      // Dynamic Specular Glass Glare
+      // Subtle Warm Architectural Grid
       (0, x.jsx)("div", {
         style: {
           position: "absolute",
           inset: 0,
-          pointerEvents: "none",
-          background: `radial-gradient(circle at ${50 + mousePos.x * 60}% ${50 + mousePos.y * 60}%, rgba(255,255,255,0.12) 0%, transparent 60%)`,
-          zIndex: 10
-        }
-      }),
-
-      // Subtle Scanline Grid
-      (0, x.jsx)("div", {
-        style: {
-          position: "absolute",
-          inset: 0,
-          backgroundImage: "linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)",
-          backgroundSize: "20px 20px",
+          backgroundImage: "radial-gradient(rgba(24, 29, 39, 0.06) 1px, transparent 1px)",
+          backgroundSize: "16px 16px",
           pointerEvents: "none",
           zIndex: 1
         }
@@ -2008,7 +2121,7 @@ export function ThreatRadarCockpit({ scrollProgress = 0 }) {
 
       // Header Bar: Threat Radar Status & Node Metadata
       (0, x.jsxs)("div", {
-        style: { display: "flex", justifyContent: "space-between", alignItems: "center", position: "relative", zIndex: 5, borderBottom: "1px solid rgba(255,255,255,0.08)", paddingBottom: 12 },
+        style: { display: "flex", justifyContent: "space-between", alignItems: "center", position: "relative", zIndex: 5, borderBottom: "1px solid rgba(24,29,39,0.09)", paddingBottom: 12 },
         children: [
           (0, x.jsxs)("div", {
             style: { display: "flex", alignItems: "center", gap: 8 },
@@ -2018,45 +2131,45 @@ export function ThreatRadarCockpit({ scrollProgress = 0 }) {
                   width: 8,
                   height: 8,
                   borderRadius: "50%",
-                  background: isSafePhase ? "#10b981" : "#ef4444",
-                  boxShadow: `0 0 10px ${isSafePhase ? "#10b981" : "#ef4444"}`
+                  background: isSafePhase ? "#15803d" : "#d95323",
+                  boxShadow: `0 0 10px ${isSafePhase ? "rgba(21,128,61,0.5)" : "rgba(217,83,35,0.5)"}`
                 }
               }),
               (0, x.jsxs)("span", {
-                style: { fontFamily: I, fontSize: 11, fontWeight: 800, letterSpacing: "0.08em", color: "#f1f5f9" },
-                children: ["RADAR // SECTOR 04", isSafePhase ? " [CONTAINED]" : " [INTERCEPTING]"]
+                style: { fontFamily: "monospace", fontSize: 11, fontWeight: 800, letterSpacing: "0.08em", color: "#181d27" },
+                children: ["SECTOR 04 // ", isSafePhase ? "EQUILIBRIUM LOCKED" : "INTERCEPTING SURGE"]
               })
             ]
           }),
           (0, x.jsxs)("div", {
-            style: { display: "flex", gap: 6, alignItems: "center", fontSize: 9.5, fontFamily: "monospace", color: "#94a3b8" },
+            style: { display: "flex", gap: 6, alignItems: "center", fontSize: 9.5, fontFamily: "monospace" },
             children: [
-              (0, x.jsx)("span", { style: { background: "rgba(255,255,255,0.06)", padding: "2px 6px", borderRadius: 4 }, children: "AIR-GAP ACTIVE" }),
-              (0, x.jsx)("span", { style: { color: R, fontWeight: 700 }, children: "45 TOPS" })
+              (0, x.jsx)("span", { style: { background: "#efeae0", color: "#57534e", border: "1px solid rgba(24,29,39,0.08)", padding: "3px 8px", borderRadius: 100, fontWeight: 700 }, children: "AIR-GAP ENCLAVE" }),
+              (0, x.jsx)("span", { style: { background: "#181d27", color: "#fff", padding: "3px 8px", borderRadius: 100, fontWeight: 800 }, children: "45 TOPS" })
             ]
           })
         ]
       }),
 
-      // Middle Stage: Interactive Radar Scanner & Modbus Stream
+      // Middle Stage: Tactile Architectural Radar Dial & Decompiled Dossier
       (0, x.jsxs)("div", {
-        style: { display: "grid", gridTemplateColumns: "170px 1fr", gap: 18, alignItems: "center", position: "relative", zIndex: 5, margin: "10px 0" },
+        style: { display: "grid", gridTemplateColumns: "164px 1fr", gap: 16, alignItems: "center", position: "relative", zIndex: 5, margin: "6px 0" },
         children: [
-          // Left: Radar Sweep Disc
+          // Left: Warm Brushed Alabaster & Copper Radar Dial
           (0, x.jsxs)("div", {
             style: {
-              width: 160,
-              height: 160,
+              width: 158,
+              height: 158,
               position: "relative",
               borderRadius: "50%",
-              background: "radial-gradient(circle at 50% 50%, rgba(217,83,35,0.12) 0%, rgba(10,13,20,0.8) 75%)",
-              border: "1px solid rgba(217,83,35,0.3)",
-              boxShadow: "0 0 20px rgba(0,0,0,0.4), inset 0 0 15px rgba(217,83,35,0.15)",
+              background: "radial-gradient(circle at 50% 50%, #ffffff 0%, #efeae0 75%, #e5dec9 100%)",
+              border: "1.5px solid rgba(24,29,39,0.14)",
+              boxShadow: "0 12px 28px rgba(24,29,39,0.08), inset 0 2px 6px rgba(24,29,39,0.05)",
               overflow: "hidden"
             },
             children: [
-              // Concentric Rings
-              [20, 45, 70].map((rVal, idx) => (
+              // Concentric Precision Rings
+              [22, 46, 68].map((rVal, idx) => (
                 (0, x.jsx)("div", {
                   key: idx,
                   style: {
@@ -2067,121 +2180,130 @@ export function ThreatRadarCockpit({ scrollProgress = 0 }) {
                     height: rVal * 2,
                     transform: "translate(-50%, -50%)",
                     borderRadius: "50%",
-                    border: "1px dashed rgba(255,255,255,0.12)"
+                    border: idx === 1 ? "1px dashed rgba(217,83,35,0.35)" : "1px solid rgba(24,29,39,0.08)"
                   }
                 })
               )),
 
               // Crosshair Lines
-              (0, x.jsx)("div", { style: { position: "absolute", top: "50%", left: 0, right: 0, height: 1, background: "rgba(255,255,255,0.1)" } }),
-              (0, x.jsx)("div", { style: { position: "absolute", left: "50%", top: 0, bottom: 0, width: 1, background: "rgba(255,255,255,0.1)" } }),
+              (0, x.jsx)("div", { style: { position: "absolute", top: "50%", left: 0, right: 0, height: 1, background: "rgba(24,29,39,0.08)" } }),
+              (0, x.jsx)("div", { style: { position: "absolute", left: "50%", top: 0, bottom: 0, width: 1, background: "rgba(24,29,39,0.08)" } }),
 
-              // Sweeping Radar Line
+              // Sweeping Copper/Terracotta Needle
               (0, x.jsx)("div", {
                 style: {
                   position: "absolute",
                   top: "50%",
                   left: "50%",
-                  width: 80,
+                  width: 76,
                   height: 2,
-                  background: `linear-gradient(90deg, ${R}, transparent)`,
+                  background: `linear-gradient(90deg, #d95323, transparent)`,
                   transformOrigin: "0 0",
-                  transform: `rotate(${sweepAngle}deg)`,
-                  boxShadow: `0 0 8px ${R}`
+                  transform: `rotate(${sweepAngle}deg)`
                 }
               }),
 
-              // Anomaly Blip (Flashing)
-              (0, x.jsxs)("div", {
-                style: {
-                  position: "absolute",
-                  top: 38,
-                  left: 104,
-                  transform: "translate(-50%, -50%)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center"
-                },
-                children: [
-                  (0, x.jsx)("div", {
-                    style: {
-                      width: 10,
-                      height: 10,
-                      borderRadius: "50%",
-                      background: isSafePhase ? "#10b981" : "#ef4444",
-                      boxShadow: `0 0 10px ${isSafePhase ? "#10b981" : "#ef4444"}`,
-                      animation: "radarBlip 1s infinite alternate"
-                    }
-                  }),
-                  (0, x.jsx)("div", {
-                    style: {
-                      position: "absolute",
-                      width: 22,
-                      height: 22,
-                      borderRadius: "50%",
-                      border: `1px solid ${isSafePhase ? "#10b981" : "#ef4444"}`,
-                      opacity: 0.6
-                    }
-                  })
-                ]
-              }),
+              // Interactive Substation Nodes
+              nodes.map((nd, idx) => (
+                (0, x.jsxs)("div", {
+                  key: nd.id,
+                  onClick: () => setSelectedNode(idx),
+                  onMouseEnter: () => setSelectedNode(idx),
+                  style: {
+                    position: "absolute",
+                    top: nd.y,
+                    left: nd.x,
+                    transform: "translate(-50%, -50%)",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center"
+                  },
+                  children: [
+                    (0, x.jsx)("div", {
+                      style: {
+                        width: selectedNode === idx ? 11 : 8,
+                        height: selectedNode === idx ? 11 : 8,
+                        borderRadius: "50%",
+                        background: isSafePhase ? "#15803d" : "#d95323",
+                        border: "2px solid #ffffff",
+                        boxShadow: "0 2px 6px rgba(24,29,39,0.25)",
+                        transition: "all 0.2s ease"
+                      }
+                    }),
+                    selectedNode === idx && (0, x.jsx)("div", {
+                      style: {
+                        position: "absolute",
+                        width: 22,
+                        height: 22,
+                        borderRadius: "50%",
+                        border: `1.5px solid ${isSafePhase ? "#15803d" : "#d95323"}`,
+                        opacity: 0.5
+                      }
+                    })
+                  ]
+                })
+              )),
 
-              // Target Marker Label
+              // Bottom Dial Pill
               (0, x.jsx)("div", {
                 style: {
                   position: "absolute",
-                  bottom: 6,
+                  bottom: 8,
                   left: "50%",
                   transform: "translateX(-50%)",
                   fontSize: 7.5,
                   fontFamily: "monospace",
-                  color: isSafePhase ? "#34d399" : "#f87171",
-                  background: "rgba(0,0,0,0.7)",
-                  padding: "1px 5px",
-                  borderRadius: 3,
+                  fontWeight: 800,
+                  color: "#ffffff",
+                  background: "#181d27",
+                  padding: "2px 7px",
+                  borderRadius: 100,
                   whiteSpace: "nowrap"
                 },
-                children: isSafePhase ? "TARGET: SAFE REPLAN" : "SPOOF: REG 40012"
+                children: `${nodes[selectedNode].name}: ${nodes[selectedNode].val}`
               })
             ]
           }),
 
-          // Right: Real-time Decompiled Modbus & Forensic Stream
+          // Right: Warm Ivory Forensic & Register Dossier
           (0, x.jsxs)("div", {
             style: {
-              background: "rgba(0,0,0,0.5)",
-              borderRadius: 12,
-              padding: "12px 14px",
-              border: "1px solid rgba(255,255,255,0.08)",
+              background: "#ffffff",
+              borderRadius: 16,
+              padding: "14px 16px",
+              border: "1px solid rgba(24,29,39,0.09)",
+              boxShadow: "0 8px 24px rgba(24,29,39,0.04)",
               display: "flex",
               flexDirection: "column",
-              gap: 6,
-              fontSize: 8.5,
+              gap: 7,
+              fontSize: 9,
               fontFamily: "monospace"
             },
             children: [
               (0, x.jsxs)("div", {
-                style: { display: "flex", justifyContent: "space-between", color: "#94a3b8", borderBottom: "1px solid rgba(255,255,255,0.06)", paddingBottom: 4 },
+                style: { display: "flex", justifyContent: "space-between", color: "#57534e", borderBottom: "1px solid rgba(24,29,39,0.08)", paddingBottom: 6, fontWeight: 800 },
                 children: [
                   (0, x.jsx)("span", { children: "DISPATCH FORENSICS" }),
-                  (0, x.jsx)("span", { style: { color: "#f59e0b" }, children: "URGENCY: 8.9" })
+                  (0, x.jsx)("span", { style: { color: "#d95323" }, children: "URGENCY: 8.9" })
                 ]
               }),
-              (0, x.jsxs)("div", { style: { color: "#cbd5e1" }, children: [">> PAYLOAD: ", (0, x.jsx)("span", { style: { color: "#f87171" }, children: '"Force Pump 4 to 850 RPM"' })] }),
-              (0, x.jsxs)("div", { style: { color: "#cbd5e1" }, children: [">> MODBUS: ", (0, x.jsx)("span", { style: { color: "#38bdf8" }, children: "0x06 WRITE_REGISTER 40012" })] }),
-              (0, x.jsxs)("div", { style: { color: "#cbd5e1" }, children: [">> CYBER: ", (0, x.jsx)("span", { style: { color: "#34d399" }, children: "CRC-16 VALID (FIREWALL BLIND)" })] }),
+              (0, x.jsxs)("div", { style: { color: "#57534e" }, children: ["PAYLOAD: ", (0, x.jsx)("strong", { style: { color: "#181d27" }, children: '"Force Pump 4 to 850 RPM"' })] }),
+              (0, x.jsxs)("div", { style: { color: "#57534e" }, children: ["MODBUS : ", (0, x.jsx)("strong", { style: { color: "#d95323" }, children: "0x06 WRITE_REG 40012" })] }),
+              (0, x.jsxs)("div", { style: { color: "#57534e" }, children: ["CYBER  : ", (0, x.jsx)("strong", { style: { color: "#181d27" }, children: "CRC-16 VALID (BLIND PASS)" })] }),
               (0, x.jsxs)("div", {
                 style: {
-                  marginTop: 4,
-                  padding: "4px 6px",
-                  borderRadius: 6,
-                  background: isSafePhase ? "rgba(16,185,129,0.15)" : "rgba(239,68,68,0.15)",
-                  border: `1px solid ${isSafePhase ? "rgba(16,185,129,0.4)" : "rgba(239,68,68,0.4)"}`,
-                  color: isSafePhase ? "#34d399" : "#f87171",
-                  fontWeight: 800
+                  marginTop: 3,
+                  padding: "6px 10px",
+                  borderRadius: 8,
+                  background: isSafePhase ? "rgba(21,128,61,0.1)" : "rgba(217,83,35,0.12)",
+                  border: `1px solid ${isSafePhase ? "rgba(21,128,61,0.3)" : "rgba(217,83,35,0.3)"}`,
+                  color: isSafePhase ? "#15803d" : "#d95323",
+                  fontWeight: 800,
+                  fontSize: 8.5
                 },
                 children: [
-                  isSafePhase ? "✓ DYNAMIC TWIN: VALVE STAGED 60s (7.4 BAR SAFE)" : "⛔ DYNAMIC TWIN: WATER HAMMER PEAK 19.8 BAR"
+                  isSafePhase ? "✓ TWIN REPLAN: 60s RAMP (7.4 BAR SAFE)" : "⚡ TWIN INTERCEPT: 11.4 BAR SURGE BLOCKED"
                 ]
               })
             ]
@@ -2189,63 +2311,63 @@ export function ThreatRadarCockpit({ scrollProgress = 0 }) {
         ]
       }),
 
-      // Bottom Stage: Live Synchronized Hydraulic Waveform
+      // Bottom Stage: Warm Sand Recessed Hydrodynamic Envelope
       (0, x.jsxs)("div", {
         style: {
-          background: "rgba(0,0,0,0.5)",
-          borderRadius: 12,
-          padding: "10px 14px",
-          border: "1px solid rgba(255,255,255,0.08)",
+          background: "linear-gradient(180deg, #efeae0 0%, #e7e0d2 100%)",
+          borderRadius: 16,
+          padding: "12px 16px",
+          border: "1px solid rgba(24,29,39,0.09)",
+          boxShadow: "inset 0 2px 6px rgba(24,29,39,0.04)",
           position: "relative",
           zIndex: 5
         },
         children: [
           (0, x.jsxs)("div", {
-            style: { display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 8.5, fontFamily: "monospace", marginBottom: 6 },
+            style: { display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 8.5, fontFamily: "monospace", marginBottom: 6, fontWeight: 800 },
             children: [
-              (0, x.jsx)("span", { style: { color: "#94a3b8" }, children: "EPANET / WNTR HYDRAULIC PRESSURE ENVELOPE" }),
-              (0, x.jsxs)("span", { style: { color: isSafePhase ? "#34d399" : "#f87171", fontWeight: 800 }, children: [isSafePhase ? "PEAK: 7.4 BAR" : "PEAK: 19.8 BAR", " (LIMIT: 9.2 BAR)"] })
+              (0, x.jsx)("span", { style: { color: "#57534e" }, children: "EPANET 2.2 // HYDRAULIC PRESSURE ENVELOPE" }),
+              (0, x.jsxs)("span", { style: { color: isSafePhase ? "#15803d" : "#d95323" }, children: [isSafePhase ? "REPLANNED: 7.4 BAR" : "SURGE: 11.4 BAR", " (CEILING: 9.2 BAR)"] })
             ]
           }),
 
-          // Dual-Wave SVG Canvas
+          // Clean Bounded Dual-Wave SVG Canvas
           (0, x.jsxs)("svg", {
-            viewBox: "0 0 300 50",
-            style: { width: "100%", height: 46, display: "block" },
+            viewBox: "0 0 300 52",
+            style: { width: "100%", height: 48, display: "block" },
             children: [
               // 9.2 Bar Ceiling
-              (0, x.jsx)("line", { x1: 0, y1: 18, x2: 300, y2: 18, stroke: "rgba(239,68,68,0.4)", strokeDasharray: "4 3", strokeWidth: 1 }),
+              (0, x.jsx)("line", { x1: 0, y1: 18, x2: 300, y2: 18, stroke: "rgba(217,83,35,0.45)", strokeDasharray: "4 3", strokeWidth: 1.2 }),
               // Safe Baseline
-              (0, x.jsx)("line", { x1: 0, y1: 42, x2: 300, y2: 42, stroke: "rgba(255,255,255,0.08)", strokeWidth: 1 }),
+              (0, x.jsx)("line", { x1: 0, y1: 44, x2: 300, y2: 44, stroke: "rgba(24,29,39,0.1)", strokeWidth: 1 }),
 
-              // Unverified Surge Spike (danger red)
+              // Unverified Surge Spike (Terracotta)
               (0, x.jsx)("path", {
-                d: "M 0 42 Q 50 42 90 4 T 150 38 T 300 40",
+                d: "M 0 44 C 45 44, 65 6, 95 6 C 125 6, 145 38, 190 40 C 230 41, 265 42, 300 42",
                 fill: "none",
-                stroke: "#ef4444",
-                strokeWidth: 2,
-                opacity: isSafePhase ? 0.35 : 1,
-                style: { filter: isSafePhase ? "none" : "drop-shadow(0 0 6px #ef4444)" }
+                stroke: "#d95323",
+                strokeWidth: isSafePhase ? 1.5 : 2.5,
+                strokeDasharray: isSafePhase ? "3 3" : "none",
+                opacity: isSafePhase ? 0.45 : 1
               }),
 
-              // Safe Replan Curve (safe green)
+              // Safe Replan Curve (Deep Forest Sage / Charcoal)
               (0, x.jsx)("path", {
-                d: "M 0 42 Q 70 42 140 24 T 220 25 T 300 26",
+                d: "M 0 44 C 55 44, 95 27, 145 27 C 195 27, 240 28, 300 28",
                 fill: "none",
-                stroke: "#10b981",
-                strokeWidth: isSafePhase ? 2.5 : 1.5,
-                opacity: isSafePhase ? 1 : 0.4,
-                style: { filter: isSafePhase ? "drop-shadow(0 0 6px #10b981)" : "none" }
+                stroke: "#15803d",
+                strokeWidth: isSafePhase ? 2.8 : 1.8,
+                opacity: isSafePhase ? 1 : 0.65
               })
             ]
           }),
 
           // Enclave Attestation Seal
           (0, x.jsxs)("div", {
-            style: { display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 7.5, fontFamily: "monospace", color: "#64748b", marginTop: 4 },
+            style: { display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 7.5, fontFamily: "monospace", color: "#57534e", marginTop: 4, fontWeight: 700 },
             children: [
-              (0, x.jsx)("span", { children: "SNAPDRAGON 8 ELITE // TEE ATTESTATION: 0x8F92" }),
-              (0, x.jsx)("span", { style: { color: isSafePhase ? "#34d399" : R, fontWeight: 700 }, children: isSafePhase ? "✓ BIOMETRIC COMMIT READY" : "SIMULATING KINETICS..." })
+              (0, x.jsx)("span", { children: "SNAPDRAGON 8 ELITE // TEE KEY: 0x8F92" }),
+              (0, x.jsx)("span", { style: { color: "#181d27", fontWeight: 800 }, children: isSafePhase ? "✓ BIOMETRIC COMMIT READY" : "SIMULATING KINETICS →" })
             ]
           })
         ]
@@ -2255,10 +2377,10 @@ export function ThreatRadarCockpit({ scrollProgress = 0 }) {
 }
 
 // ==========================================
-// CINEMATIC HORIZONTAL CARDS VISUALS (Ee)
+// CINEMATIC HORIZONTAL CARDS VISUALS (Ee) — UNIFIED UMANO WARM ARCHITECTURAL SERIES
 // ==========================================
 
-// 1. Field Copilot Radar & Spectral HUD Visual (Cursor-Reactive)
+// 1. Field Copilot Radar & Spectral HUD Visual (Warm Alabaster & Terracotta — 4-Tier Full-Height Instrument)
 export function FieldCopilotVisual({ w, h }) {
   let [angle, setAngle] = (0, o.useState)(0);
   let [mouseDist, setMouseDist] = (0, o.useState)(0.5);
@@ -2266,7 +2388,7 @@ export function FieldCopilotVisual({ w, h }) {
   (0, o.useEffect)(() => {
     let anim;
     let tick = () => {
-      setAngle((a) => (a + 2) % 360);
+      setAngle((a) => (a + 1.8) % 360);
       anim = requestAnimationFrame(tick);
     };
     anim = requestAnimationFrame(tick);
@@ -2276,103 +2398,153 @@ export function FieldCopilotVisual({ w, h }) {
   return (0, x.jsxs)("div", {
     onMouseMove: (e) => {
       let rect = e.currentTarget.getBoundingClientRect();
-      setMouseDist(Math.max(0.1, Math.min(1, (e.clientX - rect.left) / rect.width)));
+      setMouseDist(Math.max(0.15, Math.min(1, (e.clientX - rect.left) / rect.width)));
     },
     style: {
       position: "absolute",
       inset: 0,
-      background: "radial-gradient(circle at 50% 30%, #171f2c 0%, #0c1017 100%)",
+      background: "linear-gradient(155deg, #ffffff 0%, #f6f2ea 55%, #eae3d5 100%)",
+      border: "1.5px solid rgba(24, 29, 39, 0.09)",
+      boxShadow: "inset 0 1px 0 #ffffff",
       display: "flex",
       flexDirection: "column",
       justifyContent: "space-between",
-      padding: 18,
+      padding: 22,
       boxSizing: "border-box",
       overflow: "hidden"
     },
     children: [
-      // Top status row
+      // Subtle dot grid
+      (0, x.jsx)("div", {
+        style: {
+          position: "absolute",
+          inset: 0,
+          backgroundImage: "radial-gradient(rgba(24,29,39,0.06) 1px, transparent 1px)",
+          backgroundSize: "16px 16px",
+          pointerEvents: "none"
+        }
+      }),
+
+      // Tier 1: Top status row
       (0, x.jsxs)("div", {
-        style: { display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 9.5, fontFamily: "monospace", color: "#94a3b8" },
+        style: { display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 9.5, fontFamily: "monospace", color: "#57534e", fontWeight: 800, position: "relative", zIndex: 2 },
         children: [
-          (0, x.jsxs)("span", { style: { display: "flex", alignItems: "center", gap: 6 }, children: [(0, x.jsx)("span", { style: { width: 6, height: 6, borderRadius: "50%", background: R, boxShadow: `0 0 8px ${R}` } }), "ACOUSTIC TRIAGE // FORENSICS"] }),
-          (0, x.jsx)("span", { style: { color: "#38bdf8", fontWeight: 700 }, children: "45 TOPS NPU" })
+          (0, x.jsxs)("span", {
+            style: { display: "flex", alignItems: "center", gap: 7, color: "#181d27" },
+            children: [(0, x.jsx)("span", { style: { width: 7, height: 7, borderRadius: "50%", background: "#d95323" } }), "01 // ACOUSTIC TRIAGE FORENSICS"]
+          }),
+          (0, x.jsx)("span", { style: { background: "#181d27", color: "#fff", padding: "3px 9px", borderRadius: 100, fontSize: 8.5 }, children: "45 TOPS NPU" })
         ]
       }),
 
-      // Center: Circular Radar Sweep with Live Holographic Blips
+      // Tier 2: Intercepted Caller Dossier & Duty Roster Cross-Check
       (0, x.jsxs)("div", {
-        style: { position: "relative", width: Math.min(170, w * 0.44), height: Math.min(170, w * 0.44), margin: "0 auto" },
+        style: {
+          background: "#ffffff",
+          borderRadius: 12,
+          border: "1px solid rgba(24,29,39,0.09)",
+          padding: "10px 14px",
+          boxShadow: "0 4px 14px rgba(24,29,39,0.04)",
+          position: "relative",
+          zIndex: 2,
+          display: "flex",
+          flexDirection: "column",
+          gap: 6
+        },
+        children: [
+          (0, x.jsxs)("div", {
+            style: { display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 8, fontFamily: "monospace", fontWeight: 800 },
+            children: [
+              (0, x.jsx)("span", { style: { color: "#78716c" }, children: "CALLER ID: SUPERVISOR REYNOLDS" }),
+              (0, x.jsx)("span", { style: { color: "#dc2626", background: "rgba(220,38,38,0.1)", padding: "2px 6px", borderRadius: 4 }, children: "ROSTER: OFFLINE (LEAVE)" })
+            ]
+          }),
+          (0, x.jsx)("div", {
+            style: { fontSize: 9.5, fontFamily: "monospace", fontWeight: 700, color: "#181d27", background: "#f7f4ed", padding: "6px 10px", borderRadius: 8, borderLeft: "3px solid #d95323" },
+            children: "\"Emergency override! Force Booster 04 to 100% capacity immediately!\""
+          })
+        ]
+      }),
+
+      // Tier 3: Tactile Brushed Alabaster & Copper Radar Dial
+      (0, x.jsxs)("div", {
+        style: { position: "relative", width: Math.min(182, w * 0.44), height: Math.min(182, w * 0.44), margin: "0 auto", zIndex: 2 },
         children: [
           (0, x.jsxs)("svg", {
             viewBox: "0 0 160 160",
-            style: { width: "100%", height: "100%" },
+            style: { width: "100%", height: "100%", filter: "drop-shadow(0 12px 24px rgba(24,29,39,0.08))" },
             children: [
-              [24, 46, 68].map((rVal, idx) => (
-                (0, x.jsx)("circle", { key: idx, cx: 80, cy: 80, r: rVal, fill: "none", stroke: "rgba(56, 189, 248, 0.22)", strokeWidth: 1, strokeDasharray: idx === 2 ? "3 3" : undefined })
-              )),
-              (0, x.jsx)("line", { x1: 5, y1: 80, x2: 155, y2: 80, stroke: "rgba(56, 189, 248, 0.15)", strokeWidth: 1 }),
-              (0, x.jsx)("line", { x1: 80, y1: 5, x2: 80, y2: 155, stroke: "rgba(56, 189, 248, 0.15)", strokeWidth: 1 }),
-              // Radar sweep line
+              (0, x.jsx)("circle", { cx: 80, cy: 80, r: 74, fill: "#ffffff", stroke: "rgba(24,29,39,0.12)", strokeWidth: 1.5 }),
+              (0, x.jsx)("circle", { cx: 80, cy: 80, r: 54, fill: "#f7f4ed", stroke: "rgba(217,83,35,0.3)", strokeWidth: 1, strokeDasharray: "4 3" }),
+              (0, x.jsx)("circle", { cx: 80, cy: 80, r: 30, fill: "none", stroke: "rgba(24,29,39,0.1)", strokeWidth: 1 }),
+              (0, x.jsx)("line", { x1: 10, y1: 80, x2: 150, y2: 80, stroke: "rgba(24,29,39,0.08)", strokeWidth: 1 }),
+              (0, x.jsx)("line", { x1: 80, y1: 10, x2: 80, y2: 150, stroke: "rgba(24,29,39,0.08)", strokeWidth: 1 }),
+              // Radar sweep needle
               (0, x.jsx)("line", {
                 x1: 80,
                 y1: 80,
-                x2: 80 + 70 * Math.cos((angle * Math.PI) / 180),
-                y2: 80 + 70 * Math.sin((angle * Math.PI) / 180),
-                stroke: R,
-                strokeWidth: 2,
-                style: { filter: `drop-shadow(0 0 6px ${R})` }
+                x2: 80 + 68 * Math.cos((angle * Math.PI) / 180),
+                y2: 80 + 68 * Math.sin((angle * Math.PI) / 180),
+                stroke: "#d95323",
+                strokeWidth: 2.5
               }),
-              // Threat target blip
-              (0, x.jsx)("circle", {
-                cx: 110,
-                cy: 58,
-                r: 4.5,
-                fill: "#ef4444",
-                style: { filter: "drop-shadow(0 0 7px #ef4444)" }
-              })
+              (0, x.jsx)("circle", { cx: 80, cy: 80, r: 4, fill: "#181d27" }),
+              // Threat target node
+              (0, x.jsx)("circle", { cx: 112, cy: 56, r: 6, fill: "#d95323", stroke: "#ffffff", strokeWidth: 2 })
             ]
           }),
           (0, x.jsx)("div", {
             style: {
               position: "absolute",
-              bottom: 2,
+              bottom: -4,
               left: "50%",
               transform: "translateX(-50%)",
-              background: "rgba(239, 68, 68, 0.2)",
-              border: "1px solid rgba(239, 68, 68, 0.4)",
-              color: "#f87171",
+              background: "#181d27",
+              color: "#ffffff",
               fontSize: 8,
               fontFamily: "monospace",
               fontWeight: 800,
-              padding: "2px 6px",
-              borderRadius: 4,
-              whiteSpace: "nowrap"
+              padding: "4px 12px",
+              borderRadius: 100,
+              whiteSpace: "nowrap",
+              boxShadow: "0 4px 12px rgba(24,29,39,0.15)"
             },
-            children: "8.9 URGENCY SPOOF DETECTED"
+            children: "8.9 URGENCY SPOOF FLAGGED"
           })
         ]
       }),
 
-      // Bottom: Cursor-Reactive Equalizer Waveform
+      // Tier 4: Warm Sand Recessed Equalizer Waveform & Metrics
       (0, x.jsxs)("div", {
-        style: { background: "rgba(0,0,0,0.5)", borderRadius: 8, padding: "8px 10px", border: "1px solid rgba(255,255,255,0.06)" },
+        style: {
+          background: "#efeae0",
+          borderRadius: 14,
+          padding: "12px 14px",
+          border: "1px solid rgba(24,29,39,0.09)",
+          position: "relative",
+          zIndex: 2
+        },
         children: [
           (0, x.jsxs)("div", {
-            style: { display: "flex", justifyContent: "space-between", fontSize: 8, fontFamily: "monospace", color: "#cbd5e1", marginBottom: 6 },
-            children: [(0, x.jsx)("span", { children: "VOICE CLONE SPECTRAL MATCH" }), (0, x.jsx)("span", { style: { color: "#f59e0b", fontWeight: 700 }, children: "71% SIMILARITY" })]
+            style: { display: "flex", justifyContent: "space-between", fontSize: 8, fontFamily: "monospace", color: "#57534e", fontWeight: 800, marginBottom: 8 },
+            children: [
+              (0, x.jsx)("span", { children: "VOICEPRINT SPECTRAL HARMONICS (SILERO VAD)" }),
+              (0, x.jsx)("span", { style: { color: "#d95323" }, children: "71% CLONE MATCH" })
+            ]
           }),
           (0, x.jsx)("div", {
-            style: { display: "flex", alignItems: "flex-end", gap: 3, height: 28 },
-            children: [6, 16, 24, 12, 20, 28, 14, 22, 10, 26, 18, 12, 24, 16, 20, 10, 14, 18, 22, 12].map((hVal, idx) => {
-              let dynamicH = Math.max(4, hVal + Math.sin(angle * 0.12 + idx * 0.5) * (10 * mouseDist));
+            style: { display: "flex", alignItems: "flex-end", gap: 3.5, height: 38 },
+            children: [10, 18, 28, 14, 24, 32, 16, 26, 12, 30, 22, 14, 28, 18, 24, 12, 16, 22, 26, 14].map((hVal, idx) => {
+              let dynamicH = Math.max(6, hVal + Math.sin(angle * 0.12 + idx * 0.5) * (10 * mouseDist));
+              let isTerracotta = idx % 2 === 0;
               return (0, x.jsx)("div", {
                 key: idx,
                 style: {
                   flex: 1,
                   height: `${dynamicH}px`,
-                  background: idx % 2 === 0 ? R : "#38bdf8",
-                  borderRadius: 1.5,
-                  boxShadow: idx % 2 === 0 ? `0 0 6px ${R}60` : "none",
+                  background: isTerracotta ? "#d95323" : "#181d27",
+                  opacity: isTerracotta ? 0.92 : 0.48,
+                  borderRadius: 2.5,
                   transition: "height 0.08s ease"
                 }
               });
@@ -2384,7 +2556,7 @@ export function FieldCopilotVisual({ w, h }) {
   });
 }
 
-// 2. Verification Pipeline Visual (Conduits & Glowing Interactive Nodes)
+// 2. Verification Pipeline Visual (Warm Architectural Interlock Stack — 4-Tier Full-Height Instrument)
 export function VerificationPipelineVisual({ w, h }) {
   let [activeNode, setActiveNode] = (0, o.useState)(0);
   let [hoveredIndex, setHoveredIndex] = (0, o.useState)(null);
@@ -2392,16 +2564,16 @@ export function VerificationPipelineVisual({ w, h }) {
   (0, o.useEffect)(() => {
     let t = setInterval(() => {
       setActiveNode((n) => (n + 1) % 5);
-    }, 1400);
+    }, 1600);
     return () => clearInterval(t);
   }, []);
 
   const stages = [
-    { name: "INGEST", sub: "Voice Dispatch (Cellular)", status: "Intercepted", code: "PAYLOAD: 850 RPM" },
-    { name: "SLM 3B", sub: "Snapdragon NPU On-Device", status: "18ms Decompile", code: "REG: 40012" },
-    { name: "MODBUS", sub: "SCADA Protocol Gate", status: "CRC Valid (Blind)", code: "0x01 0x06 CRC:OK" },
-    { name: "EPANET", sub: "Fluid Dynamic Twin", status: "Surge Reject", code: "19.8 BAR BREACH" },
-    { name: "TEE KEY", sub: "Hardware Biometric Enclave", status: "Signed Safe", code: "0x8F92 COMMITTED" }
+    { id: "01", name: "INGEST", sub: "Cellular Voice Dispatch", status: "Intercepted", code: "PAYLOAD: 850 RPM" },
+    { id: "02", name: "SLM 3B", sub: "Snapdragon NPU On-Device", status: "18ms Decompile", code: "HOLDING REG: 40012" },
+    { id: "03", name: "MODBUS", sub: "SCADA Protocol Gate", status: "CRC Valid (Blind)", code: "0x01 0x06 CRC:OK" },
+    { id: "04", name: "EPANET", sub: "Hydrodynamic Twin Solver", status: "11.4B Blocked", code: "SURGE -> 7.4B REPLAN" },
+    { id: "05", name: "TEE KEY", sub: "Hardware Biometric Enclave", status: "Signed Safe", code: "ED25519 COMMITTED" }
   ];
 
   let displayIdx = hoveredIndex !== null ? hoveredIndex : activeNode;
@@ -2410,25 +2582,55 @@ export function VerificationPipelineVisual({ w, h }) {
     style: {
       position: "absolute",
       inset: 0,
-      background: "radial-gradient(circle at 50% 30%, #151d2a 0%, #0a0d13 100%)",
-      padding: 16,
+      background: "linear-gradient(155deg, #ffffff 0%, #f6f2ea 55%, #eae3d5 100%)",
+      border: "1.5px solid rgba(24, 29, 39, 0.09)",
+      boxShadow: "inset 0 1px 0 #ffffff",
+      padding: 22,
       boxSizing: "border-box",
       display: "flex",
       flexDirection: "column",
       justifyContent: "space-between"
     },
     children: [
+      // Tier 1: Header
       (0, x.jsxs)("div", {
-        style: { display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 9.5, fontFamily: "monospace", color: "#94a3b8" },
+        style: { display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 9.5, fontFamily: "monospace", color: "#181d27", fontWeight: 800 },
         children: [
-          (0, x.jsx)("span", { children: "CROSS-DOMAIN VERIFICATION BARRIER" }),
-          (0, x.jsxs)("span", { style: { color: R, fontWeight: 700 }, children: ["STAGE 0", displayIdx + 1, "/05"] })
+          (0, x.jsx)("span", { children: "02 // CROSS-DOMAIN BARRIER" }),
+          (0, x.jsxs)("span", { style: { background: "#d95323", color: "#fff", padding: "3px 9px", borderRadius: 100, fontSize: 8.5 }, children: ["STAGE 0", displayIdx + 1, "/05"] })
         ]
       }),
 
-      // 5 Interactive Pipeline Nodes
+      // Tier 2: Decompiled Register Target Summary Strip
+      (0, x.jsxs)("div", {
+        style: {
+          background: "#efeae0",
+          borderRadius: 12,
+          border: "1px solid rgba(24,29,39,0.08)",
+          padding: "10px 14px",
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr 1fr",
+          gap: 8
+        },
+        children: [
+          { label: "TARGET PLC", val: "%QW104" },
+          { label: "Z3 INVARIANT", val: "RPM <= 850" },
+          { label: "ENCLAVE MODE", val: "AIR-GAPPED" }
+        ].map((item, i) => (
+          (0, x.jsxs)("div", {
+            key: i,
+            style: { background: "#ffffff", borderRadius: 8, padding: "6px 8px", border: "1px solid rgba(24,29,39,0.06)", textAlign: "center" },
+            children: [
+              (0, x.jsx)("div", { style: { fontSize: 7, fontFamily: "monospace", color: "#78716c" }, children: item.label }),
+              (0, x.jsx)("div", { style: { fontSize: 8.5, fontFamily: "monospace", fontWeight: 800, color: "#181d27", marginTop: 2 }, children: item.val })
+            ]
+          })
+        ))
+      }),
+
+      // Tier 3: 5 Interactive Architectural Stage Rows
       (0, x.jsx)("div", {
-        style: { display: "flex", flexDirection: "column", gap: 7, margin: "6px 0" },
+        style: { display: "flex", flexDirection: "column", gap: 8, margin: "4px 0" },
         children: stages.map((s, idx) => {
           let isActive = displayIdx === idx;
           return (0, x.jsxs)("div", {
@@ -2439,30 +2641,36 @@ export function VerificationPipelineVisual({ w, h }) {
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
-              padding: "7px 12px",
-              borderRadius: 8,
-              background: isActive ? "rgba(217, 83, 35, 0.18)" : "rgba(255,255,255,0.03)",
-              border: isActive ? `1px solid ${R}` : "1px solid rgba(255,255,255,0.06)",
+              padding: "11px 14px",
+              borderRadius: 12,
+              background: isActive ? "#181d27" : "#ffffff",
+              color: isActive ? "#ffffff" : "#181d27",
+              border: isActive ? "1px solid #181d27" : "1px solid rgba(24,29,39,0.08)",
+              boxShadow: isActive ? "0 10px 22px rgba(24,29,39,0.15)" : "0 2px 5px rgba(24,29,39,0.02)",
+              transform: isActive ? "translateX(4px)" : "translateX(0)",
               cursor: "pointer",
-              transition: "all 0.2s ease"
+              transition: "all 0.24s cubic-bezier(0.16, 1, 0.3, 1)"
             },
             children: [
               (0, x.jsxs)("div", {
-                style: { display: "flex", alignItems: "center", gap: 8 },
+                style: { display: "flex", alignItems: "center", gap: 10 },
                 children: [
-                  (0, x.jsx)("div", {
+                  (0, x.jsx)("span", {
                     style: {
-                      width: 8,
-                      height: 8,
-                      borderRadius: "50%",
-                      background: isActive ? (idx === 3 ? "#ef4444" : idx === 4 ? "#10b981" : R) : "#475467",
-                      boxShadow: isActive ? `0 0 10px ${R}` : "none"
-                    }
+                      fontFamily: "monospace",
+                      fontSize: 9.5,
+                      fontWeight: 800,
+                      color: isActive ? "#ffffff" : "#d95323",
+                      background: isActive ? "#d95323" : "rgba(217,83,35,0.1)",
+                      padding: "3px 7px",
+                      borderRadius: 6
+                    },
+                    children: s.id
                   }),
                   (0, x.jsxs)("div", {
                     children: [
-                      (0, x.jsx)("div", { style: { fontFamily: "monospace", fontSize: 10.5, fontWeight: 700, color: isActive ? "#fff" : "#94a3b8" }, children: s.name }),
-                      (0, x.jsx)("div", { style: { fontSize: 7.5, color: "#64748b" }, children: s.sub })
+                      (0, x.jsx)("div", { style: { fontFamily: "monospace", fontSize: 10.5, fontWeight: 800, color: isActive ? "#ffffff" : "#181d27" }, children: s.name }),
+                      (0, x.jsx)("div", { style: { fontSize: 8, color: isActive ? "#cbd5e1" : "#78716c" }, children: s.sub })
                     ]
                   })
                 ]
@@ -2470,9 +2678,9 @@ export function VerificationPipelineVisual({ w, h }) {
               (0, x.jsx)("span", {
                 style: {
                   fontFamily: "monospace",
-                  fontSize: 8.5,
-                  fontWeight: 700,
-                  color: idx === 3 ? "#ef4444" : idx === 4 ? "#10b981" : "#38bdf8"
+                  fontSize: 9,
+                  fontWeight: 800,
+                  color: isActive ? "#d95323" : "#57534e"
                 },
                 children: s.status
               })
@@ -2481,32 +2689,32 @@ export function VerificationPipelineVisual({ w, h }) {
         })
       }),
 
-      // Active Inspection Console
+      // Tier 4: Bottom Inspection Strip
       (0, x.jsxs)("div", {
         style: {
-          background: "rgba(0,0,0,0.6)",
-          padding: "6px 10px",
-          borderRadius: 6,
-          border: "1px solid rgba(255,255,255,0.08)",
+          background: "#efeae0",
+          padding: "9px 14px",
+          borderRadius: 10,
+          border: "1px solid rgba(24,29,39,0.08)",
           fontFamily: "monospace",
-          fontSize: 8,
-          color: "#38bdf8",
+          fontSize: 8.5,
+          color: "#181d27",
           display: "flex",
-          justifyContent: "space-between"
+          justifyContent: "space-between",
+          fontWeight: 800
         },
         children: [
-          (0, x.jsxs)("span", { children: [">> EXEC: ", (0, x.jsx)("strong", { style: { color: "#fff" }, children: stages[displayIdx].code })] }),
-          (0, x.jsx)("span", { style: { color: "#34d399" }, children: "✓ PARSED OK" })
+          (0, x.jsxs)("span", { children: ["TRACE // ", (0, x.jsx)("span", { style: { color: "#d95323" }, children: stages[displayIdx].code })] }),
+          (0, x.jsx)("span", { style: { color: "#15803d" }, children: "✓ DETERMINISTIC" })
         ]
       })
     ]
   });
 }
 
-// 3. Latency Triage Chronograph Visual (Interactive Air-Gap Reactor)
+// 3. Latency Triage Chronograph Visual (Warm Alabaster & Terracotta Precision Timer — 4-Tier Full-Height Instrument)
 export function LatencyTriageVisual({ w, h }) {
   let [tick, setTick] = (0, o.useState)(0);
-  let [isFast, setIsFast] = (0, o.useState)(false);
 
   (0, o.useEffect)(() => {
     let anim;
@@ -2518,86 +2726,138 @@ export function LatencyTriageVisual({ w, h }) {
     return () => cancelAnimationFrame(anim);
   }, []);
 
-  let msJitter = (Math.sin(tick * 0.1) * 6).toFixed(0);
-  let currentMs = (1788 + Number(msJitter));
+  let msJitter = (Math.sin(tick * 0.08) * 5).toFixed(0);
+  let currentMs = 1788 + Number(msJitter);
 
   return (0, x.jsxs)("div", {
-    onMouseEnter: () => setIsFast(true),
-    onMouseLeave: () => setIsFast(false),
     style: {
       position: "absolute",
       inset: 0,
-      background: "radial-gradient(circle at 50% 30%, #1a2230 0%, #0a0d13 100%)",
-      padding: 16,
+      background: "linear-gradient(155deg, #ffffff 0%, #f6f2ea 55%, #eae3d5 100%)",
+      border: "1.5px solid rgba(24, 29, 39, 0.09)",
+      boxShadow: "inset 0 1px 0 #ffffff",
+      padding: 22,
       boxSizing: "border-box",
       display: "flex",
       flexDirection: "column",
       justifyContent: "space-between"
     },
     children: [
+      // Tier 1: Header
       (0, x.jsxs)("div", {
-        style: { display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 9.5, fontFamily: "monospace", color: "#94a3b8" },
+        style: { display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 9.5, fontFamily: "monospace", color: "#181d27", fontWeight: 800 },
         children: [
-          (0, x.jsx)("span", { children: "END-TO-END TRIAGE LATENCY" }),
-          (0, x.jsx)("span", { style: { color: "#34d399", fontWeight: 700 }, children: "TARGET: < 2.0s" })
+          (0, x.jsx)("span", { children: "03 // END-TO-END SLA CHRONOGRAPH" }),
+          (0, x.jsx)("span", { style: { background: "rgba(21,128,61,0.12)", color: "#15803d", padding: "3px 9px", borderRadius: 100, fontSize: 8.5 }, children: "SLA < 2.0s" })
         ]
       }),
 
-      // Center Big 1.79s Readout with Radial Glow Arc
+      // Tier 2: 3-Column NPU Hardware Telemetry Strip
+      (0, x.jsx)("div", {
+        style: {
+          background: "#efeae0",
+          borderRadius: 12,
+          border: "1px solid rgba(24,29,39,0.08)",
+          padding: "10px 12px",
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr 1fr",
+          gap: 8
+        },
+        children: [
+          { label: "HEXAGON DSP", val: "45 TOPS" },
+          { label: "PRECISION", val: "INT4 QUANT" },
+          { label: "CLOUD TRIP", val: "0.0ms (ZERO)" }
+        ].map((m, i) => (
+          (0, x.jsxs)("div", {
+            key: i,
+            style: { background: "#ffffff", borderRadius: 8, padding: "6px 8px", border: "1px solid rgba(24,29,39,0.06)", textAlign: "center" },
+            children: [
+              (0, x.jsx)("div", { style: { fontSize: 7, fontFamily: "monospace", color: "#78716c" }, children: m.label }),
+              (0, x.jsx)("div", { style: { fontSize: 8.5, fontFamily: "monospace", fontWeight: 800, color: "#181d27", marginTop: 2 }, children: m.val })
+            ]
+          })
+        ))
+      }),
+
+      // Tier 3: Center Tactile Chronograph Dial with 1.79s Readout + Sub-Millisecond Budget Bar
       (0, x.jsxs)("div", {
-        style: { textAlign: "center", padding: "10px 0" },
+        style: {
+          background: "#ffffff",
+          borderRadius: 16,
+          border: "1px solid rgba(24,29,39,0.08)",
+          boxShadow: "0 10px 26px rgba(24,29,39,0.05)",
+          padding: "20px 18px",
+          textAlign: "center",
+          position: "relative"
+        },
         children: [
           (0, x.jsxs)("div", {
             style: {
-              fontFamily: I,
-              fontSize: 48,
-              fontWeight: 900,
-              color: R,
-              lineHeight: 1,
-              letterSpacing: "-0.04em",
-              textShadow: `0 0 24px ${R}70`
+              fontFamily: F,
+              fontSize: 58,
+              fontWeight: 700,
+              color: "#d95323",
+              lineHeight: 0.95,
+              letterSpacing: "-0.04em"
             },
             children: [
               (currentMs / 1000).toFixed(2),
-              (0, x.jsx)("span", { style: { fontSize: 24, fontWeight: 700, marginLeft: 2 }, children: "s" })
+              (0, x.jsx)("span", { style: { fontSize: 26, fontFamily: I, fontWeight: 800, color: "#181d27", marginLeft: 3 }, children: "s" })
             ]
           }),
           (0, x.jsx)("div", {
-            style: { fontSize: 8.5, fontFamily: "monospace", color: "#94a3b8", letterSpacing: "0.1em", textTransform: "uppercase", marginTop: 4 },
-            children: "AIR-GAPPED TOTAL EXECUTION TIME"
+            style: { fontSize: 8.5, fontFamily: "monospace", color: "#57534e", letterSpacing: "0.1em", fontWeight: 800, textTransform: "uppercase", marginTop: 8 },
+            children: "TOTAL AIR-GAPPED VERIFICATION LATENCY"
+          }),
+          // Segmented Latency Budget Bar
+          (0, x.jsxs)("div", {
+            style: { display: "flex", gap: 3, height: 8, marginTop: 14, borderRadius: 4, overflow: "hidden" },
+            children: [
+              (0, x.jsx)("div", { style: { flex: 18, background: "#181d27" } }),
+              (0, x.jsx)("div", { style: { flex: 8, background: "#15803d" } }),
+              (0, x.jsx)("div", { style: { flex: 62, background: "#d95323" } }),
+              (0, x.jsx)("div", { style: { flex: 12, background: "#78716c" } })
+            ]
           })
         ]
       }),
 
-      // Sub-Stage Breakdown Progress Bars
+      // Tier 4: Sub-Stage Breakdown Progress Bars in Warm Palette
       (0, x.jsx)("div", {
-        style: { display: "flex", flexDirection: "column", gap: 6 },
+        style: {
+          background: "#efeae0",
+          borderRadius: 14,
+          padding: "12px 14px",
+          border: "1px solid rgba(24,29,39,0.08)",
+          display: "flex",
+          flexDirection: "column",
+          gap: 8
+        },
         children: [
-          { name: "Acoustic Forensics (Whisper-v3)", ms: 18, pct: 15, color: "#38bdf8" },
-          { name: "Modbus CRC Formal Check (Z3)", ms: 2, pct: 8, color: "#34d399" },
-          { name: "EPANET Fluid Twin (Runge-Kutta)", ms: 142, pct: 72, color: R },
-          { name: "Hardware Enclave Biometric (TEE)", ms: 12, pct: 12, color: "#a78bfa" }
+          { name: "Acoustic Forensics (Whisper-v3)", ms: 18, pct: 22, color: "#181d27" },
+          { name: "Modbus CRC Formal Prover (Z3)", ms: 2, pct: 12, color: "#15803d" },
+          { name: "EPANET Fluid Twin (Runge-Kutta)", ms: 142, pct: 76, color: "#d95323" },
+          { name: "Hardware Enclave Biometric (TEE)", ms: 12, pct: 18, color: "#181d27" }
         ].map((item, idx) => (
           (0, x.jsxs)("div", {
             key: idx,
-            style: { display: "flex", flexDirection: "column", gap: 2 },
+            style: { display: "flex", flexDirection: "column", gap: 3 },
             children: [
               (0, x.jsxs)("div", {
-                style: { display: "flex", justifyContent: "space-between", fontSize: 7.5, fontFamily: "monospace", color: "#cbd5e1" },
+                style: { display: "flex", justifyContent: "space-between", fontSize: 8, fontFamily: "monospace", color: "#181d27", fontWeight: 700 },
                 children: [
                   (0, x.jsx)("span", { children: item.name }),
-                  (0, x.jsxs)("span", { style: { color: item.color, fontWeight: 700 }, children: [item.ms, "ms"] })
+                  (0, x.jsxs)("span", { style: { color: item.color, fontWeight: 800 }, children: [item.ms, "ms"] })
                 ]
               }),
               (0, x.jsx)("div", {
-                style: { width: "100%", height: 3, background: "rgba(255,255,255,0.08)", borderRadius: 2, overflow: "hidden" },
+                style: { width: "100%", height: 5, background: "rgba(24,29,39,0.08)", borderRadius: 3, overflow: "hidden" },
                 children: (0, x.jsx)("div", {
                   style: {
                     width: `${item.pct}%`,
                     height: "100%",
                     background: item.color,
-                    borderRadius: 2,
-                    boxShadow: `0 0 6px ${item.color}80`
+                    borderRadius: 3
                   }
                 })
               })
@@ -2609,17 +2869,18 @@ export function LatencyTriageVisual({ w, h }) {
   });
 }
 
-// 4. Industrial Stack Physics Sandbox (Bouncing Floating Nodes)
+// 4. Industrial Stack Tactile Hardware Matrix (Warm Ceramic Tiles — 4-Tier Full-Height Instrument)
 export function IndustrialStackVisual({ w, h }) {
   let [mouseOffset, setMouseOffset] = (0, o.useState)({ x: 0, y: 0 });
+  let [hoveredTile, setHoveredTile] = (0, o.useState)(null);
 
   const stackItems = [
-    { label: "MODBUS TCP", desc: "Port 502 // Holding Regs", col: "#38bdf8" },
-    { label: "OPENPLC", desc: "IEC 61131-3 Ladder", col: "#34d399" },
-    { label: "EPANET 2.2", desc: "Hydraulic Twin Solver", col: R },
-    { label: "SNAPDRAGON", desc: "8 Elite NPU 45 TOPS", col: "#f59e0b" },
-    { label: "VIVO OFFICE", desc: "Edge Zero-Friction Bridge", col: "#a78bfa" },
-    { label: "ORIGINOS 5", desc: "TEE Biometric Enclave", col: "#38bdf8" }
+    { label: "MODBUS TCP", desc: "Port 502 // Holding Regs", badge: "0.8ms", load: "98%" },
+    { label: "OPENPLC v3", desc: "IEC 61131-3 Ladder", badge: "LOCKED", load: "100%" },
+    { label: "EPANET 2.2", desc: "Hydraulic Twin Solver", badge: "RK4", load: "60s" },
+    { label: "SNAPDRAGON", desc: "8 Elite NPU 45 TOPS", badge: "INT4", load: "18ms" },
+    { label: "VIVO OFFICE", desc: "Edge Zero-Friction Bridge", badge: "SYNC", load: "TLS1.3" },
+    { label: "ORIGINOS 5", desc: "TEE Biometric Enclave", badge: "ED25519", load: "SIGNED" }
   ];
 
   return (0, x.jsxs)("div", {
@@ -2629,72 +2890,127 @@ export function IndustrialStackVisual({ w, h }) {
       let y = (e.clientY - rect.top) / rect.height - 0.5;
       setMouseOffset({ x, y });
     },
-    onMouseLeave: () => setMouseOffset({ x: 0, y: 0 }),
+    onMouseLeave: () => { setMouseOffset({ x: 0, y: 0 }); setHoveredTile(null); },
     style: {
       position: "absolute",
       inset: 0,
-      background: "radial-gradient(circle at 50% 40%, #151c27 0%, #090c12 100%)",
-      padding: 16,
+      background: "linear-gradient(155deg, #ffffff 0%, #f6f2ea 55%, #eae3d5 100%)",
+      border: "1.5px solid rgba(24, 29, 39, 0.09)",
+      boxShadow: "inset 0 1px 0 #ffffff",
+      padding: 22,
       boxSizing: "border-box",
       display: "flex",
       flexDirection: "column",
       justifyContent: "space-between"
     },
     children: [
+      // Tier 1: Header
       (0, x.jsxs)("div", {
-        style: { display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 9.5, fontFamily: "monospace", color: "#94a3b8" },
+        style: { display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 9.5, fontFamily: "monospace", color: "#181d27", fontWeight: 800 },
         children: [
-          (0, x.jsx)("span", { children: "HARDWARE-IN-THE-LOOP ECOSYSTEM" }),
-          (0, x.jsx)("span", { style: { color: "#34d399", fontWeight: 700 }, children: "ZERO BYPASS" })
+          (0, x.jsx)("span", { children: "04 // HARDWARE-IN-THE-LOOP MATRIX" }),
+          (0, x.jsx)("span", { style: { background: "#181d27", color: "#fff", padding: "3px 9px", borderRadius: 100, fontSize: 8.5 }, children: "ZERO BYPASS" })
         ]
       }),
 
-      // 6 Floating Interactive Stack Cards
+      // Tier 2: Live Edge-to-Plant Conduit Topology Strip
+      (0, x.jsxs)("div", {
+        style: {
+          background: "#efeae0",
+          borderRadius: 12,
+          border: "1px solid rgba(24,29,39,0.08)",
+          padding: "10px 14px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          fontFamily: "monospace",
+          fontSize: 8
+        },
+        children: [
+          (0, x.jsx)("span", { style: { background: "#181d27", color: "#fff", padding: "4px 8px", borderRadius: 6, fontWeight: 800 }, children: "iQOO 13 NPU" }),
+          (0, x.jsx)("span", { style: { color: "#d95323", fontWeight: 800 }, children: "──[VIVO KIT]──►" }),
+          (0, x.jsx)("span", { style: { background: "#ffffff", color: "#181d27", border: "1px solid rgba(24,29,39,0.12)", padding: "4px 8px", borderRadius: 6, fontWeight: 800 }, children: "OPENPLC" }),
+          (0, x.jsx)("span", { style: { color: "#15803d", fontWeight: 800 }, children: "──► EPANET" })
+        ]
+      }),
+
+      // Tier 3: 6 Floating Warm Ceramic Hardware Cards
       (0, x.jsx)("div", {
-        style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, margin: "10px 0" },
+        style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, margin: "6px 0" },
         children: stackItems.map((st, idx) => {
-          let jitterX = mouseOffset.x * ((idx % 2 === 0 ? 1 : -1) * 8);
-          let jitterY = mouseOffset.y * (idx * 3);
+          let isHov = hoveredTile === idx;
+          let jitterX = mouseOffset.x * ((idx % 2 === 0 ? 1 : -1) * 6);
+          let jitterY = mouseOffset.y * ((idx < 3 ? 1 : -1) * 5);
           return (0, x.jsxs)("div", {
             key: idx,
+            onMouseEnter: () => setHoveredTile(idx),
             style: {
-              background: "rgba(255,255,255,0.04)",
-              border: "1px solid rgba(255,255,255,0.08)",
-              borderRadius: 10,
-              padding: "9px 10px",
+              background: isHov ? "#181d27" : "#ffffff",
+              color: isHov ? "#ffffff" : "#181d27",
+              border: `1px solid ${isHov ? "#d95323" : "rgba(24,29,39,0.09)"}`,
+              borderRadius: 14,
+              padding: "14px 14px",
+              boxShadow: isHov ? "0 12px 24px rgba(24,29,39,0.15)" : "0 4px 12px rgba(24,29,39,0.04)",
               transform: `translate(${jitterX}px, ${jitterY}px)`,
-              transition: "transform 0.15s ease-out, background 0.2s ease",
+              transition: "transform 0.16s ease-out, background 0.2s ease, color 0.2s ease",
               cursor: "pointer"
             },
-            onMouseEnter: (e) => { e.currentTarget.style.background = "rgba(255,255,255,0.08)"; },
-            onMouseLeave: (e) => { e.currentTarget.style.background = "rgba(255,255,255,0.04)"; },
             children: [
               (0, x.jsxs)("div", {
                 style: { display: "flex", alignItems: "center", justifyContent: "space-between" },
                 children: [
-                  (0, x.jsx)("span", { style: { fontFamily: "monospace", fontSize: 9.5, fontWeight: 800, color: "#fff" }, children: st.label }),
-                  (0, x.jsx)("span", { style: { width: 5, height: 5, borderRadius: "50%", background: st.col, boxShadow: `0 0 6px ${st.col}` } })
+                  (0, x.jsx)("span", { style: { fontFamily: "monospace", fontSize: 10, fontWeight: 800 }, children: st.label }),
+                  (0, x.jsx)("span", {
+                    style: {
+                      fontFamily: "monospace",
+                      fontSize: 7.5,
+                      fontWeight: 800,
+                      color: "#d95323",
+                      background: isHov ? "rgba(217,83,35,0.2)" : "rgba(217,83,35,0.1)",
+                      padding: "2px 6px",
+                      borderRadius: 4
+                    },
+                    children: st.badge
+                  })
                 ]
               }),
-              (0, x.jsx)("div", { style: { fontSize: 7.5, color: "#94a3b8", marginTop: 2 }, children: st.desc })
+              (0, x.jsx)("div", { style: { fontSize: 8.5, color: isHov ? "#cbd5e1" : "#57534e", marginTop: 4 }, children: st.desc }),
+              (0, x.jsxs)("div", {
+                style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 8, paddingTop: 6, borderTop: `1px solid ${isHov ? "rgba(255,255,255,0.1)" : "rgba(24,29,39,0.06)"}`, fontSize: 7.5, fontFamily: "monospace" },
+                children: [
+                  (0, x.jsx)("span", { style: { color: isHov ? "#94a3b8" : "#78716c" }, children: "STATUS: ONLINE" }),
+                  (0, x.jsx)("span", { style: { color: "#15803d", fontWeight: 800 }, children: st.load })
+                ]
+              })
             ]
           });
         })
       }),
 
-      // Bottom Telemetry Bar
+      // Tier 4: Bottom Telemetry Bar
       (0, x.jsxs)("div", {
-        style: { display: "flex", justifyContent: "space-between", fontSize: 8, fontFamily: "monospace", color: "#64748b" },
+        style: {
+          background: "#efeae0",
+          borderRadius: 10,
+          padding: "9px 14px",
+          border: "1px solid rgba(24,29,39,0.08)",
+          display: "flex",
+          justifyContent: "space-between",
+          fontSize: 8.5,
+          fontFamily: "monospace",
+          color: "#181d27",
+          fontWeight: 800
+        },
         children: [
-          (0, x.jsx)("span", { children: "PLC LATENCY: 0.8ms" }),
-          (0, x.jsx)("span", { style: { color: R, fontWeight: 700 }, children: "AIR-GAP ASSURANCE: 100%" })
+          (0, x.jsx)("span", { children: "PLC ROUNDTRIP: 0.8ms" }),
+          (0, x.jsx)("span", { style: { color: "#d95323" }, children: "AIR-GAP ASSURANCE: 100%" })
         ]
       })
     ]
   });
 }
 
-// 5. Dynamic Twin Water Hammer Simulation Visual (Cursor-Scrubbed)
+// 5. Dynamic Twin Water Hammer & Valve Replanning Reactor (Screenshot 4 Complete Rebuild — 4-Tier Full-Height Instrument)
 export function DynamicTwinVisual({ w, h }) {
   let [tick, setTick] = (0, o.useState)(0);
   let [hoverX, setHoverX] = (0, o.useState)(null);
@@ -2709,156 +3025,213 @@ export function DynamicTwinVisual({ w, h }) {
     return () => cancelAnimationFrame(anim);
   }, []);
 
-  let scrubT = hoverX !== null ? (hoverX * 60).toFixed(1) : ((tick % 240) / 240 * 60).toFixed(1);
-  let scrubP = hoverX !== null ? (4.2 + hoverX * 7.2).toFixed(1) : (4.2 + (Math.sin(tick * 0.05) + 1) * 3.6).toFixed(1);
+  let normX = hoverX !== null ? hoverX : ((tick % 240) / 240);
+  let scrubT = (normX * 60).toFixed(1);
+  let replannedP = (5.2 + Math.sin(normX * Math.PI) * 2.2).toFixed(1);
 
   return (0, x.jsxs)("div", {
     onMouseMove: (e) => {
       let rect = e.currentTarget.getBoundingClientRect();
-      setHoverX(Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width)));
+      setHoverX(Math.max(0.02, Math.min(0.98, (e.clientX - rect.left) / rect.width)));
     },
     onMouseLeave: () => setHoverX(null),
     style: {
       position: "absolute",
       inset: 0,
-      background: "radial-gradient(circle at 50% 30%, #151d2c 0%, #080b11 100%)",
-      padding: 16,
+      background: "linear-gradient(155deg, #ffffff 0%, #f6f2ea 55%, #eae3d5 100%)",
+      border: "1.5px solid rgba(24, 29, 39, 0.09)",
+      boxShadow: "inset 0 1px 0 #ffffff",
+      padding: 22,
       boxSizing: "border-box",
       display: "flex",
       flexDirection: "column",
       justifyContent: "space-between",
-      cursor: "crosshair"
+      cursor: "ew-resize"
     },
     children: [
-      // Top status row
+      // Tier 1: Top Header Row
       (0, x.jsxs)("div", {
-        style: { display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 9.5, fontFamily: "monospace", color: "#94a3b8" },
+        style: { display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 9.5, fontFamily: "monospace", color: "#181d27", fontWeight: 800 },
         children: [
-          (0, x.jsxs)("span", { style: { display: "flex", alignItems: "center", gap: 6 }, children: [(0, x.jsx)("span", { style: { width: 6, height: 6, borderRadius: "50%", background: "#ef4444", boxShadow: "0 0 6px #ef4444" } }), "TRANSIENT SURGE VS SAFE REPLAN"] }),
-          (0, x.jsx)("span", { style: { color: "#10b981", fontWeight: 800 }, children: "EPANET 2.2 / WNTR" })
+          (0, x.jsxs)("span", {
+            style: { display: "flex", alignItems: "center", gap: 6 },
+            children: [(0, x.jsx)("span", { style: { width: 7, height: 7, borderRadius: "50%", background: "#15803d" } }), "05 // AUTONOMOUS VALVE REPLANNER"]
+          }),
+          (0, x.jsx)("span", { style: { background: "#d95323", color: "#fff", padding: "3px 9px", borderRadius: 100, fontSize: 8.5 }, children: "EPANET 2.2 / WNTR" })
         ]
       }),
 
-      // Animated Pipe Conduit Cross-Section
-      (0, x.jsxs)("div", {
+      // Tier 2: 3-Column Comparative Consequence Matrix
+      (0, x.jsx)("div", {
         style: {
-          height: 38,
-          background: "rgba(0,0,0,0.6)",
-          borderRadius: 8,
-          border: "1px solid rgba(255,255,255,0.08)",
-          position: "relative",
-          overflow: "hidden",
-          display: "flex",
-          alignItems: "center"
+          background: "#efeae0",
+          borderRadius: 12,
+          border: "1px solid rgba(24,29,39,0.08)",
+          padding: "9px 12px",
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr 1fr",
+          gap: 8
         },
         children: [
-          // Fluid flow particles
-          Array.from({ length: 8 }).map((_, i) => (
-            (0, x.jsx)("div", {
-              key: i,
-              style: {
-                position: "absolute",
-                left: `${((tick * 3 + i * 45) % 360) / 360 * 100}%`,
-                width: 14,
-                height: 3,
-                background: "linear-gradient(90deg, transparent, #38bdf8, transparent)",
-                borderRadius: 2
-              }
-            })
-          )),
-          // Pipe valve choke gate
-          (0, x.jsx)("div", {
-            style: {
-              position: "absolute",
-              right: 40,
-              top: 4,
-              bottom: 4,
-              width: 5,
-              background: "#ef4444",
-              borderRadius: 2,
-              boxShadow: "0 0 8px #ef4444"
-            }
-          }),
-          (0, x.jsx)("div", {
-            style: { position: "absolute", left: 10, fontSize: 8, fontFamily: "monospace", color: "#38bdf8", fontWeight: 700 },
-            children: "PIPE P-04 // VELOCITY: 3.4 m/s"
-          }),
-          (0, x.jsx)("div", {
-            style: { position: "absolute", right: 52, fontSize: 8, fontFamily: "monospace", color: "#ef4444", fontWeight: 800 },
-            children: "RV-02 BLOCKED"
+          { label: "RAW OVERRIDE", val: "11.4 BAR", color: "#dc2626" },
+          { label: "FLANGE LIMIT", val: "8.0 BAR", color: "#181d27" },
+          { label: "SAFE REPLAN", val: "7.4 BAR", color: "#15803d" }
+        ].map((c, i) => (
+          (0, x.jsxs)("div", {
+            key: i,
+            style: { background: "#ffffff", borderRadius: 8, padding: "6px 8px", border: "1px solid rgba(24,29,39,0.06)", textAlign: "center" },
+            children: [
+              (0, x.jsx)("div", { style: { fontSize: 6.5, fontFamily: "monospace", color: "#78716c" }, children: c.label }),
+              (0, x.jsx)("div", { style: { fontSize: 9, fontFamily: "monospace", fontWeight: 800, color: c.color, marginTop: 2 }, children: c.val })
+            ]
           })
-        ]
+        ))
       }),
 
-      // Main Dual-Waveform Display
+      // Tier 3: Tactile Actuator & Conduit Status Bar
       (0, x.jsxs)("div", {
-        style: { height: 110, background: "rgba(0,0,0,0.6)", borderRadius: 10, border: "1px solid rgba(255,255,255,0.08)", padding: 8, position: "relative" },
+        style: {
+          background: "#ffffff",
+          borderRadius: 12,
+          border: "1px solid rgba(24,29,39,0.09)",
+          padding: "10px 14px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          boxShadow: "0 4px 12px rgba(24,29,39,0.03)"
+        },
         children: [
-          (0, x.jsxs)("svg", {
-            viewBox: "0 0 240 85",
-            style: { width: "100%", height: "100%" },
+          (0, x.jsxs)("div", {
+            style: { display: "flex", alignItems: "center", gap: 10 },
             children: [
-              // Safety limit line (8.0 Bar)
-              (0, x.jsx)("line", { x1: 0, y1: 28, x2: 240, y2: 28, stroke: "#ef4444", strokeDasharray: "3 3", strokeWidth: 1 }),
-              (0, x.jsx)("text", { x: 235, y: 24, textAnchor: "end", fill: "#ef4444", fontSize: 7, fontFamily: "monospace", children: "8.0 BAR LIMIT" }),
-
-              // Catastrophic spike curve (11.4 Bar)
-              (0, x.jsx)("path", {
-                d: "M 0 68 Q 40 68 75 8 T 130 62 T 240 65",
-                fill: "none",
-                stroke: "#ef4444",
-                strokeWidth: 2.2,
-                style: { filter: "drop-shadow(0 0 5px #ef4444)" }
+              // Spinning Precision Impeller Icon
+              (0, x.jsxs)("svg", {
+                viewBox: "0 0 28 28",
+                style: { width: 26, height: 26, flexShrink: 0 },
+                children: [
+                  (0, x.jsx)("circle", { cx: 14, cy: 14, r: 12, fill: "#f7f4ed", stroke: "#181d27", strokeWidth: 1.5 }),
+                  (0, x.jsxs)("g", {
+                    transform: `rotate(${(tick * 2.5) % 360} 14 14)`,
+                    children: [
+                      (0, x.jsx)("line", { x1: 14, y1: 4, x2: 14, y2: 24, stroke: "#d95323", strokeWidth: 2 }),
+                      (0, x.jsx)("line", { x1: 4, y1: 14, x2: 24, y2: 14, stroke: "#181d27", strokeWidth: 2 })
+                    ]
+                  })
+                ]
               }),
-
-              // Safe replanned curve (7.4 Bar)
-              (0, x.jsx)("path", {
-                d: "M 0 68 Q 60 68 110 38 T 170 40 T 240 42",
-                fill: "none",
-                stroke: "#10b981",
-                strokeWidth: 2.5,
-                style: { filter: "drop-shadow(0 0 5px #10b981)" }
-              }),
-
-              // Scrubber vertical cursor
-              (0, x.jsx)("line", {
-                x1: hoverX !== null ? hoverX * 240 : ((tick % 240) / 240 * 240),
-                y1: 0,
-                x2: hoverX !== null ? hoverX * 240 : ((tick % 240) / 240 * 240),
-                y2: 85,
-                stroke: "#38bdf8",
-                strokeWidth: 1.5,
-                opacity: 0.8
+              (0, x.jsxs)("div", {
+                children: [
+                  (0, x.jsx)("div", { style: { fontFamily: "monospace", fontSize: 9, fontWeight: 800, color: "#181d27" }, children: "BOOSTER 04: 680 RPM RAMP" }),
+                  (0, x.jsx)("div", { style: { fontFamily: "monospace", fontSize: 7.5, color: "#57534e" }, children: "FLUID VELOCITY: 2.11 m/s // J-104" })
+                ]
               })
             ]
           }),
+          (0, x.jsx)("div", {
+            style: {
+              fontFamily: "monospace",
+              fontSize: 8,
+              fontWeight: 800,
+              color: "#15803d",
+              background: "rgba(21,128,61,0.1)",
+              border: "1px solid rgba(21,128,61,0.25)",
+              padding: "4px 9px",
+              borderRadius: 6
+            },
+            children: "PRV-02: 45% OPEN"
+          })
+        ]
+      }),
 
-          // Telemetry Legend
+      // Tier 4: Perfectly Bounded Dual-Curve Hydrodynamic Equilibrium Graph + Stepped Ramp Bars
+      (0, x.jsxs)("div", {
+        style: {
+          background: "#efeae0",
+          borderRadius: 14,
+          border: "1px solid rgba(24,29,39,0.09)",
+          padding: "12px 14px",
+          display: "flex",
+          flexDirection: "column",
+          gap: 8
+        },
+        children: [
           (0, x.jsxs)("div", {
-            style: { position: "absolute", top: 8, left: 10, fontSize: 7.5, fontFamily: "monospace", lineHeight: 1.3 },
+            style: { display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 8, fontFamily: "monospace", fontWeight: 800 },
             children: [
-              (0, x.jsx)("div", { style: { color: "#ef4444", fontWeight: 700 }, children: "-- UNVERIFIED: 11.4 BAR (BURST)" }),
-              (0, x.jsx)("div", { style: { color: "#10b981", fontWeight: 700 }, children: "-- REPLANNED: 7.4 BAR (SAFE)" }),
-              (0, x.jsxs)("div", { style: { color: "#38bdf8", marginTop: 2 }, children: ["T = ", scrubT, "s // P = ", scrubP, " BAR"] })
+              (0, x.jsxs)("div", {
+                style: { display: "flex", gap: 10 },
+                children: [
+                  (0, x.jsx)("span", { style: { color: "#d95323" }, children: "● UNVERIFIED: 11.4B" }),
+                  (0, x.jsx)("span", { style: { color: "#15803d" }, children: "● REPLANNED: 7.4B" })
+                ]
+              }),
+              (0, x.jsxs)("span", { style: { color: "#181d27" }, children: ["T+", scrubT, "s // ", replannedP, " BAR"] })
+            ]
+          }),
+
+          // Bounded Cubic Bezier SVG (Guaranteed Within 0..84 Y Range)
+          (0, x.jsxs)("svg", {
+            viewBox: "0 0 240 84",
+            style: { width: "100%", height: 96, display: "block", overflow: "hidden" },
+            children: [
+              // 8.0 Bar Flange Ceiling Line
+              (0, x.jsx)("line", { x1: 0, y1: 26, x2: 240, y2: 26, stroke: "rgba(217,83,35,0.5)", strokeDasharray: "3 3", strokeWidth: 1.2 }),
+              (0, x.jsx)("text", { x: 236, y: 21, textAnchor: "end", fill: "#d95323", fontSize: 7, fontFamily: "monospace", fontWeight: 800, children: "8.0 BAR CEILING" }),
+              (0, x.jsx)("line", { x1: 0, y1: 72, x2: 240, y2: 72, stroke: "rgba(24,29,39,0.1)", strokeWidth: 1 }),
+
+              // Unverified Surge Curve (Cubic Bezier peaking cleanly at y=8, never overflowing!)
+              (0, x.jsx)("path", {
+                d: "M 0 68 C 35 68, 55 8, 82 8 C 110 8, 130 58, 175 60 C 205 61, 225 62, 240 62",
+                fill: "none",
+                stroke: "#d95323",
+                strokeWidth: 2.2,
+                strokeDasharray: "3 2"
+              }),
+
+              // Replanned Safe Curve (Cubic Bezier staying smoothly at y=40 beneath ceiling!)
+              (0, x.jsx)("path", {
+                d: "M 0 68 C 45 68, 75 40, 120 40 C 165 40, 200 42, 240 42",
+                fill: "none",
+                stroke: "#15803d",
+                strokeWidth: 3
+              }),
+
+              // Interactive Scrubber Line & Node
+              (0, x.jsx)("line", {
+                x1: normX * 240,
+                y1: 4,
+                x2: normX * 240,
+                y2: 76,
+                stroke: "#181d27",
+                strokeWidth: 1.2,
+                strokeDasharray: "2 2"
+              }),
+              (0, x.jsx)("circle", {
+                cx: normX * 240,
+                cy: 40,
+                r: 4.5,
+                fill: "#15803d",
+                stroke: "#ffffff",
+                strokeWidth: 1.5
+              })
             ]
           })
         ]
       }),
 
-      // Bottom Status Pill
+      // Tier 5: Bottom Status Pill
       (0, x.jsxs)("div", {
         style: {
-          background: "rgba(16, 185, 129, 0.12)",
-          border: "1px solid rgba(16, 185, 129, 0.35)",
-          borderRadius: 6,
-          padding: "6px 10px",
+          background: "#181d27",
+          borderRadius: 10,
+          padding: "9px 14px",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center"
         },
         children: [
-          (0, x.jsx)("span", { style: { fontSize: 8.5, fontFamily: "monospace", color: "#34d399", fontWeight: 700 }, children: "✓ 60s STAGED VALVE DEVIATION COMMITTED" }),
-          (0, x.jsx)("span", { style: { fontSize: 8.5, fontFamily: "monospace", color: "#fff", fontWeight: 800 }, children: "ZERO SURGE" })
+          (0, x.jsx)("span", { style: { fontSize: 8.5, fontFamily: "monospace", color: "#faf8f5", fontWeight: 800 }, children: "✓ 60s STAGED VALVE RAMP COMMITTED" }),
+          (0, x.jsx)("span", { style: { fontSize: 8.5, fontFamily: "monospace", color: "#d95323", fontWeight: 800 }, children: "ZERO SURGE →" })
         ]
       })
     ]
