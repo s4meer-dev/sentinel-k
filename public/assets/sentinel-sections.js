@@ -3241,11 +3241,447 @@ export function DynamicTwinVisual({ w, h }) {
 // ==========================================
 // CINEMATIC ATMOSPHERE & SCADA SYNTHESIZER
 // ==========================================
+export function SentinelConvergenceCTA() {
+  let [pulseStage, setPulseStage] = (0, o.useState)(-1);
+  let [verifying, setVerifying] = (0, o.useState)(false);
+  let [hoverBtn, setHoverBtn] = (0, o.useState)(false);
+  let [btnOffset, setBtnOffset] = (0, o.useState)({ x: 0, y: 0 });
+  let [tick, setTick] = (0, o.useState)(0);
+
+  (0, o.useEffect)(() => {
+    let id = setInterval(() => setTick(t => t + 1), 60);
+    return () => clearInterval(id);
+  }, []);
+
+  let triggerConvergencePulse = () => {
+    if (verifying) return;
+    setVerifying(true);
+    setPulseStage(0);
+    window.dispatchEvent(new CustomEvent("sentinel-convergence-pulse"));
+    for (let i = 1; i <= 8; i++) {
+      setTimeout(() => {
+        setPulseStage(i);
+        if (i === 8) {
+          setTimeout(() => setVerifying(false), 1200);
+        }
+      }, i * 210);
+    }
+  };
+
+  const stages = [
+    { id: "01", code: "SILERO VAD", metric: "8.9 URGENCY", status: "VOICE CLONE FLAGGED" },
+    { id: "02", code: "WHISPER-V3", metric: "18ms NPU", status: "INTENT EXTRACTED" },
+    { id: "03", code: "MODBUS TCP", metric: "HR_40012", status: "REGISTER DECOMPILED" },
+    { id: "04", code: "Z3 PROVER", metric: "RPM <= 850", status: "FORMAL INVARIANT" },
+    { id: "05", code: "EPANET 2.2", metric: "11.4B SURGE", status: "SHOCKWAVE CAUGHT" },
+    { id: "06", code: "WNTR RAMP", metric: "7.4B SAFE", status: "60s VALVE TRAJECTORY" },
+    { id: "07", code: "VIVO BRIDGE", metric: "0.8ms TLS", status: "AIR-GAP CONDUIT" },
+    { id: "08", code: "TEE ENCLAVE", metric: "ED25519", status: "BIOMETRIC SIGNED" }
+  ];
+
+  return (0, x.jsxs)("section", {
+    id: "convergence-cta",
+    "data-section": "convergence-cta",
+    style: {
+      position: "relative",
+      background: "linear-gradient(180deg, #ede7db 0%, #e1d9c8 100%)",
+      padding: "110px 24px 96px",
+      overflow: "hidden",
+      borderTop: "1px solid rgba(24,29,39,0.09)"
+    },
+    children: [
+      // Converging Concentric Architectural Geometry SVG in Background
+      (0, x.jsxs)("svg", {
+        viewBox: "0 0 1200 640",
+        style: {
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          pointerEvents: "none",
+          opacity: 0.55
+        },
+        children: [
+          (0, x.jsx)("circle", {
+            cx: 600,
+            cy: 320,
+            r: 290,
+            fill: "none",
+            stroke: "rgba(24,29,39,0.08)",
+            strokeWidth: 1,
+            strokeDasharray: "6 6",
+            transform: `rotate(${(tick * 0.35) % 360} 600 320)`
+          }),
+          (0, x.jsx)("circle", {
+            cx: 600,
+            cy: 320,
+            r: 215,
+            fill: "none",
+            stroke: verifying ? "rgba(21,128,61,0.38)" : "rgba(217,83,35,0.22)",
+            strokeWidth: 1.5,
+            strokeDasharray: "12 8",
+            transform: `rotate(${(-tick * 0.55) % 360} 600 320)`
+          }),
+          (0, x.jsx)("circle", {
+            cx: 600,
+            cy: 320,
+            r: 140,
+            fill: "none",
+            stroke: "rgba(24,29,39,0.1)",
+            strokeWidth: 1
+          }),
+          // Radial Convergence Spokes
+          [0, 45, 90, 135, 180, 225, 270, 315].map(deg => {
+            let rad = (deg * Math.PI) / 180;
+            return (0, x.jsx)("line", {
+              key: deg,
+              x1: 600 + Math.cos(rad) * 90,
+              y1: 320 + Math.sin(rad) * 90,
+              x2: 600 + Math.cos(rad) * 310,
+              y2: 320 + Math.sin(rad) * 310,
+              stroke: verifying ? "rgba(21,128,61,0.2)" : "rgba(24,29,39,0.06)",
+              strokeWidth: 1
+            });
+          })
+        ]
+      }),
+
+      (0, x.jsxs)("div", {
+        style: {
+          position: "relative",
+          zIndex: 2,
+          maxWidth: 1120,
+          margin: "0 auto",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 32
+        },
+        children: [
+          // Editorial Act VIII Header Pill
+          (0, x.jsxs)("div", {
+            style: {
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 10,
+              background: "#ffffff",
+              border: "1px solid rgba(24,29,39,0.12)",
+              borderRadius: 100,
+              padding: "7px 18px",
+              boxShadow: "0 8px 24px rgba(24,29,39,0.06)"
+            },
+            children: [
+              (0, x.jsx)("span", {
+                style: {
+                  width: 8,
+                  height: 8,
+                  borderRadius: "50%",
+                  background: pulseStage === 8 ? "#15803d" : "#d95323",
+                  boxShadow: pulseStage === 8 ? "0 0 10px #15803d" : "0 0 10px #d95323"
+                }
+              }),
+              (0, x.jsx)("span", {
+                style: {
+                  fontFamily: "monospace",
+                  fontSize: 10.5,
+                  fontWeight: 800,
+                  letterSpacing: "0.14em",
+                  color: "#181d27"
+                },
+                children: "ACT VIII // FIELD CONVERGENCE & DETERMINISTIC COMMAND SEAL"
+              })
+            ]
+          }),
+
+          // Cinematic Finale Statement
+          (0, x.jsxs)("div", {
+            style: { textAlign: "center", maxWidth: 820 },
+            children: [
+              (0, x.jsxs)("h2", {
+                style: {
+                  fontFamily: "'AM Le Cygne', serif",
+                  fontWeight: 700,
+                  fontSize: "clamp(42px, 6.2vw, 86px)",
+                  lineHeight: 0.96,
+                  letterSpacing: "-0.03em",
+                  color: "#181d27",
+                  margin: "0 0 18px"
+                },
+                children: [
+                  "Where Cyber Intent Meets ",
+                  (0, x.jsx)("span", { style: { color: "#d95323", fontStyle: "italic" }, children: "Physical Law." })
+                ]
+              }),
+              (0, x.jsx)("p", {
+                style: {
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: "clamp(15px, 1.4vw, 19px)",
+                  lineHeight: 1.6,
+                  color: "#57534e",
+                  maxWidth: 650,
+                  margin: "0 auto"
+                },
+                children: "Every high-impact field instruction converges through an 8-stage air-gapped verification barrier in 1.78 seconds—eliminating spoofed authority, validating PLC registers, and proving hydrodynamic equilibrium before execution."
+              })
+            ]
+          }),
+
+          // Interactive 8-Stage Convergence Matrix Card
+          (0, x.jsxs)("div", {
+            style: {
+              width: "100%",
+              background: "linear-gradient(165deg, #ffffff 0%, #f4efe4 100%)",
+              borderRadius: 28,
+              border: "1px solid rgba(24,29,39,0.12)",
+              boxShadow: "0 32px 72px rgba(24,29,39,0.12), inset 0 1px 0 #ffffff",
+              padding: "28px 28px 24px",
+              display: "flex",
+              flexDirection: "column",
+              gap: 22
+            },
+            children: [
+              // Matrix Top Bar
+              (0, x.jsxs)("div", {
+                style: {
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  flexWrap: "wrap",
+                  gap: 12,
+                  borderBottom: "1px solid rgba(24,29,39,0.08)",
+                  paddingBottom: 14
+                },
+                children: [
+                  (0, x.jsxs)("div", {
+                    style: { display: "flex", alignItems: "center", gap: 10 },
+                    children: [
+                      (0, x.jsx)("span", {
+                        style: {
+                          fontFamily: "monospace",
+                          fontSize: 11,
+                          fontWeight: 800,
+                          color: "#181d27",
+                          letterSpacing: "0.08em"
+                        },
+                        children: "SENTINEL-K // FULL-SPECTRUM CONVERGENCE TELEMETRY"
+                      }),
+                      (0, x.jsx)("span", {
+                        style: {
+                          fontFamily: "monospace",
+                          fontSize: 9.5,
+                          fontWeight: 800,
+                          background: pulseStage === 8 ? "rgba(21,128,61,0.12)" : "rgba(217,83,35,0.12)",
+                          color: pulseStage === 8 ? "#15803d" : "#d95323",
+                          padding: "3px 10px",
+                          borderRadius: 100
+                        },
+                        children: pulseStage === 8 ? "✓ 8/8 STAGES VERIFIED SAFE (1.78s)" : verifying ? `SCANNING STAGE 0${pulseStage}/08...` : "READY FOR LIVE PULSE"
+                      })
+                    ]
+                  }),
+                  (0, x.jsx)("span", {
+                    style: { fontFamily: "monospace", fontSize: 10, color: "#57534e", fontWeight: 700 },
+                    children: "SNAPDRAGON 8 ELITE NPU // OPENPLC v3 // EPANET 2.2"
+                  })
+                ]
+              }),
+
+              // 8-Stage Grid
+              (0, x.jsx)("div", {
+                style: {
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+                  gap: 12
+                },
+                children: stages.map((st, idx) => {
+                  let isDone = pulseStage > idx || pulseStage === 8;
+                  let isCurrent = verifying && pulseStage === idx + 1;
+                  return (0, x.jsxs)("div", {
+                    key: st.id,
+                    onClick: triggerConvergencePulse,
+                    style: {
+                      background: isCurrent ? "#181d27" : isDone ? "#ffffff" : "#efeae0",
+                      borderRadius: 16,
+                      padding: "14px 16px",
+                      border: isCurrent
+                        ? "1px solid #d95323"
+                        : isDone
+                        ? "1px solid rgba(21,128,61,0.35)"
+                        : "1px solid rgba(24,29,39,0.08)",
+                      boxShadow: isCurrent
+                        ? "0 14px 30px rgba(24,29,39,0.18)"
+                        : isDone
+                        ? "0 6px 18px rgba(21,128,61,0.08)"
+                        : "none",
+                      cursor: "pointer",
+                      transition: "all 0.28s cubic-bezier(0.16, 1, 0.3, 1)",
+                      transform: isCurrent ? "translateY(-3px) scale(1.015)" : "none"
+                    },
+                    children: [
+                      (0, x.jsxs)("div", {
+                        style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 },
+                        children: [
+                          (0, x.jsx)("span", {
+                            style: {
+                              fontFamily: "monospace",
+                              fontSize: 9,
+                              fontWeight: 800,
+                              color: isCurrent ? "#d95323" : isDone ? "#15803d" : "#78716c"
+                            },
+                            children: `STAGE ${st.id}`
+                          }),
+                          (0, x.jsx)("span", {
+                            style: {
+                              fontFamily: "monospace",
+                              fontSize: 9,
+                              fontWeight: 800,
+                              padding: "2px 7px",
+                              borderRadius: 6,
+                              background: isCurrent ? "rgba(217,83,35,0.2)" : isDone ? "rgba(21,128,61,0.12)" : "rgba(24,29,39,0.07)",
+                              color: isCurrent ? "#ff8c5a" : isDone ? "#15803d" : "#57534e"
+                            },
+                            children: st.metric
+                          })
+                        ]
+                      }),
+                      (0, x.jsx)("div", {
+                        style: {
+                          fontFamily: "'Inter', sans-serif",
+                          fontSize: 13,
+                          fontWeight: 800,
+                          color: isCurrent ? "#ffffff" : "#181d27",
+                          marginBottom: 3
+                        },
+                        children: st.code
+                      }),
+                      (0, x.jsx)("div", {
+                        style: {
+                          fontFamily: "monospace",
+                          fontSize: 9.5,
+                          fontWeight: 700,
+                          color: isCurrent ? "#d6d3cd" : isDone ? "#15803d" : "#57534e"
+                        },
+                        children: isDone ? `✓ ${st.status}` : st.status
+                      })
+                    ]
+                  });
+                })
+              }),
+
+              // Magnetic Convergence Trigger Bar
+              (0, x.jsxs)("div", {
+                style: {
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  flexWrap: "wrap",
+                  gap: 16,
+                  paddingTop: 8
+                },
+                children: [
+                  (0, x.jsxs)("div", {
+                    style: { display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" },
+                    children: [
+                      (0, x.jsxs)("button", {
+                        onClick: triggerConvergencePulse,
+                        onMouseEnter: () => setHoverBtn(true),
+                        onMouseLeave: () => {
+                          setHoverBtn(false);
+                          setBtnOffset({ x: 0, y: 0 });
+                        },
+                        onMouseMove: (e) => {
+                          let rect = e.currentTarget.getBoundingClientRect();
+                          let dx = (e.clientX - (rect.left + rect.width / 2)) * 0.18;
+                          let dy = (e.clientY - (rect.top + rect.height / 2)) * 0.24;
+                          setBtnOffset({ x: dx, y: dy });
+                        },
+                        "data-cursor-Action": "VERIFY",
+                        style: {
+                          background: verifying ? "#15803d" : hoverBtn ? "#d95323" : "#181d27",
+                          color: "#ffffff",
+                          border: "none",
+                          borderRadius: 100,
+                          padding: "16px 32px",
+                          fontFamily: "monospace",
+                          fontSize: 12,
+                          fontWeight: 800,
+                          letterSpacing: "0.1em",
+                          cursor: "pointer",
+                          boxShadow: hoverBtn
+                            ? "0 18px 38px rgba(217,83,35,0.32)"
+                            : "0 12px 28px rgba(24,29,39,0.18)",
+                          transform: `translate(${btnOffset.x}px, ${btnOffset.y}px) scale(${hoverBtn ? 1.03 : 1})`,
+                          transition: "background 0.25s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease"
+                        },
+                        children: [
+                          verifying
+                            ? `EXECUTING 8-STAGE VERIFICATION BARRIER (0${pulseStage}/08)...`
+                            : "⚡ TRIGGER LIVE 1.78s CONVERGENCE PULSE →"
+                        ]
+                      }),
+                      (0, x.jsx)("a", {
+                        href: "#digital-twin",
+                        style: {
+                          background: "#efeae0",
+                          color: "#181d27",
+                          border: "1px solid rgba(24,29,39,0.14)",
+                          borderRadius: 100,
+                          padding: "15px 26px",
+                          fontFamily: "monospace",
+                          fontSize: 11,
+                          fontWeight: 800,
+                          letterSpacing: "0.08em",
+                          textDecoration: "none"
+                        },
+                        children: "OPEN EPANET 2.2 SIMULATOR ↑"
+                      })
+                    ]
+                  }),
+                  (0, x.jsx)("div", {
+                    style: {
+                      fontFamily: "monospace",
+                      fontSize: 10,
+                      color: "#57534e",
+                      fontWeight: 700
+                    },
+                    children: "ZERO BACKGROUND SURVEILLANCE // 100% DETERMINISTIC SAFETY"
+                  })
+                ]
+              })
+            ]
+          })
+        ]
+      })
+    ]
+  });
+}
+
+// ==========================================
+// CINEMATIC ATMOSPHERE, 8-ACT SENTINEL FIELD & DIRECTOR TIMELINE HUD
+// ==========================================
 export function CinematicAtmosphere() {
   let canvasRef = (0, o.useRef)(null);
   let [audioEnabled, setAudioEnabled] = (0, o.useState)(false);
   let [scrollProgress, setScrollProgress] = (0, o.useState)(0);
+  let [velocityDisplay, setVelocityDisplay] = (0, o.useState)("0.0");
+  let [cursorAction, setCursorAction] = (0, o.useState)("");
+  let [cursorPos, setCursorPos] = (0, o.useState)({ x: -200, y: -200 });
+  let [isMobile, setIsMobile] = (0, o.useState)(() => window.innerWidth <= 900);
   let audioCtxRef = (0, o.useRef)(null);
+  let shockwaveRef = (0, o.useRef)(0);
+
+  const acts = [
+    { id: "01", roman: "I", name: "THE WORLD", status: "FIELD INITIALIZED", range: [0.0, 0.12], target: "#root" },
+    { id: "02", roman: "II", name: "THE ANOMALY", status: "8.9 URGENCY DETECTED", range: [0.12, 0.27], target: "#how-it-works" },
+    { id: "03", roman: "III", name: "THE BARRIER", status: "5-STAGE CONDUIT LOCKED", range: [0.27, 0.48], target: "#how-it-works" },
+    { id: "04", roman: "IV", name: "INCIDENT MATRIX", status: "3D CONSTELLATION ACTIVE", range: [0.48, 0.62], target: "#clientstories" },
+    { id: "05", roman: "V", name: "PHYSICAL TWIN", status: "7.4 BAR EQUILIBRIUM", range: [0.62, 0.74], target: "#digital-twin" },
+    { id: "06", roman: "VI", name: "LANGGRAPH SWARM", status: "4 AGENTS SYNCHRONIZED", range: [0.74, 0.83], target: "#agents" },
+    { id: "07", roman: "VII", name: "ARCHITECTURE", status: "EDGE-TO-PLANT READY", range: [0.83, 0.92], target: "#pricing" },
+    { id: "08", roman: "VIII", name: "CONVERGENCE", status: "DETERMINISTIC SEAL", range: [0.92, 1.01], target: "#convergence-cta" }
+  ];
+
+  let activeAct = acts.find(a => scrollProgress >= a.range[0] && scrollProgress < a.range[1]) || acts[0];
 
   // Sound synthesis function
   let playBlip = (freq = 880, dur = 0.035, type = "sine") => {
@@ -3269,27 +3705,63 @@ export function CinematicAtmosphere() {
     } catch {}
   };
 
-  // Wire subtle global interaction clicks when audio is enabled
+  // Listen for Convergence Pulse shockwave events
+  (0, o.useEffect)(() => {
+    let onPulse = () => {
+      shockwaveRef.current = 1.0;
+      playBlip(1320, 0.09, "triangle");
+    };
+    window.addEventListener("sentinel-convergence-pulse", onPulse);
+    return () => window.removeEventListener("sentinel-convergence-pulse", onPulse);
+  }, [audioEnabled]);
+
+  // Wire subtle global interaction clicks & context-aware cursor states
   (0, o.useEffect)(() => {
     let onClick = (e) => {
       let target = e.target.closest("button, a, [role='button'], input");
       if (target) playBlip(1200, 0.04, "triangle");
     };
+    let onMove = (e) => {
+      setCursorPos({ x: e.clientX, y: e.clientY });
+      let t = e.target;
+      if (!t || !t.closest) return;
+      if (t.closest("[data-cursor-Action='VERIFY']")) {
+        setCursorAction("VERIFY");
+      } else if (t.closest("input[type='range'], #digital-twin button")) {
+        setCursorAction("INTERACT");
+      } else if (t.closest("[data-cursor='card'], #clientstories [style*='cursor: pointer']")) {
+        setCursorAction("EXPLORE");
+      } else if (t.closest("a, button")) {
+        setCursorAction("SELECT");
+      } else {
+        setCursorAction("");
+      }
+    };
     window.addEventListener("click", onClick, { passive: true });
-    return () => window.removeEventListener("click", onClick);
+    window.addEventListener("mousemove", onMove, { passive: true });
+    return () => {
+      window.removeEventListener("click", onClick);
+      window.removeEventListener("mousemove", onMove);
+    };
   }, [audioEnabled]);
 
-  // Track scroll progress for hairline progress line
+  // Track scroll progress & responsive state
   (0, o.useEffect)(() => {
     let onScroll = () => {
       let h = document.documentElement.scrollHeight - window.innerHeight;
-      if (h > 0) setScrollProgress(window.scrollY / h);
+      if (h > 0) setScrollProgress(Math.max(0, Math.min(1, window.scrollY / h)));
     };
+    let onResize = () => setIsMobile(window.innerWidth <= 900);
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("resize", onResize, { passive: true });
+    onScroll();
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onResize);
+    };
   }, []);
 
-  // Canvas particle & fluid wave loop
+  // 8-Act Evolving Sentinel Field Canvas Loop (Elevated zIndex: 38 so it floats subtly over sections)
   (0, o.useEffect)(() => {
     let canvas = canvasRef.current;
     if (!canvas) return;
@@ -3317,58 +3789,133 @@ export function CinematicAtmosphere() {
 
     let onScroll = () => {
       let sy = window.scrollY;
-      scrollVelocity = Math.min(25, Math.abs(sy - lastScrollY));
+      scrollVelocity = Math.min(36, Math.abs(sy - lastScrollY));
       lastScrollY = sy;
     };
     window.addEventListener("scroll", onScroll, { passive: true });
 
-    // Generate telemetry particles
-    let count = Math.min(48, Math.floor(width / 32));
-    let particles = Array.from({ length: count }, () => ({
+    // Generate Sentinel Field topology nodes
+    let count = Math.min(34, Math.floor(width / 44));
+    let nodes = Array.from({ length: count }, (_, i) => ({
       x: Math.random() * width,
       y: Math.random() * height,
-      vx: (Math.random() - 0.5) * 0.4,
-      vy: (Math.random() - 0.5) * 0.4,
-      rad: Math.random() * 1.6 + 0.8,
-      alpha: Math.random() * 0.4 + 0.15,
-      hue: Math.random() > 0.6 ? 24 : 198
+      vx: (Math.random() - 0.5) * 0.45,
+      vy: (Math.random() - 0.5) * 0.45,
+      rad: (i % 4 === 0) ? 2.6 : 1.6,
+      isAccent: i % 3 === 0,
+      angle: (i / count) * Math.PI * 2
     }));
 
     let frame = 0;
     let render = () => {
       frame++;
-      scrollVelocity *= 0.94;
-      ctx.clearRect(0, 0, width, height);
-
-      // Draw subtle undulating hydrodynamic waveforms
-      let waveCount = 3;
-      for (let w = 0; w < waveCount; w++) {
-        ctx.beginPath();
-        let baseY = height * (0.25 + w * 0.28);
-        ctx.moveTo(0, baseY);
-        for (let x = 0; x <= width; x += 40) {
-          let distMouse = Math.abs(x - mouseX) / width;
-          let mouseInfluence = Math.max(0, 1 - distMouse * 2.5) * (mouseY - baseY) * 0.12;
-          let waveY = baseY + Math.sin(frame * 0.012 + x * 0.003 + w * 1.5) * (14 + scrollVelocity * 1.2) + mouseInfluence;
-          ctx.lineTo(x, waveY);
-        }
-        ctx.strokeStyle = w === 1 ? "rgba(217, 83, 35, 0.045)" : "rgba(56, 189, 248, 0.035)";
-        ctx.lineWidth = 1;
-        ctx.stroke();
+      scrollVelocity *= 0.92;
+      if (frame % 6 === 0) {
+        setVelocityDisplay(scrollVelocity.toFixed(1));
       }
 
-      // Draw vector particles
-      for (let p of particles) {
-        p.x += p.vx;
-        p.y += p.vy;
+      ctx.clearRect(0, 0, width, height);
 
-        // Subtle mouse repulsion
+      let h = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      let prog = Math.max(0, Math.min(1, window.scrollY / h));
+
+      // 1. ACT-DEPENDENT ARCHITECTURAL FIELD GEOMETRY
+      if (prog < 0.14) {
+        // ACT I: Concentric Perimeter Scanning Rings around Hero Phone
+        let cx = width * 0.5;
+        let cy = height * 0.52;
+        for (let r = 1; r <= 3; r++) {
+          ctx.beginPath();
+          let radius = 160 + r * 95 + Math.sin(frame * 0.02 + r) * 6;
+          ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+          ctx.strokeStyle = r === 2 ? "rgba(217, 83, 35, 0.085)" : "rgba(24, 29, 39, 0.055)";
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
+      } else if (prog >= 0.14 && prog < 0.28) {
+        // ACT II: Kinetic Anomaly Harmonic Sine Waves & Laser Scanline
+        let scanY = ((frame * 2.2) % height);
+        ctx.beginPath();
+        ctx.moveTo(0, scanY);
+        ctx.lineTo(width, scanY);
+        ctx.strokeStyle = "rgba(217, 83, 35, 0.11)";
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      } else if (prog >= 0.28 && prog < 0.48) {
+        // ACT III: Horizontal Laminar Conduit Streamlines & High-Speed Signal Packets
+        for (let l = 0; l < 4; l++) {
+          let y = height * (0.22 + l * 0.18);
+          ctx.beginPath();
+          ctx.moveTo(0, y);
+          ctx.lineTo(width, y);
+          ctx.strokeStyle = "rgba(24, 29, 39, 0.045)";
+          ctx.lineWidth = 1;
+          ctx.stroke();
+
+          // Traveling Signal Packet
+          let px = width - ((frame * (4 + l * 1.3) + scrollVelocity * 6 + l * 260) % width);
+          ctx.beginPath();
+          ctx.arc(px, y, 2.5, 0, Math.PI * 2);
+          ctx.fillStyle = l % 2 === 0 ? "rgba(217, 83, 35, 0.42)" : "rgba(21, 128, 61, 0.42)";
+          ctx.fill();
+        }
+      } else if (prog >= 0.48 && prog < 0.63) {
+        // ACT IV: Triangulated Constellation Linking the 3 Floating 3D Incident Cards
+        let pts = [
+          { x: width * 0.28, y: height * 0.42 },
+          { x: width * 0.49, y: height * 0.62 },
+          { x: width * 0.72, y: height * 0.40 }
+        ];
+        ctx.beginPath();
+        ctx.moveTo(pts[0].x, pts[0].y);
+        ctx.lineTo(pts[1].x, pts[1].y);
+        ctx.lineTo(pts[2].x, pts[2].y);
+        ctx.closePath();
+        ctx.strokeStyle = "rgba(217, 83, 35, 0.14)";
+        ctx.lineWidth = 1.2;
+        ctx.setLineDash([5, 5]);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      } else if (prog >= 0.90) {
+        // ACT VIII: Radial Field Convergence toward Final Command Portal
+        let cx = width * 0.5;
+        let cy = height * 0.5;
+        for (let n of nodes) {
+          n.x += (cx + Math.cos(n.angle + frame * 0.01) * 220 - n.x) * 0.025;
+          n.y += (cy + Math.sin(n.angle + frame * 0.01) * 220 - n.y) * 0.025;
+        }
+      }
+
+      // 2. Shockwave Pulse Ring (When user triggers Convergence Pulse)
+      if (shockwaveRef.current > 0.01) {
+        let swProg = 1 - shockwaveRef.current;
+        ctx.beginPath();
+        ctx.arc(width / 2, height / 2, swProg * Math.max(width, height) * 0.75, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(21, 128, 61, ${shockwaveRef.current * 0.45})`;
+        ctx.lineWidth = 3;
+        ctx.stroke();
+        shockwaveRef.current *= 0.94;
+      }
+
+      // 3. Connected Sentinel Field Nodes & Magnetic Cursor Refraction
+      for (let i = 0; i < nodes.length; i++) {
+        let p = nodes[i];
+        p.x += p.vx * (1 + scrollVelocity * 0.12);
+        p.y += p.vy * (1 + scrollVelocity * 0.12);
+
         let dx = p.x - mouseX;
         let dy = p.y - mouseY;
         let dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 140 && dist > 1) {
-          p.x += (dx / dist) * 1.2;
-          p.y += (dy / dist) * 1.2;
+        if (dist < 170 && dist > 1) {
+          p.x += (dx / dist) * 1.1;
+          p.y += (dy / dist) * 1.1;
+          // Draw subtle refraction tether to cursor
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(mouseX, mouseY);
+          ctx.strokeStyle = `rgba(217, 83, 35, ${(1 - dist / 170) * 0.15})`;
+          ctx.lineWidth = 0.8;
+          ctx.stroke();
         }
 
         if (p.x < 0) p.x = width;
@@ -3376,9 +3923,25 @@ export function CinematicAtmosphere() {
         if (p.y < 0) p.y = height;
         if (p.y > height) p.y = 0;
 
+        // Node-to-node topology connections
+        for (let j = i + 1; j < nodes.length; j++) {
+          let q = nodes[j];
+          let ndx = p.x - q.x;
+          let ndy = p.y - q.y;
+          let ndist = Math.sqrt(ndx * ndx + ndy * ndy);
+          if (ndist < 145) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(q.x, q.y);
+            ctx.strokeStyle = `rgba(24, 29, 39, ${(1 - ndist / 145) * 0.065})`;
+            ctx.lineWidth = 0.75;
+            ctx.stroke();
+          }
+        }
+
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.rad, 0, Math.PI * 2);
-        ctx.fillStyle = p.hue === 24 ? `rgba(217, 83, 35, ${p.alpha * 0.6})` : `rgba(56, 189, 248, ${p.alpha * 0.5})`;
+        ctx.fillStyle = p.isAccent ? "rgba(217, 83, 35, 0.32)" : "rgba(24, 29, 39, 0.22)";
         ctx.fill();
       }
 
@@ -3403,12 +3966,12 @@ export function CinematicAtmosphere() {
           top: 0,
           left: 0,
           width: `${scrollProgress * 100}%`,
-          height: 2.5,
-          background: "linear-gradient(90deg, #d95323, #ff8c5a)",
+          height: 3,
+          background: "linear-gradient(90deg, #181d27 0%, #d95323 65%, #15803d 100%)",
           zIndex: 10003,
           pointerEvents: "none",
-          boxShadow: "0 0 8px rgba(217,83,35,0.7)",
-          transition: "width 0.1s linear"
+          boxShadow: "0 0 10px rgba(217,83,35,0.55)",
+          transition: "width 0.08s linear"
         }
       }),
 
@@ -3417,26 +3980,157 @@ export function CinematicAtmosphere() {
         style: {
           position: "fixed",
           inset: 0,
-          backgroundImage: "radial-gradient(circle at 50% 50%, transparent 80%, rgba(0,0,0,0.18)), url('data:image/svg+xml,%3Csvg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cfilter id=\"noise\"%3E%3CfeTurbulence type=\"fractalNoise\" baseFrequency=\"0.8\" numOctaves=\"3\" stitchTiles=\"stitch\"/%3E%3C/filter%3E%3Crect width=\"100%25\" height=\"100%25\" filter=\"url(%23noise)\" opacity=\"0.03\"/%3E%3C/svg%3E')",
+          backgroundImage: "radial-gradient(circle at 50% 50%, transparent 82%, rgba(24,29,39,0.08)), url('data:image/svg+xml,%3Csvg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cfilter id=\"noise\"%3E%3CfeTurbulence type=\"fractalNoise\" baseFrequency=\"0.8\" numOctaves=\"3\" stitchTiles=\"stitch\"/%3E%3C/filter%3E%3Crect width=\"100%25\" height=\"100%25\" filter=\"url(%23noise)\" opacity=\"0.025\"/%3E%3C/svg%3E')",
           pointerEvents: "none",
           zIndex: 99990,
-          opacity: 0.8
+          opacity: 0.75
         }
       }),
 
-      // 3. Cyber-Physical Fluid Wave Energy Canvas
+      // 3. 8-Act Evolving Sentinel Field Canvas (Elevated zIndex: 38 so it is visible across all sections!)
       (0, x.jsx)("canvas", {
         ref: canvasRef,
         style: {
           position: "fixed",
           inset: 0,
           pointerEvents: "none",
-          zIndex: 0,
-          opacity: 0.75
+          zIndex: 38,
+          opacity: 0.9
         }
       }),
 
-      // 4. SCADA Audio Synthesizer Control Pill (Floating in bottom-left)
+      // 4. Context-Aware Custom Cursor Action Badge (Desktop Only)
+      !isMobile && cursorAction && (0, x.jsx)("div", {
+        style: {
+          position: "fixed",
+          left: cursorPos.x + 18,
+          top: cursorPos.y + 18,
+          zIndex: 100005,
+          pointerEvents: "none",
+          background: cursorAction === "VERIFY" ? "#d95323" : "#181d27",
+          color: "#faf8f5",
+          padding: "3px 9px",
+          borderRadius: 100,
+          fontFamily: "monospace",
+          fontSize: 8.5,
+          fontWeight: 800,
+          letterSpacing: "0.12em",
+          boxShadow: "0 6px 16px rgba(24,29,39,0.22)",
+          border: "1px solid rgba(255,255,255,0.2)"
+        },
+        children: cursorAction
+      }),
+
+      // 5. Director's 8-Act Cinematic Timeline Scrubber Rail (Right Edge, Desktop Only)
+      !isMobile && (0, x.jsxs)("div", {
+        style: {
+          position: "fixed",
+          right: 18,
+          top: "50%",
+          transform: "translateY(-50%)",
+          zIndex: 10002,
+          background: "rgba(255, 255, 255, 0.78)",
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
+          border: "1px solid rgba(24, 29, 39, 0.1)",
+          borderRadius: 18,
+          padding: "10px 8px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 6,
+          boxShadow: "0 12px 32px rgba(24, 29, 39, 0.08)"
+        },
+        children: [
+          (0, x.jsx)("div", {
+            style: {
+              fontFamily: "monospace",
+              fontSize: 7.5,
+              fontWeight: 800,
+              color: "#d95323",
+              letterSpacing: "0.08em",
+              writingMode: "vertical-rl",
+              transform: "rotate(180deg)",
+              marginBottom: 4
+            },
+            children: `ACT ${activeAct.roman} // ${activeAct.name}`
+          }),
+          acts.map((act) => {
+            let isCurrent = act.id === activeAct.id;
+            return (0, x.jsx)("button", {
+              key: act.id,
+              title: `Act ${act.roman}: ${act.name} (${act.status})`,
+              onClick: () => {
+                let el = document.querySelector(act.target);
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+              },
+              style: {
+                width: isCurrent ? 8 : 5,
+                height: isCurrent ? 22 : 7,
+                borderRadius: 100,
+                border: "none",
+                padding: 0,
+                cursor: "pointer",
+                background: isCurrent ? "#d95323" : "rgba(24, 29, 39, 0.2)",
+                transition: "all 0.25s cubic-bezier(0.16, 1, 0.3, 1)"
+              }
+            });
+          })
+        ]
+      }),
+
+      // 6. Bottom-Right Live Scene & Velocity Telemetry Pill (Desktop Only)
+      !isMobile && (0, x.jsxs)("div", {
+        style: {
+          position: "fixed",
+          bottom: 24,
+          right: 28,
+          zIndex: 10000,
+          background: "rgba(255, 255, 255, 0.82)",
+          border: "1px solid rgba(24, 29, 39, 0.12)",
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
+          borderRadius: 100,
+          padding: "6px 14px",
+          display: "flex",
+          alignItems: "center",
+          gap: 10,
+          pointerEvents: "none",
+          boxShadow: "0 4px 16px rgba(24, 29, 39, 0.06)"
+        },
+        children: [
+          (0, x.jsx)("span", {
+            style: {
+              width: 6.5,
+              height: 6.5,
+              borderRadius: "50%",
+              background: "#15803d",
+              boxShadow: "0 0 8px rgba(21,128,61,0.6)"
+            }
+          }),
+          (0, x.jsx)("span", {
+            style: {
+              fontFamily: "monospace",
+              fontSize: 9,
+              fontWeight: 800,
+              letterSpacing: "0.06em",
+              color: "#181d27"
+            },
+            children: `SCENE ${activeAct.id}: ${activeAct.status}`
+          }),
+          (0, x.jsx)("span", {
+            style: {
+              fontFamily: "monospace",
+              fontSize: 9,
+              fontWeight: 700,
+              color: "#78716c"
+            },
+            children: `| VEL ${velocityDisplay}px/f | ${Math.round(scrollProgress * 100)}%`
+          })
+        ]
+      }),
+
+      // 7. SCADA Audio Synthesizer Control Pill (Floating in bottom-left)
       (0, x.jsxs)("button", {
         onClick: () => {
           setAudioEnabled(!audioEnabled);
@@ -3448,8 +4142,8 @@ export function CinematicAtmosphere() {
           bottom: 24,
           left: 28,
           zIndex: 10000,
-          background: audioEnabled ? "rgba(16, 185, 129, 0.15)" : "rgba(255, 255, 255, 0.75)",
-          border: audioEnabled ? "1px solid rgba(16, 185, 129, 0.5)" : "1px solid rgba(0, 0, 0, 0.12)",
+          background: audioEnabled ? "rgba(21, 128, 61, 0.14)" : "rgba(255, 255, 255, 0.82)",
+          border: audioEnabled ? "1px solid rgba(21, 128, 61, 0.45)" : "1px solid rgba(24, 29, 39, 0.12)",
           backdropFilter: "blur(12px)",
           WebkitBackdropFilter: "blur(12px)",
           borderRadius: 100,
@@ -3458,16 +4152,16 @@ export function CinematicAtmosphere() {
           alignItems: "center",
           gap: 8,
           cursor: "pointer",
-          boxShadow: "0 4px 16px rgba(0,0,0,0.06)",
+          boxShadow: "0 4px 16px rgba(24, 29, 39, 0.06)",
           transition: "all 0.25s ease"
         },
         children: [
           (0, x.jsxs)("div", {
             style: { display: "flex", alignItems: "flex-end", gap: 2, height: 12 },
             children: [
-              (0, x.jsx)("span", { style: { width: 2.5, height: audioEnabled ? 11 : 4, background: audioEnabled ? "#10b981" : "#7c766c", borderRadius: 1, transition: "height 0.2s ease" } }),
-              (0, x.jsx)("span", { style: { width: 2.5, height: audioEnabled ? 8 : 4, background: audioEnabled ? "#10b981" : "#7c766c", borderRadius: 1, transition: "height 0.3s ease" } }),
-              (0, x.jsx)("span", { style: { width: 2.5, height: audioEnabled ? 12 : 4, background: audioEnabled ? "#10b981" : "#7c766c", borderRadius: 1, transition: "height 0.15s ease" } })
+              (0, x.jsx)("span", { style: { width: 2.5, height: audioEnabled ? 11 : 4, background: audioEnabled ? "#15803d" : "#7c766c", borderRadius: 1, transition: "height 0.2s ease" } }),
+              (0, x.jsx)("span", { style: { width: 2.5, height: audioEnabled ? 8 : 4, background: audioEnabled ? "#15803d" : "#7c766c", borderRadius: 1, transition: "height 0.3s ease" } }),
+              (0, x.jsx)("span", { style: { width: 2.5, height: audioEnabled ? 12 : 4, background: audioEnabled ? "#15803d" : "#7c766c", borderRadius: 1, transition: "height 0.15s ease" } })
             ]
           }),
           (0, x.jsx)("span", {
@@ -3476,7 +4170,7 @@ export function CinematicAtmosphere() {
               fontSize: 9.5,
               fontWeight: 800,
               letterSpacing: "0.08em",
-              color: audioEnabled ? "#059669" : "#545b67"
+              color: audioEnabled ? "#15803d" : "#181d27"
             },
             children: audioEnabled ? "TELEMETRY AUDIO: ON" : "AUDIO: MUTED"
           })
@@ -3485,4 +4179,5 @@ export function CinematicAtmosphere() {
     ]
   });
 }
+
 
